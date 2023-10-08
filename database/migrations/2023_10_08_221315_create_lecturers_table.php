@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student', function (Blueprint $table) {
+        Schema::create('lecturers', function (Blueprint $table) {
             $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('otherName');
-            $table->string('regNumber');
-            $table->string('courseCode');
-            $table->string('level');
-            $table->timestamps();
+            $table->string('email')->unique();
+            $table->string('phoneNumber');
+            $table->string('password');
+            $table->unsignedBigInteger('courseId');
+            $table->foreign('courseId')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student');
+        Schema::dropIfExists('lecturers');
     }
 };

@@ -19,7 +19,8 @@ class StudentFactory extends Factory
         return [
             'firstName' => $this->faker->name(),
             'lastName' => $this->faker->name(),
-            'regNumber' => $this->faker->phoneNumber(),
+            'otherName' => $this->faker->name(),
+            'regNumber' => $this->faker->phoneNumber(5),
             'courseCode' => 'CRE 152',
             'level' => '400',
         ];
