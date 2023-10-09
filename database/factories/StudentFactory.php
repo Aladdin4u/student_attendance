@@ -20,10 +20,9 @@ class StudentFactory extends Factory
         return [
             'firstName' => $this->faker->name(),
             'lastName' => $this->faker->name(),
-            'othersName' => $this->faker->name(),
+            'otherName' => $this->faker->name(),
             'regNumber' => $this->faker->postcode(),
             'level' => '400',
-            'courseId' => 1,
         ];
     }
 }

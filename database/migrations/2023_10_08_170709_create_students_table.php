@@ -15,15 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('othersName');
+            $table->string('otherName');
             $table->string('regNumber')->unique();
             $table->string('level');
-            $table->unsignedBigInteger('courseId');
-            $table->foreign('courseId')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

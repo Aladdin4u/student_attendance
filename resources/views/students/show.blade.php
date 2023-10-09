@@ -12,7 +12,7 @@
     <td>{{$student['id']}}</td>
     <td>{{$student['firstName']}}</td>
     <td class="text-red-600">{{$student['lastName']}}</td>
-    <td>{{$student['othersName']}}</td>
+    <td>{{$student['otherName']}}</td>
     <td>{{$student['regNumber']}}</td>
     <td>{{$student['level']}}</td>
   </tr>

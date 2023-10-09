@@ -18,6 +18,16 @@
     <td>{{$student['regNumber']}}</td>
     <td>{{$student['level']}}</td>
     <td><a href="/students/{{$student['id']}}">view</a></td>
+    <td>
+      <form method="POST" action="/students/{{$student->id}}">
+          @csrf
+          @method('DELETE')
+            <button class="text-red-600">
+              <i class="fa-solid fa-trash-can"></i>
+                Delete
+            </button>
+        </form>
+      </td>
   </tr>
   @endforeach
 </table>

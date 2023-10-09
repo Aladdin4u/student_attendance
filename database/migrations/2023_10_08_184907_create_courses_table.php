@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->string('semester');
             $table->string('session');
+            $table->unsignedBigInteger('studentId');
+            $table->foreign('studentId')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
