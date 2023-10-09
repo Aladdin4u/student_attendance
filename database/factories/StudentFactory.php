@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
@@ -19,10 +20,10 @@ class StudentFactory extends Factory
         return [
             'firstName' => $this->faker->name(),
             'lastName' => $this->faker->name(),
-            'otherName' => $this->faker->name(),
-            'regNumber' => $this->faker->phoneNumber(5),
-            'courseCode' => 'CRE 152',
+            'othersName' => $this->faker->name(),
+            'regNumber' => $this->faker->postcode(),
             'level' => '400',
+            'courseId' => 1,
         ];
     }
 }
