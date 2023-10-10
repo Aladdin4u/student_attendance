@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,8 @@ Route::put('/students/{student}', [StudentController::class, 'update']);
 Route::delete('/students/{student}', [StudentController::class, 'destroy']);
 // show single student
 Route::get('/students/{student}', [StudentController::class, 'show']);
-
+// store course create form
+Route::post('/courses', [CourseController::class, 'store']);
 // Common Resource Routes:
 // index - Show all listings
 // show - Show single listing
