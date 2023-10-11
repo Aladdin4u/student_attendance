@@ -73,4 +73,7 @@ class StudentController extends Controller
         return redirect("/students")->with("message", "Student Deleted Successfully!");
     }
 
+    public function manage(Student $student) {
+        return view("students.manage", ["students" => $student->course()->get()]);
+    }
 }

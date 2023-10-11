@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    // show create form
-    public function create() {
-        return view("students.create");
+    // show student students
+    public function show(Course $course) {
+        return view("students.show", [
+            "student" => $course
+        ]);
     }
     // store form data
     public function store(Request $request) {

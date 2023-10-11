@@ -30,10 +30,13 @@ Route::get('/students/{student}/edit', [StudentController::class, 'edit']);
 Route::put('/students/{student}', [StudentController::class, 'update']);
 // update student edit form
 Route::delete('/students/{student}', [StudentController::class, 'destroy']);
+// manage student
+Route::get('/students/manage', [StudentController::class, 'manage']);
 // show single student
 Route::get('/students/{student}', [StudentController::class, 'show']);
 // store course create form
 Route::post('/courses', [CourseController::class, 'store']);
+
 // Common Resource Routes:
 // index - Show all listings
 // show - Show single listing
