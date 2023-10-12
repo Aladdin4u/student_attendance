@@ -64,7 +64,7 @@ class StudentController extends Controller
 
     // destroy student data 
     public function destroy(Student $student) {
-        if(auth()->role != "admin"){
+        if(auth()->user()->role != "admin"){
             abort(403, "Unauthorized Action");
         }
 
