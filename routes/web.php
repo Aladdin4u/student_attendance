@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     return view("welcome");
 });
-// show all students
-Route::get('/students', [StudentController::class, 'index']);
+// show user create form
+Route::get('/register', [UserController::class, 'create']);
+// store user
+Route::post('/register', [UserController::class, 'store']);
+// show user login form
+Route::get('/login', [UserController::class, 'login']);
+// login user
+Route::post('/login', [UserController::class, 'authenticate']);
+// log User Out
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 // store student
 Route::post('/students', [StudentController::class, 'store']);
 // show student create form
