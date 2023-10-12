@@ -1,25 +1,24 @@
-<h1>manage listings</h1>
-@unless(count($students) == 0)
+<h1>manage students</h1>
+<h2>courses</h2>
+@unless(count($courses) == 0)
 <table>
   <tr>
     <th>#</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Other Name</th>
-    <th>Reg Number</th>
-    <th>Level</th>
+    <th>Code</th>
+    <th>Title</th>
+    <th>semester</th>
+    <th>Session</th>
   </tr>
-  @foreach($students as $student)
+  @foreach($courses as $course)
   <tr>
-    <td>{{$student['id']}}</td>
-    <td>{{$student['firstName']}}</td>
-    <td>{{$student['lastName']}}</td>
-    <td>{{$student['othersName']}}</td>
-    <td>{{$student['regNumber']}}</td>
-    <td>{{$student['level']}}</td>
-    <td><a href="/students/{{$student['id']}}">view</a></td>
+    <td>{{$course['id']}}</td>
+    <td>{{$course['code']}}</td>
+    <td>{{$course['title']}}</td>
+    <td>{{$course['semester']}}</td>
+    <td>{{$course['session']}}</td>
+    <td><a href="/courses/{{$course['id']}}/edit">edit</a></td>
     <td>
-      <form method="POST" action="/students/{{$student->id}}">
+      <form method="POST" action="/courses/{{$course->id}}">
           @csrf
           @method('DELETE')
             <button class="text-red-600">
@@ -32,5 +31,5 @@
   @endforeach
 </table>
 @else 
-<p>No student availabe</p>
+<p>No course availabe</p>
 @endunless
