@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->string('semester');
             $table->string('session');
+            $table->string('level');
+            $table->foreignId('lecturerId')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('studentId');
             $table->foreign('studentId')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();

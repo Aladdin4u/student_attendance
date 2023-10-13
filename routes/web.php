@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -53,6 +54,8 @@ Route::get('/courses/{course}/edit', [CourseController::class, 'edit']);
 Route::put('/courses/{course}', [CourseController::class, 'update']);
 // destroy course
 Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
+// show attendance create form
+Route::get('/attendances/create', [AttendanceController::class, 'create']);
 
 // Common Resource Routes:
 // index - Show all listings
