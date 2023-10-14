@@ -62,37 +62,53 @@ class DatabaseSeeder extends Seeder
             'semester' => 'first',
             'session' => '2019',
         ]);
-        \App\Models\Attendance::factory()->create([
+        $EzeAtt152 = \App\Models\Attendance::factory()->create([
             'is_present' => true,
             'date' => '2023-10-14',
             'student_id' => $eze->id,
             'course_id' => $cre152->id,
         ]);
-        \App\Models\Attendance::factory()->create([
+        $EzeAtt124 = \App\Models\Attendance::factory()->create([
             'is_present' => true,
             'date' => '2023-10-14',
             'student_id' => $eze->id,
             'course_id' => $cre124->id,
         ]);
-        \App\Models\Attendance::factory()->create([
+        $ibehAtt152 = \App\Models\Attendance::factory()->create([
             'is_present' => true,
             'date' => '2023-10-14',
             'student_id' => $ibeh->id,
             'course_id' => $cre152->id,
         ]);
-        \App\Models\Attendance::factory()->create([
+        $ibehAtt124 = \App\Models\Attendance::factory()->create([
             'is_present' => true,
             'date' => '2023-10-14',
             'student_id' => $ibeh->id,
             'course_id' => $cre124->id,
         ]);
-        \App\Models\CourseStudent::factory()->create([
-            'student_id' => $ibeh->id,
-            'lecturer_id' => $lecturer->id,
-        ]);
-        \App\Models\CourseStudent::factory()->create([
+        \App\Models\Lession::factory()->create([
             'student_id' => $eze->id,
             'lecturer_id' => $lecturer->id,
+            'course_id' => $cre152->id,
+            'attendance_id' => $EzeAtt152->id,
+        ]);
+        \App\Models\Lession::factory()->create([
+            'student_id' => $eze->id,
+            'lecturer_id' => $lecturer->id,
+            'course_id' => $cre124->id,
+            'attendance_id' => $EzeAtt124->id,
+        ]);
+        \App\Models\Lession::factory()->create([
+            'student_id' => $ibeh->id,
+            'lecturer_id' => $lecturer->id,
+            'course_id' => $cre152->id,
+            'attendance_id' => $ibehAtt152->id,
+        ]);
+        \App\Models\Lession::factory()->create([
+            'student_id' => $ibeh->id,
+            'lecturer_id' => $lecturer->id,
+            'course_id' => $cre124->id,
+            'attendance_id' => $ibehAtt124->id,
         ]);
     }
 }
