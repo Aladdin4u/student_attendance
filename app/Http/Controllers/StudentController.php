@@ -59,7 +59,7 @@ class StudentController extends Controller
 
         $student->update($formFields);
 
-        return back()->with("message", "Student Updated Successfully!");
+        return redirect("/students/manage")->with("message", "Student Updated Successfully!");
     }
 
     // destroy student data 
@@ -73,11 +73,10 @@ class StudentController extends Controller
         return redirect("/students")->with("message", "Student Deleted Successfully!");
     }
 
-    public function manage($student) {
-        // dd(Student::find($student)->course);
-        if(!Student::find($student)){
-            abort(404, "Not Found");
-        }
-        return view("students.manage", ["courses" => Student::find($student)->course]);
+    public function manage(Student $student) {
+
+        return view("students.manage", [
+            "students" => $student::latest()->filter(request(["search"]))->paginate(6)
+        ]);
     }
 }

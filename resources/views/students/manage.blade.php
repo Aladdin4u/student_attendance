@@ -1,24 +1,32 @@
 <h1>manage students</h1>
-<h2>courses</h2>
-@unless(count($courses) == 0)
+<form action="/students/manage/">
+  <input type="text" name="search" placeholder="search student">
+  <button type="submit">Search</button>
+</form>
+<p><a href="/students/create">Create new Student</a></p>
+<h2>students</h2>
+@unless(count($students) == 0)
 <table>
   <tr>
-    <th>#</th>
-    <th>Code</th>
-    <th>Title</th>
-    <th>semester</th>
-    <th>Session</th>
+  <th>#</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Other Name</th>
+    <th>Reg Number</th>
+    <th>Level</th>
   </tr>
-  @foreach($courses as $course)
+  @foreach($students as $student)
   <tr>
-    <td>{{$course['id']}}</td>
-    <td>{{$course['code']}}</td>
-    <td>{{$course['title']}}</td>
-    <td>{{$course['semester']}}</td>
-    <td>{{$course['session']}}</td>
-    <td><a href="/courses/{{$course['id']}}/edit">edit</a></td>
+    <td>{{$student['id']}}</td>
+    <td>{{$student['firstName']}}</td>
+    <td>{{$student['lastName']}}</td>
+    <td>{{$student['otherName']}}</td>
+    <td>{{$student['regNumber']}}</td>
+    <td>{{$student['level']}}</td>
+    <td><a href="/students/{{$student['id']}}">view</a></td>
+    <td><a href="/students/{{$student['id']}}/edit">edit</a></td>
     <td>
-      <form method="POST" action="/courses/{{$course->id}}">
+      <form method="POST" action="/students/{{$student['id']}}">
           @csrf
           @method('DELETE')
             <button class="text-red-600">
@@ -31,5 +39,5 @@
   @endforeach
 </table>
 @else 
-<p>No course availabe</p>
+<p>No student availabe</p>
 @endunless

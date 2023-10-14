@@ -43,9 +43,13 @@ Route::put('/students/{student}', [StudentController::class, 'update']);
 // destroy student
 Route::delete('/students/{student}', [StudentController::class, 'destroy']);
 // manage student
-Route::get('/students/manage/{student}', [StudentController::class, 'manage']);
+Route::get('/students/manage', [StudentController::class, 'manage']);
 // show single student
 Route::get('/students/{student}', [StudentController::class, 'show']);
+// show single course
+Route::get('/courses', [CourseController::class, 'index']);
+// show course create form
+Route::get('/courses/create', [CourseController::class, 'create']);
 // store course create form
 Route::post('/courses', [CourseController::class, 'store']);
 // edit course form
@@ -54,6 +58,10 @@ Route::get('/courses/{course}/edit', [CourseController::class, 'edit']);
 Route::put('/courses/{course}', [CourseController::class, 'update']);
 // destroy course
 Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
+// manage student
+Route::get('/courses/manage', [CourseController::class, 'manage']);
+// show single course
+Route::get('/courses/{course}', [CourseController::class, 'show']);
 // show attendance create form
 Route::get('/attendances/create', [AttendanceController::class, 'create']);
 
