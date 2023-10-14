@@ -54,16 +54,6 @@
             </div>
 
             <div class="mb-6">
-                <label for="studentId" class="inline-block text-lg mb-2">
-                    student Id
-                </label>
-                <input type="text" class="border border-gray-200 rounded p-2 w-full" name="studentId" placeholder="studentId" value="{{$student['id']}}" />
-                @error('studentId')
-                    <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                @enderror
-            </div>
-
-            <div class="mb-6">
                 <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
                     Save
                 </button>

@@ -24,10 +24,7 @@
     <td>
       <form method="POST" action="/hattendances/{{$attendance->id}}">
           @csrf
-            <button class="text-red-600">
-              <i class="fa-solid fa-trash-can"></i>
-                Delete
-            </button>
+            <input type="checkbox" name="present" id="present">
         </form>
       </td>
   </tr>

@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(5)->create();
-        \App\Models\Course::factory(5)->create();
-        \App\Models\Student::factory(5)->create();
+        // \App\Models\User::factory(5)->create();
+        // \App\Models\Course::factory(5)->create();
+        // \App\Models\Student::factory(5)->create();
         // \App\Models\Lecturer::factory(10)->create();
 
 
@@ -52,23 +52,47 @@ class DatabaseSeeder extends Seeder
         ]);
         $cre152 = \App\Models\Course::factory()->create([
             'code' => 'CRE 152',
-            'title' => 'computer electronic',
+            'title' => 'Foundation of Robotics Education',
             'semester' => 'first',
             'session' => '2019',
-            'level' => '400',
-            'lecturerId' => $lecturer->id,
+        ]);
+        $cre124 = \App\Models\Course::factory()->create([
+            'code' => 'CRE 124',
+            'title' => 'word Processing',
+            'semester' => 'first',
+            'session' => '2019',
         ]);
         \App\Models\Attendance::factory()->create([
-            'is_present' => 'true',
-            'date' => '10/13/2013',
+            'is_present' => true,
+            'date' => '2023-10-14',
             'student_id' => $eze->id,
             'course_id' => $cre152->id,
         ]);
         \App\Models\Attendance::factory()->create([
-            'is_present' => 'true',
-            'date' => '10/13/2013',
+            'is_present' => true,
+            'date' => '2023-10-14',
+            'student_id' => $eze->id,
+            'course_id' => $cre124->id,
+        ]);
+        \App\Models\Attendance::factory()->create([
+            'is_present' => true,
+            'date' => '2023-10-14',
             'student_id' => $ibeh->id,
             'course_id' => $cre152->id,
+        ]);
+        \App\Models\Attendance::factory()->create([
+            'is_present' => true,
+            'date' => '2023-10-14',
+            'student_id' => $ibeh->id,
+            'course_id' => $cre124->id,
+        ]);
+        \App\Models\CourseStudent::factory()->create([
+            'student_id' => $ibeh->id,
+            'lecturer_id' => $lecturer->id,
+        ]);
+        \App\Models\CourseStudent::factory()->create([
+            'student_id' => $eze->id,
+            'lecturer_id' => $lecturer->id,
         ]);
     }
 }

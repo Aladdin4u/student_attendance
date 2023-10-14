@@ -11,7 +11,7 @@ class AttendanceController extends Controller
     // show create form
     public function create() {
         $students = Student::join("courses","students.id", "=", "courses.id")->get();
-        dd($students);
+        // dd($students);
         return view("attendances.create", [
             "attendances" => $students
         ]);

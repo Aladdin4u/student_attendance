@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('semester');
             $table->string('session');
             $table->float('total');
-            $table->unsignedBigInteger('attendanceId');
-            $table->unsignedBigInteger('studentId');
-            $table->unsignedBigInteger('courseId');
-            $table->foreign('attendanceId')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('courseId')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('studentId')->references('id')->on('students')->onDelete('cascade');
+            $table->unsignedBigInteger('attendance_id');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('attendance_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
 

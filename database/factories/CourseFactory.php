@@ -20,8 +20,7 @@ class CourseFactory extends Factory
             'code' => $this->faker->buildingNumber(),
             'title' => $this->faker->stateAbbr(),
             'semester' => 'First',
-            'session' => '2022/2023',
-            'studentId' => 1
+            'session' => '2022/2023'
         ];
     }
 }

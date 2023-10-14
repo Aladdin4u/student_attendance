@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('course_students', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('title')->unique();
-            $table->string('semester');
-            $table->string('session');
+            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('lecturer_id');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('lecturer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('coursestudents');
     }
 };

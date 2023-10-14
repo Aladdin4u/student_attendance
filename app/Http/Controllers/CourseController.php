@@ -21,7 +21,6 @@ class CourseController extends Controller
             "title" => "required",
             "semester" => "required",
             "session" => "required",
-            "studentId" => "required",
         ]);
 
         Course::create($formFields);
@@ -37,7 +36,6 @@ class CourseController extends Controller
             "title" => "required",
             "semester" => "required",
             "session" => "required",
-            "studentId" => "required",
         ]);
 
         $course->update($formFields);
