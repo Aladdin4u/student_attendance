@@ -1,5 +1,5 @@
-<h2>Register course</h2>
-<form method="POST" action="/courses">
+<h2>Create lession</h2>
+<form method="POST" action="/lession">
             @csrf
             <div class="mb-6">
                 <label for="code" class="inline-block text-lg mb-2">Course Code</label>

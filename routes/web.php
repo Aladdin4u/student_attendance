@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,7 @@ Route::delete('/students/{student}', [StudentController::class, 'destroy']);
 Route::get('/students/manage', [StudentController::class, 'manage']);
 // show single student
 Route::get('/students/{student}', [StudentController::class, 'show']);
-// show single course
+// show all course
 Route::get('/courses', [CourseController::class, 'index']);
 // show course create form
 Route::get('/courses/create', [CourseController::class, 'create']);
@@ -62,6 +63,12 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 Route::get('/courses/manage', [CourseController::class, 'manage']);
 // show single course
 Route::get('/courses/{course}', [CourseController::class, 'show']);
+// show all lessions
+Route::get('/lessions', [LessionController::class, 'index']);
+// show lession create form
+Route::get('/lessions/create', [LessionController::class, 'create']);
+// show single lession
+Route::get('/lessions/{lession}', [LessionController::class, 'show']);
 // show attendance create form
 Route::get('/attendances/create', [AttendanceController::class, 'create']);
 

@@ -19,8 +19,8 @@ class Course extends Model
         }
     }
 
-    //Relationship to Student
-    public function students(){
-        return $this->belongsTo(Student::class, "studentId");
+    //Relationship to lession
+    public function lessions(){
+        return $this->hasMany(Lession::class, "course_id");
     }
 }
