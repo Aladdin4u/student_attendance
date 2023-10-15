@@ -13,7 +13,7 @@ class LessionController extends Controller
     // show all lessions
     public function index() {
         $lession = Lession::join("students", "lessions.student_id", "=", "students.id", "left")
-        ->join("courses", "lessions.course_id", "=", "courses.id", "left")->get();
+        ->join("courses", "lessions.course_id", "=", "courses.id", "left")->get(["lessions.id", "students.firstName", "students.lastName", "courses.code", "courses.title"]);
         // dd($lession);
         return view("lessions.index", [
             "lessions" => $lession
@@ -90,10 +90,15 @@ class LessionController extends Controller
         return redirect("/lessions")->with("message", "lession Deleted Successfully!");
     }
 
-    public function manage(Lession $lession) {
+    public function manage() {
 
-        // return view("lessions.manage", [
-        //     "lessions" => $lession::latest()->filter(request(["search"]))->paginate(6)
-        // ]);
+        $lessions = Lession::join("students", "lessions.student_id", "=", "students.id", "left")
+        ->join("courses", "lessions.course_id", "=", "courses.id", "left")
+        ->join("attendances", "lessions.attendance_id", "=", "attendances.id", "left")
+        ->get(["lessions.id", "students.firstName", "students.lastName", "students.otherName", "students.regNumber", "students.level", "courses.code", "courses.title", "attendances.is_present", "attendances.date", "attendances.created_at"])->where("is_present", "!=", null);
+        // dd($lessions);
+        return view("lessions.manage", [
+            "lessions" => $lessions
+        ]);
     }
 }

@@ -24,7 +24,7 @@
     <td>
       <form method="POST" action="/hattendances/{{$attendance->id}}">
           @csrf
-            <input type="checkbox" name="present" id="present">
+            <input type="checkbox" name="is_present" id="_is_present">
         </form>
       </td>
   </tr>

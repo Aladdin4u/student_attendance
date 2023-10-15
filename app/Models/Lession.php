@@ -9,6 +9,16 @@ class Lession extends Model
 {
     use HasFactory;
 
+    public function scopeFilter($query, array $filters) {
+
+        if($filters['search'] ?? false) {
+            $query->where('code', 'like', '%' . request('search') . '%')
+            ->orWhere('title', 'like', '%' . request('search') . '%')
+            ->orWhere('semester', 'like', '%' . request('search') . '%')
+            ->orWhere('session', 'like', '%' . request('search') . '%');
+        }
+    }
+
     public function courses() {
         return $this->belongsTo(Course::class, "course_id");
     }

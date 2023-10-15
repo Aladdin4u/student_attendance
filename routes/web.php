@@ -71,6 +71,8 @@ Route::get('/lessions/create', [LessionController::class, 'create']);
 Route::post('/lessions', [LessionController::class, 'store']);
 // destroy lession
 Route::delete('/lessions/{lession}', [LessionController::class, 'destroy'])->middleware('auth');
+// manage lession
+Route::get('/lessions/manage', [LessionController::class, 'manage']);
 // show single lession
 Route::get('/lessions/{lession}', [LessionController::class, 'show']);
 // show attendance create form
