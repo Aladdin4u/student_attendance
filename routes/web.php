@@ -67,6 +67,8 @@ Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/lessions', [LessionController::class, 'index']);
 // show lession create form
 Route::get('/lessions/create', [LessionController::class, 'create']);
+// store lession create form
+Route::post('/lessions', [LessionController::class, 'store']);
 // destroy lession
 Route::delete('/lessions/{lession}', [LessionController::class, 'destroy'])->middleware('auth');
 // show single lession

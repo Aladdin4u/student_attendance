@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lession;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LessionController extends Controller
@@ -34,20 +35,26 @@ class LessionController extends Controller
 
     // show create form
     public function create() {
-        return view("lessions.create");
+        $student = Student::all();
+        $course = Course::all();
+        $lecturer = User::all()->where("role","lecturer");
+        // dd($lecturer);
+        return view("lessions.create", [
+            "students" => $student,
+            "courses" => $course,
+            "lecturers" => $lecturer
+        ]);
     }
     // store form data
     public function store(Request $request) {
         // dd($request);
         $formFields = $request->validate([
-            "firstName" => "required",
-            "lastName" => "required",
-            "otherName" => "required",
-            "regNumber" => "required",
-            "level" => "required",
+            "student_id" => "required",
+            "course_id" => "required",
+            "lecturer_id" => "required"
         ]);
 
-        lession::create($formFields);
+        Lession::create($formFields);
 
         return redirect("/lessions")->with("message", "lession created successfully!");
     }
@@ -61,11 +68,10 @@ class LessionController extends Controller
      public function update(Request $request, lession $lession) {
         // dd($request);
         $formFields = $request->validate([
-            "firstName" => "required",
-            "lastName" => "required",
-            "otherName" => "required",
-            "regNumber" => "required",
-            "level" => "required",
+            "student_id" => "required",
+            "course_id" => "required",
+            "lecturer_id" => "required",
+            "attendance_id" => "required"
         ]);
 
         $lession->update($formFields);
@@ -81,7 +87,7 @@ class LessionController extends Controller
 
         $lession->delete();
 
-        return redirect("/lessions/manage")->with("message", "lession Deleted Successfully!");
+        return redirect("/lessions")->with("message", "lession Deleted Successfully!");
     }
 
     public function manage(Lession $lession) {

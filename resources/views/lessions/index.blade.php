@@ -22,7 +22,7 @@
           @method('DELETE')
             <button class="text-red-600">
               <i class="fa-solid fa-trash-can"></i>
-                Delete
+                Delete id= {{$lession->id}}
             </button>
         </form>
       </td>
