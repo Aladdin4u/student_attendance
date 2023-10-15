@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Lession;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class LessionController extends Controller
@@ -19,11 +21,14 @@ class LessionController extends Controller
 
     // show single lession
     public function show(Lession $lession) {
-        dd($lession);
-        $lession = Lession::join("students", "lessions.student_id", "=", "students.id", "left")
-        ->join("courses", "lessions.course_id", "=", "courses.id", "left")->get();
+        $student = $lession->students()->get()->first();
+        $course = $lession->courses()->get()->first();
+        $attendance = $lession->attendances()->get()->first();
+        // dd($lession->attendance_id);
         return view("lessions.show", [
-            "lession" => $lession
+            "lessionStudent" => $student,
+            "lessionCourse" => $course,
+            "lessionAttendance" => $lession
         ]);
     }
 

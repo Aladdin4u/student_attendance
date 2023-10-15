@@ -26,7 +26,7 @@ Route::get('/register', [UserController::class, 'create']);
 // store user
 Route::post('/register', [UserController::class, 'store']);
 // show user login form
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login'])->name('login');
 // login user
 Route::post('/login', [UserController::class, 'authenticate']);
 // log User Out
@@ -67,6 +67,8 @@ Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/lessions', [LessionController::class, 'index']);
 // show lession create form
 Route::get('/lessions/create', [LessionController::class, 'create']);
+// destroy lession
+Route::delete('/lessions/{lession}', [LessionController::class, 'destroy'])->middleware('auth');
 // show single lession
 Route::get('/lessions/{lession}', [LessionController::class, 'show']);
 // show attendance create form

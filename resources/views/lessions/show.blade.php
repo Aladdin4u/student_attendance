@@ -1,19 +1,17 @@
-<h1>single lession</h1>
+<h1>single lessionStudent</h1>
 <table>
   <tr>
-    <th>#</th>
     <th>First Name</th>
     <th>Last Name</th>
-    <th>Other Name</th>
-    <th>Reg Number</th>
-    <th>Level</th>
+    <th>Code</th>
+    <th>Title</th>
   </tr>
   <tr>
-    <td>{{$lession['id']}}</td>
-    <td>{{$lession['firstName']}}</td>
-    <td class="text-red-600">{{$lession['lastName']}}</td>
-    <td>{{$lession['otherName']}}</td>
-    <td>{{$lession['regNumber']}}</td>
-    <td>{{$lession['level']}}</td>
+  <tr>
+    <td>{{$lessionStudent['firstName']}}</td>
+    <td>{{$lessionStudent['lastName']}}</td>
+    <td>{{$lessionCourse['code']}}</td>
+    <td>{{$lessionCourse['title']}}</td>
+    <td><a href="/attendances/{{$lessionAttendance['attendance_id']}}">view Attendance</a></td>
   </tr>
 </table>
