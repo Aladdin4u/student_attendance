@@ -28,4 +28,7 @@ class Lession extends Model
     public function attendances() {
         return $this->belongsTo(Attendance::class, "attendance_id");
     }
+    public function lecturers() {
+        return $this->belongsTo(User::class, "lecturer_id");
+    }
 }

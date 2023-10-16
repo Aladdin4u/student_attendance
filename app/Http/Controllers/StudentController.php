@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -16,8 +17,12 @@ class StudentController extends Controller
 
     // show student students
     public function show(Student $student) {
+        $course = $student->lessions()->join("courses", "lessions.course_id", "=", "courses.id")->get();
+        $stu = $student->lessions()->join("students", "lessions.student_id", "=", "students.id")->get();
+        // dd($course);
         return view("students.show", [
-            "student" => $student
+            "student" => $student,
+            "courses" => $course
         ]);
     }
 

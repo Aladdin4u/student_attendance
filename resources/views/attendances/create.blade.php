@@ -14,7 +14,7 @@
   </tr>
   @foreach($attendances as $attendance)
   <tr>
-    <td>{{$attendance['id']}}</td>
+    <td>{{$attendance['student_id']}}</td>
     <td>{{$attendance['firstName']}}</td>
     <td>{{$attendance['lastName']}}</td>
     <td>{{$attendance['otherName']}}</td>
@@ -22,7 +22,7 @@
     <td>{{$attendance['code']}}</td>
     <td>{{$attendance['level']}}</td>
     <td>
-      <form method="POST" action="/hattendances/{{$attendance->id}}">
+      <form method="POST" action="/attendances">
           @csrf
             <input type="checkbox" name="is_present" id="_is_present">
         </form>

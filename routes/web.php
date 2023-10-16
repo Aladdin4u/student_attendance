@@ -77,6 +77,8 @@ Route::get('/lessions/manage', [LessionController::class, 'manage']);
 Route::get('/lessions/{lession}', [LessionController::class, 'show']);
 // show attendance create form
 Route::get('/attendances/create', [AttendanceController::class, 'create']);
+// show single attendance
+Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 
 // Common Resource Routes:
 // index - Show all listings
