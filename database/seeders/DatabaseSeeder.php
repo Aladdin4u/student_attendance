@@ -63,25 +63,25 @@ class DatabaseSeeder extends Seeder
             'session' => '2019',
         ]);
         $EzeAtt152 = \App\Models\Attendance::factory()->create([
-            'is_present' => true,
+            'is_present' => 'present',
             'date' => '2023-10-14',
             'student_id' => $eze->id,
             'course_id' => $cre152->id,
         ]);
         $EzeAtt124 = \App\Models\Attendance::factory()->create([
-            'is_present' => true,
+            'is_present' => 'present',
             'date' => '2023-10-14',
             'student_id' => $eze->id,
             'course_id' => $cre124->id,
         ]);
         $ibehAtt152 = \App\Models\Attendance::factory()->create([
-            'is_present' => true,
+            'is_present' => 'present',
             'date' => '2023-10-14',
             'student_id' => $ibeh->id,
             'course_id' => $cre152->id,
         ]);
         $ibehAtt124 = \App\Models\Attendance::factory()->create([
-            'is_present' => true,
+            'is_present' => 'present',
             'date' => '2023-10-14',
             'student_id' => $ibeh->id,
             'course_id' => $cre124->id,

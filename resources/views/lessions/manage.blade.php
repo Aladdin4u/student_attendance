@@ -27,7 +27,7 @@
     <td>{{$lession['regNumber']}}</td>
     <td>{{$lession['code']}}</td>
     <td>{{$lession['level']}}</td>
-    <td>{{ $lession['is_present'] == 1 ? "Present" : "Absent" }}</td>
+    <td>{{ $lession['is_present']}}</td>
     <td>{{$lession['date']}}</td>
     <td><a href="/lessions/{{$lession['id']}}">view</a></td>
     <td><a href="/lessions/{{$lession['id']}}/edit">edit</a></td>

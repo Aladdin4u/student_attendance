@@ -6,7 +6,7 @@
   </tr>
   <tr>
   <tr>
-    <td>{{$attendance['is_present'] == 1 ? "Present" : "Absent"}}</td>
+    <td>{{$attendance['is_present']}}</td>
     <td>{{$attendance['date']}}</td>
   </tr>
 </table>
