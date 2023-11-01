@@ -1,3 +1,4 @@
+<x-layout>
 <h1>single student</h1>
 <table>
   <tr>
@@ -42,3 +43,4 @@
 @else 
 <p>No course availabe</p>
 @endunless
+</x-layout>

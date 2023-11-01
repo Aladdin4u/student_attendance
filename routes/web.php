@@ -31,6 +31,8 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
 // log User Out
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+// manage user
+Route::get('/users/manage', [UserController::class, 'manage']);
 // show all students
 Route::get('/students', [StudentController::class, 'index']);
 // store student

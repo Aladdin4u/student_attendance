@@ -1,3 +1,4 @@
+<x-layout>
 <h1>Students</h1>
 @unless(count($students) == 0)
 <table>
@@ -34,3 +35,4 @@
 @else 
 <p>No student availabe</p>
 @endunless
+</x-layout>

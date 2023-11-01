@@ -1,3 +1,4 @@
+<x-layout>
 <h1>manage students</h1>
 <form action="/students/manage/">
   <input type="text" name="search" placeholder="search student">
@@ -41,3 +42,4 @@
 @else 
 <p>No student availabe</p>
 @endunless
+</x-layout>

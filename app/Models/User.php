@@ -43,7 +43,20 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function lessions() {
+    public function scopeFilter($query, array $filters)
+    {
+
+        if ($filters['search'] ?? false) {
+            $query->where('firstName', 'like', '%' . request('search') . '%')
+                ->orWhere('lastName', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%')
+                ->orWhere('phoneNumber', 'like', '%' . request('search') . '%')
+                ->orWhere('level', 'like', '%' . request('search') . '%');
+        }
+    }
+
+    public function lessions()
+    {
         return $this->hasMany(Lession::class, "lecturer_id");
     }
 }
