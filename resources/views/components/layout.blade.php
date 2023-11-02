@@ -32,7 +32,7 @@
                 <div class="w-full flex items-center justify-between px-3">
                     <form>
                         <label for="search" class="text-sm font-medium text-gray-900 sr-only">Search</label>
-                        <div class="relative  w-80">
+                        <div class="relative w-80">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -112,8 +112,8 @@
                         </svg>
                     </div>
                     <ul class="space-y-2 font-medium pl-10" x-show="open">
-                        <li><a href="/login" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100">Create Lecturers</a></li>
-                        <li><a href="/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100">View All Lecturers</a></li>
+                        <li><a href="/register" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100">Create Lecturers</a></li>
+                        <li><a href="/users/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100">View All Lecturers</a></li>
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
