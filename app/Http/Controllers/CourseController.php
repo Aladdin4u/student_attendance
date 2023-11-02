@@ -8,23 +8,27 @@ use Illuminate\Http\Request;
 class CourseController extends Controller
 {
     // show all courses
-    public function index() {
+    public function index()
+    {
         return view("courses.index", [
             "courses" => Course::all()
         ]);
     }
     // show course courses
-    public function show(Course $course) {
+    public function show(Course $course)
+    {
         return view("courses.show", [
             "course" => $course
         ]);
     }
     // show create form
-    public function create() {
+    public function create()
+    {
         return view("courses.create");
     }
     // store form data
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // dd($request);
         $formFields = $request->validate([
             "code" => "required",
@@ -39,12 +43,14 @@ class CourseController extends Controller
     }
 
     // show edit form
-    public function edit(Course $course) {
+    public function edit(Course $course)
+    {
         return view("courses.edit", ["course" => $course]);
     }
 
     // update form data
-    public function update(Request $request, Course $course) {
+    public function update(Request $request, Course $course)
+    {
         // dd($request);
         $formFields = $request->validate([
             "code" => "required",
@@ -55,12 +61,13 @@ class CourseController extends Controller
 
         $course->update($formFields);
 
-        return back()->with("message", "Course Updated Successfully!");
+        return redirect("/courses/manage")->with("message", "Course Updated Successfully!");
     }
 
     // destroy course data 
-    public function destroy(Course $course) {
-        // if(auth()->role != "admin"){
+    public function destroy(Course $course)
+    {
+        // if (auth()->role != "admin") {
         //     abort(403, "Unauthorized Action");
         // }
 
@@ -68,7 +75,8 @@ class CourseController extends Controller
 
         return back()->with("message", "course Deleted Successfully!");
     }
-    public function manage(Course $course) {
+    public function manage(Course $course)
+    {
 
         return view("courses.manage", [
             "courses" => $course::latest()->filter(request(["search"]))->paginate(6)
