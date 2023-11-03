@@ -78,8 +78,8 @@ class UserController extends Controller
 
     public function manage(User $user)
     {
+        // dd(request()->is('users/*'));
         $test =  $user::where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6);
-        // dd($test);
         return view("users.manage", [
             "users" => $user::latest()->where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6)
         ]);
