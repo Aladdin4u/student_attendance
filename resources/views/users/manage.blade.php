@@ -98,6 +98,11 @@
           </td>
         </tr>
         @endforeach
+        <tr>
+          <td colspan="9" class="flex-col bg-white px-6 py-4 text-center">
+            {{$users->links()}}
+          </td>
+        </tr>
         @else
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
           <td colspan="8" class="flex-col px-6 py-4 text-center">
