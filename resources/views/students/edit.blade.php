@@ -1,56 +1,72 @@
 <x-layout>
-    <h1>edit students</h1>
-    <form method="POST" action="/students/{{$student->id}}">
-        @csrf
-        @method('PUT')
-        <div class="mb-6">
-            <label for="firstName" class="inline-block text-lg mb-2">First Name</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="firstName" placeholder="First Name" value="{{$student->firstName}}" />
-            @error('firstName')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
+    <h1 class="text-lg font-semibold text-left mb-4">Edit Students</h1>
+    <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-xl pb-12 space-y-2">
+        <h2 class="font-semibold text-left">Student Datails</h2>
+        <form method="POST" action="/students/{{$student->id}}" class="space-y-4">
+            @csrf
+            @method('PUT')
 
-        <div class="mb-6">
-            <label for="lastName" class="inline-block text-lg mb-2">Last Name</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="lastName" placeholder="Last Name" value="{{$student->lastName}}" />
-            @error('lastName')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
 
-        <div class="mb-6">
-            <label for="otherName" class="inline-block text-lg mb-2">Other Name</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="otherName" placeholder="Other Names" value="{{$student->otherName}}" />
-            @error('otherName')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
+                <div class="basis-1/2">
+                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="firstName" placeholder="First Name" value="{{$student->firstName}}" />
+                    @error('firstName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+                <div class="basis-1/2">
+                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="lastName" placeholder="Last Name" value="{{$student->lastName}}" />
+                    @error('lastName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+            </div>
 
-        <div class="mb-6">
-            <label for="regNumber" class="inline-block text-lg mb-2">Reg Number</label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="regNumber" placeholder="Registration Number" value="{{$student->regNumber}}" />
-            @error('regNumber')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
 
-        <div class="mb-6">
-            <label for="level" class="inline-block text-lg mb-2">
-                Level
-            </label>
-            <input type="text" class="border border-gray-200 rounded p-2 w-full" name="level" placeholder="Level" value="{{$student->level}}" />
-            @error('level')
-            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
+                <div class="basis-1/2">
+                    <label for="otherName" class="block text-sm font-medium leading-6 text-gray-900">Other Name</label>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="otherName" placeholder="Other Names" value="{{$student->otherName}}" />
+                    @error('otherName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
 
-        <div class="mb-6">
-            <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-                Save
-            </button>
+                <div class="basis-1/2">
+                    <label for="regNumber" class="block text-sm font-medium leading-6 text-gray-900">Reg Number</label>
+                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="regNumber" placeholder="Registration Number" value="{{$student->regNumber}}" />
+                    @error('regNumber')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+            </div>
 
-            <a href="/" class="text-black ml-4"> Back </a>
-        </div>
-    </form>
+            <div class="basis-1/2">
+                <label for="level" class="block text-sm font-medium leading-6 text-gray-900">
+                    Level
+                </label>
+                <select name="level" id="level" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                    <option value="" class="hover:bg-sky-100">-- select level --</option>
+                    <option value="100" {{$student->level == 100 ? 'selected' : '' }} class="hover:bg-sky-100">100</option>
+                    <option value="200" {{$student->level == 200 ? 'selected' : '' }} class="hover:bg-sky-100">200</option>
+                    <option value="300" {{$student->level == 300 ? 'selected' : '' }} class="hover:bg-sky-100">300</option>
+                    <option value="400" {{$student->level == 400 ? 'selected' : '' }} class="hover:bg-sky-100">400</option>
+                </select>
+                @error('level')
+                <x-alert>{{$message}}</x-alert>
+                @enderror
+            </div>
+
+            <div class="mx-auto flex flex-row items-center justify-between">
+                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                    Save
+                </button>
+                <a href="/students/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                    Back
+                </a>
+            </div>
+        </form>
+    </div>
 </x-layout>

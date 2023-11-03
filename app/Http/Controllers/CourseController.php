@@ -30,6 +30,10 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        if (auth()->user()->role != "admin") {
+            abort(403, "Unauthorized Action");
+        }
+
         $formFields = $request->validate([
             "code" => "required",
             "title" => "required",
@@ -52,6 +56,10 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         // dd($request);
+        if (auth()->user()->role != "admin") {
+            abort(403, "Unauthorized Action");
+        }
+
         $formFields = $request->validate([
             "code" => "required",
             "title" => "required",
@@ -67,9 +75,10 @@ class CourseController extends Controller
     // destroy course data 
     public function destroy(Course $course)
     {
-        // if (auth()->role != "admin") {
-        //     abort(403, "Unauthorized Action");
-        // }
+        // dd(auth()->user());
+        if (auth()->user()->role != "admin") {
+            abort(403, "Unauthorized Action");
+        }
 
         $course->delete();
 

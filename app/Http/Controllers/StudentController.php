@@ -33,6 +33,10 @@ class StudentController extends Controller
     // store form data
     public function store(Request $request) {
         // dd($request);
+        if(auth()->user()->role != "admin"){
+            abort(403, "Unauthorized Action");
+        }
+
         $formFields = $request->validate([
             "firstName" => "required",
             "lastName" => "required",
@@ -43,7 +47,7 @@ class StudentController extends Controller
 
         Student::create($formFields);
 
-        return redirect("/students")->with("message", "Student created successfully!");
+        return back()->with("message", "Student created successfully!");
     }
 
     // show edit form
@@ -54,6 +58,10 @@ class StudentController extends Controller
      // update form data
      public function update(Request $request, Student $student) {
         // dd($request);
+        if(auth()->user()->role != "admin"){
+            abort(403, "Unauthorized Action");
+        }
+
         $formFields = $request->validate([
             "firstName" => "required",
             "lastName" => "required",
