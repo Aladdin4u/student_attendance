@@ -3,7 +3,7 @@
   <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-lg">
 
     <div class="w-full flex items-center justify-between">
-      <h2 class="font-semibold text-left"> welcome {{$student['firstName']}}</h2>
+      <h2 class="font-semibold text-left"> welcome {{$user['firstName']}}</h2>
       <div x-data="{ open: false }">
         <button x-on:click="open = ! open" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">Register Course</button>
         <!-- Main modal -->
@@ -19,7 +19,7 @@
               </button>
               <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Register Course</h3>
-                <form method="POST" action="/students/courses" class="space-y-6">
+                <form method="POST" action="/lecturers/courses" class="space-y-6">
                   @csrf
                   <div>
                     <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
@@ -31,7 +31,7 @@
                       @endforeach
                       @endunless
                     </select>
-                    <input type="text" name="student_id" value="{{$student['id']}}" class="sr-only">
+                    <input type="text" name="user_id" value="{{$user['id']}}" class="sr-only">
                   </div>
                   <button x-on:click="open = false" type="submit" class="w-full text-white bg-sky-400 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
               </div>
@@ -46,7 +46,7 @@
 
     <h2 class="font-semibold">Courses List</h2>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      @unless($student_courses->isEmpty())
+      @unless($user_courses->isEmpty())
       <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">
@@ -64,22 +64,22 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($student_courses as $student_course)
+        @foreach($user_courses as $user_course)
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{$loop->index + 1}}
           </th>
           <td class="px-6 py-4">
-            {{$student_course['code']}}
+            {{$user_course['code']}}
           </td>
           <td class="px-6 py-4">
-            {{$student_course['title']}}
+            {{$user_course['title']}}
           </td>
           <td class="px-6 py-4">
-            <form method="POST" action="/students_courses/{{$student_course['id']}}">
+            <form method="POST" action="/lecturers_courses/{{$user_course['id']}}">
               @csrf
               @method('DELETE')
-              <button type="submit">
+              <button>
                 <svg class="flex-shrink-0 w-6 h-6 stroke-red-500 transition duration-75 hover:stroke-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998 M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97 M18.8499 9.14001L18.1999 19.21C18.0899 20.78 17.9999 22 15.2099 22H8.7899C5.9999 22 5.9099 20.78 5.7999 19.21L5.1499 9.14001 M10.3301 16.5H13.6601 M9.5 12.5H14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>

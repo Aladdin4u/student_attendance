@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -74,6 +75,19 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with("message", "Lecturer Deleted Successfully!");
+    }
+
+    // show single users
+    public function show(User $user)
+    {
+        $lecturer_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+        // dd($lecturer_course);
+        $course = Course::all();
+        return view("users.show", [
+            "user" => $user,
+            "courses" => $course,
+            "user_courses" => $lecturer_course,
+        ]);
     }
 
     public function manage(User $user)

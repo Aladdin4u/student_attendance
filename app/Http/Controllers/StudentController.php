@@ -10,15 +10,17 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     // show all students
-    public function index() {
+    public function index()
+    {
         return view("students.index", [
             "students" => Student::all()
         ]);
     }
 
     // show student students
-    public function show(Student $student) {
-        $student_course = $student->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get();
+    public function show(Student $student, Request $request)
+    {
+        $student_course = $student->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
         // dd($student_course);
         $course = Course::all();
         return view("students.show", [
@@ -29,13 +31,15 @@ class StudentController extends Controller
     }
 
     // show create form
-    public function create() {
+    public function create()
+    {
         return view("students.create");
     }
     // store form data
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // dd($request);
-        if(auth()->user()->role != "admin"){
+        if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
 
@@ -53,14 +57,16 @@ class StudentController extends Controller
     }
 
     // show edit form
-    public function edit(Student $student) {
+    public function edit(Student $student)
+    {
         return view("students.edit", ["student" => $student]);
     }
 
-     // update form data
-     public function update(Request $request, Student $student) {
+    // update form data
+    public function update(Request $request, Student $student)
+    {
         // dd($request);
-        if(auth()->user()->role != "admin"){
+        if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
 
@@ -78,8 +84,9 @@ class StudentController extends Controller
     }
 
     // destroy student data 
-    public function destroy(Student $student) {
-        if(auth()->user()->role != "admin"){
+    public function destroy(Student $student)
+    {
+        if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
 
@@ -88,7 +95,8 @@ class StudentController extends Controller
         return redirect("/students")->with("message", "Student Deleted Successfully!");
     }
 
-    public function manage(Student $student) {
+    public function manage(Student $student)
+    {
 
         return view("students.manage", [
             "students" => $student::latest()->filter(request(["search"]))->paginate(6)

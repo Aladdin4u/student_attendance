@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\Lecturer_coursesController;
 use App\Http\Controllers\LessionController;
 use App\Http\Controllers\Student_coursesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
-use App\Models\Student_courses;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +35,8 @@ Route::post('/login', [UserController::class, 'authenticate']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 // manage user
 Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
+// show single user
+Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
 // show all students
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
 // store student
@@ -54,7 +56,11 @@ Route::get('/students/{student}', [StudentController::class, 'show'])->middlewar
 // store student courses
 Route::post('/students/courses', [Student_coursesController::class, 'store'])->middleware('auth');
 // destroy student courses
-Route::delete('/students_courses/{students_courses}', [Student_courses::class, 'destroy'])->middleware('auth');
+Route::delete('/students_courses/{student_courses}', [Student_coursesController::class, 'destroy'])->middleware('auth');
+// store lecturer courses
+Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store'])->middleware('auth');
+// destroy lecturer courses
+Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy'])->middleware('auth');
 // show all course
 Route::get('/courses', [CourseController::class, 'index'])->middleware('auth');
 // show course create form
