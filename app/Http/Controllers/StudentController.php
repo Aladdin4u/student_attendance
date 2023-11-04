@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,12 +18,13 @@ class StudentController extends Controller
 
     // show student students
     public function show(Student $student) {
-        $course = $student->lessions()->join("courses", "lessions.course_id", "=", "courses.id")->get();
-        $stu = $student->lessions()->join("students", "lessions.student_id", "=", "students.id")->get();
-        // dd($course);
+        $student_course = $student->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get();
+        // dd($student_course);
+        $course = Course::all();
         return view("students.show", [
             "student" => $student,
-            "courses" => $course
+            "courses" => $course,
+            "student_courses" => $student_course,
         ]);
     }
 
