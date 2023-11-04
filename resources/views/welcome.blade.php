@@ -1,15 +1,7 @@
 <x-layout>
 
     <h1>Dashboard</h1>
-    @unless(auth()->user() == null)
-    <h2>welcome {{auth()->user()->firstName}}</h2>
-    <form action="/logout" method="POST">
-        @csrf
-        <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-            Logout
-        </button>
-    </form>
-    @endunless
+
     <div class="grid grid-cols-3 gap-4 mb-4">
         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
             <p class="text-2xl text-gray-400 dark:text-gray-500">
