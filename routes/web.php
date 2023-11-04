@@ -6,6 +6,7 @@ use App\Http\Controllers\LessionController;
 use App\Http\Controllers\Student_coursesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Models\Student_courses;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,8 @@ Route::get('/students/manage', [StudentController::class, 'manage'])->middleware
 Route::get('/students/{student}', [StudentController::class, 'show'])->middleware('auth');
 // store student courses
 Route::post('/students/courses', [Student_coursesController::class, 'store'])->middleware('auth');
+// destroy student courses
+Route::delete('/students_courses/{students_courses}', [Student_courses::class, 'destroy'])->middleware('auth');
 // show all course
 Route::get('/courses', [CourseController::class, 'index'])->middleware('auth');
 // show course create form

@@ -76,7 +76,7 @@
             {{$student_course['title']}}
           </td>
           <td class="px-6 py-4">
-            <form method="POST" action="/courses/{{$student_course['id']}}">
+            <form method="POST" action="/students_courses/{{$student_course['id']}}">
               @csrf
               @method('DELETE')
               <button>
