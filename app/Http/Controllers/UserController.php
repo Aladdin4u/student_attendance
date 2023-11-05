@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Lecturer_courses;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\Query\JoinClause;
 
 class UserController extends Controller
 {

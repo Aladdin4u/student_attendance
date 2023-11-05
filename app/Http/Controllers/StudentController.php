@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lecturer_courses;
 use App\Models\Student;
+use App\Models\Student_courses;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,6 +14,19 @@ class StudentController extends Controller
     // show all students
     public function index()
     {
+        $lecturer_student = Lecturer_courses::join("student_courses", "lecturer_courses.course_id", "=", "student_courses.course_id")
+            ->join("students", "student_id", "=", "students.id")
+            ->where("course_id", 1)
+            // ->join("courses", "course_id", "=", "courses.id")
+            ->get();
+        $students = Student_courses::join("students", "student_courses.student_id", "=", "students.id")->get(["firstName", "lastName", "otherName", "regNumber", "level", "course_id", "students.id"]);
+
+        // $res = $lecturer_student->join($students, $lecturer_student->id, "=", $students->course_id);
+        // RightJoin("student_courses", function (JoinClause $join) {
+        //     $join->on("lecturer_courses.course_id", "=", "student_courses.courses_id");
+        // })->get();
+
+        dd($lecturer_student, $students);
         return view("students.index", [
             "students" => Student::all()
         ]);
