@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lecturer_courses;
 use App\Models\Lession;
 use App\Models\Student;
+use App\Models\Student_courses;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class LessionController extends Controller
 {
     // show all lessions
-    public function index() {
+    public function index()
+    {
         $lession = Lession::join("students", "lessions.student_id", "=", "students.id", "left")
-        ->join("courses", "lessions.course_id", "=", "courses.id", "left")->get(["lessions.id", "students.firstName", "students.lastName", "courses.code", "courses.title"]);
+            ->join("courses", "lessions.course_id", "=", "courses.id", "left")->get(["lessions.id", "students.firstName", "students.lastName", "courses.code", "courses.title"]);
         // dd($lession);
         return view("lessions.index", [
             "lessions" => $lession
@@ -21,7 +24,8 @@ class LessionController extends Controller
     }
 
     // show single lession
-    public function show(Lession $lession) {
+    public function show(Lession $lession)
+    {
         $student = $lession->students()->get()->first();
         $course = $lession->courses()->get()->first();
         $attendance = $lession->attendances()->get()->first();
@@ -34,11 +38,21 @@ class LessionController extends Controller
     }
 
     // show create form
-    public function create() {
+    public function create()
+    {
         $student = Student::all();
         $course = Course::all();
-        $lecturer = User::all()->where("role","lecturer");
-        // dd($lecturer);
+        $lecturer = User::all()->where("role", "lecturer");
+        $tt = Student_courses::join("students", "student_courses.student_id", "=", "students.id")
+            ->join("courses", "Student_courses.course_id", "=", "courses.id")
+            ->get();
+        $ttt = Student_courses::where("course_id", 2)
+            ->join("students", "student_courses.student_id", "=", "students.id")
+            ->join("courses", "Student_courses.course_id", "=", "courses.id")
+            ->get();
+        $lecturer_student = Lecturer_courses::join("courses", "lecturer_courses.course_id", "=", "courses.id")
+            ->get();
+        dd($ttt);
         return view("lessions.create", [
             "students" => $student,
             "courses" => $course,
@@ -46,7 +60,8 @@ class LessionController extends Controller
         ]);
     }
     // store form data
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // dd($request);
         $formFields = $request->validate([
             "student_id" => "required",
@@ -60,12 +75,14 @@ class LessionController extends Controller
     }
 
     // show edit form
-    public function edit(Lession $lession) {
+    public function edit(Lession $lession)
+    {
         return view("lessions.edit", ["lession" => $lession]);
     }
 
-     // update form data
-     public function update(Request $request, lession $lession) {
+    // update form data
+    public function update(Request $request, lession $lession)
+    {
         // dd($request);
         $formFields = $request->validate([
             "student_id" => "required",
@@ -80,8 +97,9 @@ class LessionController extends Controller
     }
 
     // destroy lession data 
-    public function destroy(Lession $lession) {
-        if(auth()->user()->role != "admin"){
+    public function destroy(Lession $lession)
+    {
+        if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
 
@@ -90,12 +108,13 @@ class LessionController extends Controller
         return redirect("/lessions")->with("message", "lession Deleted Successfully!");
     }
 
-    public function manage() {
+    public function manage()
+    {
 
         $lessions = Lession::join("students", "lessions.student_id", "=", "students.id", "left")
-        ->join("courses", "lessions.course_id", "=", "courses.id", "left")
-        ->join("attendances", "lessions.attendance_id", "=", "attendances.id", "left")
-        ->get(["lessions.id", "students.firstName", "students.lastName", "students.otherName", "students.regNumber", "students.level", "courses.code", "courses.title", "attendances.is_present", "attendances.date", "attendances.created_at"])->where("is_present", "!=", null);
+            ->join("courses", "lessions.course_id", "=", "courses.id", "left")
+            ->join("attendances", "lessions.attendance_id", "=", "attendances.id", "left")
+            ->get(["lessions.id", "students.firstName", "students.lastName", "students.otherName", "students.regNumber", "students.level", "courses.code", "courses.title", "attendances.is_present", "attendances.date", "attendances.created_at"])->where("is_present", "!=", null);
         // dd($lessions);
         return view("lessions.manage", [
             "lessions" => $lessions

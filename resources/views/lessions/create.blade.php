@@ -7,7 +7,7 @@
             <select name="student_id" id="student_id" class="border border-gray-200 rounded p-2 w-full">
                 <option value="">-- Select Student --</option>
                 @foreach($students as $student)
-                <option value="{{$student->id}}">{{$student->regNumber}}</option>
+                <option value="{{$student->id}}">{{$student->regNumber}} {{$student->firstName}}</option>
                 @endforeach
             </select>
             @error('student_id')

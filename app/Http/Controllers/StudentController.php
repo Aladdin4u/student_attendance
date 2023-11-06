@@ -14,21 +14,16 @@ class StudentController extends Controller
     // show all students
     public function index()
     {
-        $lecturer_student = Lecturer_courses::join("student_courses", "lecturer_courses.course_id", "=", "student_courses.course_id")
-            ->join("students", "student_id", "=", "students.id")
-            ->where("course_id", 1)
-            // ->join("courses", "course_id", "=", "courses.id")
+        $lc = Lecturer_courses::where("user_id", auth()->user()->id)
+            ->get(["course_id"])->first();
+        $lecturer_student = Student_courses::where("course_id", $lc->course_id)
+            ->join("students", "student_courses.student_id", "=", "students.id")
+            ->join("courses", "Student_courses.course_id", "=", "courses.id")
             ->get();
-        $students = Student_courses::join("students", "student_courses.student_id", "=", "students.id")->get(["firstName", "lastName", "otherName", "regNumber", "level", "course_id", "students.id"]);
 
-        // $res = $lecturer_student->join($students, $lecturer_student->id, "=", $students->course_id);
-        // RightJoin("student_courses", function (JoinClause $join) {
-        //     $join->on("lecturer_courses.course_id", "=", "student_courses.courses_id");
-        // })->get();
-
-        dd($lecturer_student, $students);
+        // dd($lecturer_student, $students);
         return view("students.index", [
-            "students" => Student::all()
+            "students" => $lecturer_student
         ]);
     }
 
