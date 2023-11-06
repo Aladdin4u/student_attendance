@@ -52,7 +52,7 @@ class AttendanceController extends Controller
     // store form data
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $formFields = $request->validate([
             "is_present" => "required",
             "date" => "required",
