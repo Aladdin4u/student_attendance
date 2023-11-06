@@ -1,20 +1,15 @@
 <x-layout>
   <h1 class="text-lg font-semibold text-left mb-4">View Class Attendance</h1>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <div class="w-full flex items-center justify-between p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+    <div class="w-full flex flex-col p-5 text-gray-900 bg-white space-y-2 dark:text-white dark:bg-gray-800">
       <span class="font-semibold text-left">
         Class Attendance
       </span>
-      <div class="relative">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-          </svg>
-        </div>
-        <form action="/students/manage/">
-          <input type="search" id="search" class="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-4 pl-10" placeholder="Search...">
-        </form>
-      </div>
+      <form action="" class="space-y-2">
+        <label for="date" class="block text-sm font-medium leading-6 text-gray-900">Select Date</label>
+        <input type="date" name="date" id="date" class="block w-60 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+        <button type="submit" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">View Attendance</button>
+      </form>
     </div>
     @unless(count($attendances) == 0)
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
