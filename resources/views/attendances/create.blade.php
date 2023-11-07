@@ -44,12 +44,12 @@
           <td class="px-6 py-4">{{$attendance['code']}}</td>
           <td class="px-6 py-4">{{$attendance['level']}}</td>
           <td class="px-6 py-4 text-center">
-            <form method="POST" action="/attendances">
+            <form id="form" method="POST" action="/attendances">
               @csrf
               <input type="text" name="student_id" value="{{$attendance['student_id']}}" style="display: none;">
               <input type="text" name="course_id" value="{{$attendance['id']}}" style="display: none;">
               <input type="text" name="date" value="{{date('Y-m-d')}}" style="display: none;">
-              <input type="checkbox" name="is_present" id="is_present">
+              <input id="btn" type="checkbox" name="is_present" id="is_present" @click="console.log('clicked')">
               <button type="submit">submit</button>
             </form>
           </td>
