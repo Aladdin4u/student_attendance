@@ -14,7 +14,7 @@
     <div class="grid grid-cols-4 gap-4 mb-4">
         <x-card>
             <x-slot:title>
-                Total students
+                Total Students
                 </x-slot>
                 <x-slot:desc>
                     250

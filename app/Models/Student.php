@@ -9,24 +9,30 @@ class Student extends Model
 {
     use HasFactory;
 
-    public function scopeFilter($query, array $filters) {
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['tag'] ?? false) {
+            $query->where('code', 'like', '%' . request('tag') . '%');
+        }
 
-        if($filters['search'] ?? false) {
+        if ($filters['search'] ?? false) {
             $query->where('firstName', 'like', '%' . request('search') . '%')
-            ->orWhere('lastName', 'like', '%' . request('search') . '%')
-            ->orWhere('otherName', 'like', '%' . request('search') . '%')
-            ->orWhere('regNumber', 'like', '%' . request('search') . '%')
-            ->orWhere('level', 'like', '%' . request('search') . '%');
+                ->orWhere('lastName', 'like', '%' . request('search') . '%')
+                ->orWhere('otherName', 'like', '%' . request('search') . '%')
+                ->orWhere('regNumber', 'like', '%' . request('search') . '%')
+                ->orWhere('level', 'like', '%' . request('search') . '%');
         }
     }
 
     //Relationship to lession
-    public function lessions(){
+    public function lessions()
+    {
         return $this->hasMany(Lession::class, "student_id");
     }
 
     //Relationship to course
-    public function student_courses(){
+    public function student_courses()
+    {
         return $this->hasMany(Student_courses::class, "student_id");
     }
 }

@@ -16,8 +16,8 @@ class AttendanceController extends Controller
     public function index()
     {
         $attendances = Attendance::join("students", "attendances.student_id", "=", "students.id", "left")
-            ->join("courses", "attendances.course_id", "=", "courses.id", "left")->get();
-        // dd($attendances);
+            ->join("courses", "attendances.course_id", "=", "courses.id", "left")->filter(request(["date"]))->get();
+        // dd($request, $attendances);
         return view("attendances.index", [
             "attendances" => $attendances
         ]);
@@ -76,5 +76,13 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         return redirect("/attendances")->with("message", "Attendance Deleted Successfully!");
+    }
+
+    public function manage(Attendance $attendance)
+    {
+
+        return view("attendances.manage", [
+            "attendances" => $attendance::latest()->filter(request(["search"]))->paginate(6)
+        ]);
     }
 }

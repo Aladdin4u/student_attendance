@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
 use App\Models\Student;
@@ -21,7 +22,7 @@ class StudentController extends Controller
             ->join("courses", "Student_courses.course_id", "=", "courses.id")
             ->get();
 
-        // dd($lecturer_student, $students);
+        // dd($lecturer_student);
         return view("students.index", [
             "students" => $lecturer_student
         ]);
@@ -31,11 +32,15 @@ class StudentController extends Controller
     public function show(Student $student, Request $request)
     {
         $student_course = $student->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
-        // dd($student_course);
-        $course = Course::all();
+        $attendances = Attendance::where("student_id", $student->id)
+            ->join("students", "attendances.student_id", "=", "students.id", "left")
+            ->join("courses", "attendances.course_id", "=", "courses.id", "left")
+            ->filter(request(["tag"]))
+            ->get();
+        // dd($student_course, $attendances, $request);
         return view("students.show", [
             "student" => $student,
-            "courses" => $course,
+            "attendances" => $attendances,
             "student_courses" => $student_course,
         ]);
     }

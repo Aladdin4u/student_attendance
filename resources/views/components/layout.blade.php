@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     @vite('resources/css/app.css')
     @vite('resources/js/main.js')
-    <title>Attendance System</title>
+    <title>Attendify</title>
 </head>
 
 <body>

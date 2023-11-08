@@ -93,12 +93,14 @@ Route::get('/lessions/{lession}', [LessionController::class, 'show'])->middlewar
 Route::get('/attendances', [AttendanceController::class, 'index'])->middleware('auth');
 // show attendance create form
 Route::get('/attendances/create', [AttendanceController::class, 'create'])->middleware('auth');
-// show single attendance
-Route::get('/attendances/{attendance}', [AttendanceController::class, 'show'])->middleware('auth');
 // store attendance create form
 Route::post('/attendances', [AttendanceController::class, 'store'])->middleware('auth');
-// destroy lession
+// destroy attendendance
 Route::delete('/attendances/{attendance}', [AttendanceController::class, 'destroy'])->middleware('auth');
+// manage attendances
+Route::get('/attendances/manage', [AttendanceController::class, 'manage'])->middleware('auth');
+// show single attendance
+Route::get('/attendances/{attendance}', [AttendanceController::class, 'show'])->middleware('auth');
 
 // Common Resource Routes:
 // index - Show all listings
