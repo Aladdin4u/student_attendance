@@ -12,7 +12,7 @@ class Student extends Model
     public function scopeFilter($query, array $filters)
     {
         if ($filters['tag'] ?? false) {
-            $query->where('code', 'like', '%' . request('tag') . '%');
+            $query->where('code', 'like', '%' . request('CRE 152') . '%');
         }
 
         if ($filters['search'] ?? false) {

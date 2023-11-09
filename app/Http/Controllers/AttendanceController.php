@@ -6,9 +6,9 @@ use App\Models\User;
 use App\Models\Lession;
 use App\Models\Student;
 use App\Models\Attendance;
-use App\Models\Lecturer_courses;
-use App\Models\Student_courses;
 use Illuminate\Http\Request;
+use App\Models\Student_courses;
+use App\Models\Lecturer_courses;
 
 class AttendanceController extends Controller
 {
@@ -19,7 +19,8 @@ class AttendanceController extends Controller
             ->join("courses", "attendances.course_id", "=", "courses.id", "left")->filter(request(["date"]))->get();
         // dd($request, $attendances);
         return view("attendances.index", [
-            "attendances" => $attendances
+            "attendances" => $attendances,
+            // "database" => datatables(Student::all())->toJson()
         ]);
     }
     // show attendance

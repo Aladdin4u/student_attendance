@@ -35,9 +35,9 @@ class StudentController extends Controller
         $attendances = Attendance::where("student_id", $student->id)
             ->join("students", "attendances.student_id", "=", "students.id", "left")
             ->join("courses", "attendances.course_id", "=", "courses.id", "left")
-            ->filter(request(["tag"]))
+            ->where("code", request(["tag"]) ?? false)
             ->get();
-        // dd($student_course, $attendances, $request);
+        // dd($attendances, $request);
         return view("students.show", [
             "student" => $student,
             "attendances" => $attendances,

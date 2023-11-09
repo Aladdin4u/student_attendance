@@ -114,23 +114,25 @@
 
     <div>
       <h2 class="font-semibold">Attendances</h2>
-      <p>filter by courses</p>
-      <ul class="flex">
-        <li class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-md py-1 px-3 mr-2 text-xs">
-          <a href="?tag=null">
-            Clear
-          </a>
-        </li>
-        @foreach($student_courses as $student_course)
-        <li class="flex items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-md py-1 px-3 mr-2 text-xs">
-          <a href="?tag={{$student_course->code}}">
-            {{$student_course->code}}
-          </a>
-        </li>
-        @endforeach
-      </ul>
-      @unless(count($attendances) == 0)
+      <div class="flex items-center justify-between my-2">
+        <p>Filter by courses:</p>
+        <ul class="flex">
+          <li class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-sm py-1 px-3 mr-2 text-xs">
+            <a href="?">
+              Clear
+            </a>
+          </li>
+          @foreach($student_courses as $student_course)
+          <li class="flex items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-sm py-1 px-2 mr-2 text-xs">
+            <a href="?tag={{$student_course->code}}">
+              {{$student_course->code}}
+            </a>
+          </li>
+          @endforeach
+        </ul>
+      </div>
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        @unless(count($attendances) == 0)
         <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="px-6 py-3">
@@ -197,7 +199,7 @@
           </tr>
           @endforeach
           @else
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white dark:bg-gray-8 00dark:border-gray-700">
             <td colspan="8" class="flex-col px-6 py-4 text-center">
               <button class="text-gray-400">
                 <svg class="flex-shrink-0 w-10 h-10 stroke-gray-500 transition duration-75 hover:stroke-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -208,8 +210,8 @@
             </td>
           </tr>
         </tbody>
+        @endunless
       </table>
-      @endunless
     </div>
   </div>
 
