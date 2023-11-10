@@ -90,6 +90,7 @@
         </div>
     </main>
     <x-flash-message />
+    @stack('scripts')
 </body>
 
 </html>

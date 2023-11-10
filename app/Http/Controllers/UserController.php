@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
@@ -97,5 +98,10 @@ class UserController extends Controller
         return view("users.manage", [
             "users" => $user::latest()->where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6)
         ]);
+    }
+
+    public function index(UsersDataTable $dataTable)
+    {
+        return $dataTable->render('users.index');
     }
 }

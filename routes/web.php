@@ -33,6 +33,8 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
 // log User Out
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+// get all user
+Route::get('/users', [UserController::class, 'index'])->middleware('auth');
 // manage user
 Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
 // show single user

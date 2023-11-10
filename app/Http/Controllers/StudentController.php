@@ -37,9 +37,11 @@ class StudentController extends Controller
             ->join("courses", "attendances.course_id", "=", "courses.id", "left")
             ->where("code", request(["tag"]) ?? false)
             ->get();
+        $course = Course::all();
         // dd($attendances, $request);
         return view("students.show", [
             "student" => $student,
+            "courses" => $course,
             "attendances" => $attendances,
             "student_courses" => $student_course,
         ]);
