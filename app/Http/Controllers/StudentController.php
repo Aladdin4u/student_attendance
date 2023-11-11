@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\StudentsDataTable;
 use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
@@ -112,11 +113,11 @@ class StudentController extends Controller
         return redirect("/students")->with("message", "Student Deleted Successfully!");
     }
 
-    public function manage(Student $student)
+    public function manage(Student $student, StudentsDataTable $dataTable)
     {
-
-        return view("students.manage", [
-            "students" => $student::latest()->filter(request(["search"]))->paginate(6)
-        ]);
+        return $dataTable->render("students.manage");
+        // return view("students.manage", [
+        //     "students" => $student::latest()->filter(request(["search"]))->paginate(6)
+        // ]);
     }
 }

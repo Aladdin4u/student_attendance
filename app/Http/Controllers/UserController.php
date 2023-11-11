@@ -93,11 +93,12 @@ class UserController extends Controller
         ]);
     }
 
-    public function manage(User $user)
+    public function manage(User $user, UsersDataTable $dataTable)
     {
-        return view("users.manage", [
-            "users" => $user::latest()->where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6)
-        ]);
+        return $dataTable->render('users.manage');
+        // return view("users.manage", [
+        //     "users" => $user::latest()->where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6)
+        // ]);
     }
 
     public function index(UsersDataTable $dataTable)

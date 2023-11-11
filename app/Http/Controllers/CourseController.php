@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\CoursesDataTable;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -84,11 +85,12 @@ class CourseController extends Controller
 
         return back()->with("message", "course Deleted Successfully!");
     }
-    public function manage(Course $course)
+    public function manage(Course $course, CoursesDataTable $dataTable)
     {
 
-        return view("courses.manage", [
-            "courses" => $course::latest()->filter(request(["search"]))->paginate(6)
-        ]);
+        return $dataTable->render("courses.manage");
+        // return view("courses.manage", [
+        //     "courses" => $course::latest()->filter(request(["search"]))->paginate(6),
+        // ]);
     }
 }
