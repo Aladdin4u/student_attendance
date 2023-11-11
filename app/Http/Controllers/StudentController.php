@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\StudentsDataTable;
+use App\DataTables\LecturerStudentsDataTable;
 use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
@@ -14,19 +15,20 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     // show all students
-    public function index()
+    public function index(LecturerStudentsDataTable $dataTable)
     {
-        $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-            ->get(["course_id"])->first();
-        $lecturer_student = Student_courses::where("course_id", $lc->course_id)
-            ->join("students", "student_courses.student_id", "=", "students.id")
-            ->join("courses", "Student_courses.course_id", "=", "courses.id")
-            ->get();
+        // $lc = Lecturer_courses::where("user_id", auth()->user()->id)
+        //     ->get(["course_id"])->first();
+        // $lecturer_student = Student_courses::where("course_id", $lc->course_id)
+        //     ->join("students", "student_courses.student_id", "=", "students.id")
+        //     ->join("courses", "Student_courses.course_id", "=", "courses.id")->where("firstName", 'like',"%chi%")
+        //     ->get(["student_courses.id", "firstName", "lastName", "otherName", "regNumber", "code", "level", "student_id"]);
 
         // dd($lecturer_student);
-        return view("students.index", [
-            "students" => $lecturer_student
-        ]);
+        return $dataTable->render("students.index");
+        // return view("students.index", [
+        //     "students" => $lecturer_student
+        // ]);
     }
 
     // show student students
