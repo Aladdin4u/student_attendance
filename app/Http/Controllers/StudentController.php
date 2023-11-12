@@ -61,7 +61,7 @@ class StudentController extends Controller
     // store form data
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
@@ -121,8 +121,5 @@ class StudentController extends Controller
     public function manage(Student $student, StudentsDataTable $dataTable)
     {
         return $dataTable->render("students.manage");
-        // return view("students.manage", [
-        //     "students" => $student::latest()->filter(request(["search"]))->paginate(6)
-        // ]);
     }
 }

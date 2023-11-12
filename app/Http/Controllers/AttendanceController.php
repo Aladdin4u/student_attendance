@@ -42,16 +42,13 @@ class AttendanceController extends Controller
     // store form data
     public function store(Request $request)
     {
-        dd($request);
-        $formFields = $request->validate([
-            "is_present" => "required",
-            "date" => "required",
-            "student_id" => "required",
-            "course_id" => "required"
-        ]);
+        $records = $request->formData;
+        $formFields = [];
+        foreach ($records as $record) {
+            $formFields[] = $record;
+        }
 
         Attendance::insert($formFields);
-
 
         return redirect("/attendances")->with("message", "Attendance created successfully!");
     }

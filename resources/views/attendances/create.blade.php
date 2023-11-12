@@ -19,11 +19,24 @@
     const formData = [];
     $('#save-btn').on('click', function() {
       $('#form > input[type="checkbox"]').each(function(index, value) {
-        let data = ["is_present:" + (this.checked ? "present" : "absent"), "student_id:" + value.value, "course_id:" + $("#course_id").val(), "date:" + $("#date").val()]
+        let data = {
+          is_present: (this.checked ? "present" : "absent"),
+          student_id: value.value,
+          course_id: $("#course_id").val(),
+          date: $("#date").val()
+        }
         formData.push(data)
         // console.log(["is_present:" + (this.checked ? "present" : "absent"), "student_id:" + value.value, "course_id:" + $("#course_id").val(), "date:" + $("#date").val()])
       });
-      console.log(formData);
+      let d = formData.map(data => {
+        return {
+          is_present: data.is_present,
+          student_id: data.student_id,
+          course_id: data.course_id,
+          date: data.date
+        }
+      })
+      console.log(JSON.stringify(formData));
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -32,10 +45,10 @@
       $.ajax({
         type: "POST",
         url: "/attendances",
-        data: formData,
-        dataType: "json",
+        data: {formData: formData},
         success: function(data) {
           console.log(data);
+          window.location.href = "/attendances";
         },
       });
       console.log(formData);
