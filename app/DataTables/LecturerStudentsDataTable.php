@@ -28,6 +28,7 @@ class LecturerStudentsDataTable extends DataTable
             })
             ->rawColumns(['Attendance'])
             ->setRowId('id')
+            ->addIndexColumn()
             ->filter(function ($query) {
                 if (request()->has('firstName')) {
                     $query->where('firstName', 'like', "%" . request('firstName') . "%");
@@ -79,7 +80,7 @@ class LecturerStudentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->title('#'),
             Column::make('firstName'),
             Column::make('lastName'),
             Column::make('otherName'),

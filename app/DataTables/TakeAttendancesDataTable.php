@@ -23,10 +23,13 @@ class TakeAttendancesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Checkbox', function (Student_courses $student) {
-                return '<input type="checkbox" id="' . $student->id . '" name="someCheckbox" />';
+            ->addColumn('Check', function (Student_courses $student) {
+                return '<div id="form"><input type="checkbox" id="' . $student->id . '" name="is_present" value="' . $student->student_id . '" />
+                <input type="text" id="course_id" name="course_id" value="' . $student->course_id . '" class="sr-only" />
+                <input type="date" id="date" name="date" value="' . date('Y-m-d') . '" class="sr-only" /><div>';
             })
-            ->rawColumns(['Checkbox'])
+            ->rawColumns(['Check'])
+            ->addIndexColumn()
             ->setRowId('id')
             ->filter(function ($query) {
                 if (request()->has('firstName')) {
@@ -79,14 +82,14 @@ class TakeAttendancesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->title('#'),
             Column::make('firstName'),
             Column::make('lastName'),
             Column::make('otherName'),
             Column::make('regNumber'),
             Column::make('code'),
             Column::make('level'),
-            Column::computed('Checkbox'),
+            Column::computed('Check'),
         ];
     }
 

@@ -47,6 +47,7 @@ class StudentsDataTable extends DataTable
           </form>';
             })
             ->rawColumns(['View', 'Edit', 'Delete'])
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -86,7 +87,7 @@ class StudentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->title('#'),
             Column::make('firstName'),
             Column::make('lastName'),
             Column::make('otherName'),

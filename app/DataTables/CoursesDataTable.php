@@ -41,6 +41,7 @@ class CoursesDataTable extends DataTable
               </form>';
             })
             ->rawColumns(['Edit', 'Delete'])
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -85,7 +86,7 @@ class CoursesDataTable extends DataTable
             //       ->printable(false)
             //       ->width(60)
             //       ->addClass('text-center'),
-            Column::make('id'),
+            Column::make('DT_RowIndex')->title('#'),
             Column::make('code'),
             Column::make('title'),
             Column::computed('Edit'),

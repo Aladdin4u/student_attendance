@@ -50,7 +50,7 @@ class AttendanceController extends Controller
             "course_id" => "required"
         ]);
 
-        Attendance::create($formFields);
+        Attendance::insert($formFields);
 
 
         return redirect("/attendances")->with("message", "Attendance created successfully!");
