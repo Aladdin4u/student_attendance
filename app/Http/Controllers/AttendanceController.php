@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\Student_courses;
 use App\Models\Lecturer_courses;
+use App\DataTables\TakeAttendancesDataTable;
 
 class AttendanceController extends Controller
 {
@@ -33,21 +34,9 @@ class AttendanceController extends Controller
     }
 
     // show create form
-    public function create()
+    public function create(TakeAttendancesDataTable $dataTable)
     {
-        $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-            ->get(["course_id"])->first();
-        $lecturer_student = Student_courses::where("course_id", $lc->course_id)
-            ->join("students", "student_courses.student_id", "=", "students.id")
-            ->join("courses", "Student_courses.course_id", "=", "courses.id")
-            ->get();
-        $attendances = Attendance::all();
-
-        // dd($lecturer_student);
-        return view("attendances.create", [
-            "attendances" => $lecturer_student,
-            "all" => $attendances,
-        ]);
+        return $dataTable->render("attendances.create");
     }
 
     // store form data

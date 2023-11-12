@@ -13,7 +13,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class LecturerStudentsDataTable extends DataTable
+class TakeAttendancesDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,10 +23,10 @@ class LecturerStudentsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Attendance', function (Student_courses $student) {
-                return '<a href="/students/' . $student->student_id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
+            ->addColumn('Checkbox', function (Student_courses $student) {
+                return '<input type="checkbox" id="' . $student->id . '" name="someCheckbox" />';
             })
-            ->rawColumns(['Attendance'])
+            ->rawColumns(['Checkbox'])
             ->setRowId('id')
             ->filter(function ($query) {
                 if (request()->has('firstName')) {
@@ -57,7 +57,7 @@ class LecturerStudentsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('lecturer-students-table')
+            ->setTableId('take-attendances-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -86,7 +86,7 @@ class LecturerStudentsDataTable extends DataTable
             Column::make('regNumber'),
             Column::make('code'),
             Column::make('level'),
-            Column::computed('Attendance'),
+            Column::computed('Checkbox'),
         ];
     }
 
@@ -95,6 +95,6 @@ class LecturerStudentsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'LecturerStudents_' . date('YmdHis');
+        return 'TakeAttendance_' . date('YmdHis');
     }
 }
