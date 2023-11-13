@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use App\DataTables\TakeAttendancesDataTable;
 use App\DataTables\AttendancesDataTable;
+use App\DataTables\TakeAttendancesDataTable;
+use App\DataTables\OverallAttendancesDataTable;
 
 class AttendanceController extends Controller
 {
@@ -14,13 +15,6 @@ class AttendanceController extends Controller
     public function index(AttendancesDataTable $dataTable)
     {
         return $dataTable->render("attendances.index");
-        // $attendances = Attendance::join("students", "attendances.student_id", "=", "students.id", "left")
-        //     ->join("courses", "attendances.course_id", "=", "courses.id", "left")->filter(request(["date"]))->get();
-        // dd($request, $attendances);
-        // return view("attendances.index", [
-        //     "attendances" => $attendances,
-        //     // "database" => datatables(Student::all())->toJson()
-        // ]);
     }
     // show attendance
     public function show(Attendance $attendance)
@@ -63,11 +57,14 @@ class AttendanceController extends Controller
         return redirect("/attendances")->with("message", "Attendance Deleted Successfully!");
     }
 
-    public function manage(Attendance $attendance)
+    public function manage(OverallAttendancesDataTable $dataTable)
     {
 
-        return view("attendances.manage", [
-            "attendances" => $attendance::latest()->filter(request(["search"]))->paginate(6)
-        ]);
+        $distinct = Attendance::distinct()->get();
+        dd($distinct);
+        return $dataTable->render("attendances.manage");
+        // return view("attendances.manage", [
+        //     "attendances" => $attendance::latest()->filter(request(["search"]))->paginate(6)
+        // ]);
     }
 }

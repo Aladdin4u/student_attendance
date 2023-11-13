@@ -5,9 +5,9 @@
       All Students
     </h2>
     {{ $dataTable->table() }}
+    <button type="submit" id="save-btn" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">Take Attendance</button>
   </div>
 
-  <button class="btn btn-primary" id="save-btn">save</button>
 
   @push('scripts')
   {{ $dataTable->scripts() }}
@@ -45,7 +45,9 @@
       $.ajax({
         type: "POST",
         url: "/attendances",
-        data: {formData: formData},
+        data: {
+          formData: formData
+        },
         success: function(data) {
           console.log(data);
           window.location.href = "/attendances";

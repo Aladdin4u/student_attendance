@@ -4,7 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Attendance;
 use App\Models\Lecturer_courses;
-use GuzzleHttp\Psr7\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -14,7 +13,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class AttendancesDataTable extends DataTable
+class OverallAttendancesDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -37,7 +36,10 @@ class AttendancesDataTable extends DataTable
                 </span></div>';
                 }
             })
-            ->rawColumns(['Status'])
+            ->addColumn('Total %', function (Attendance $attendance) {
+                return '<div>80%</div>';
+            })
+            ->rawColumns(['Status', 'Total %'])
             ->addIndexColumn()
             ->setRowId('id')
             ->filter(function (QueryBuilder $query) {
@@ -71,7 +73,7 @@ class AttendancesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('attendances-table')
+            ->setTableId('ovrall-attendances-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom( 'Bfrtip')
@@ -100,8 +102,8 @@ class AttendancesDataTable extends DataTable
             Column::make('regNumber'),
             Column::make('code'),
             Column::make('level'),
+            Column::computed('Total %'),
             Column::computed('Status'),
-            Column::make('date'),
         ];
     }
 
@@ -110,6 +112,6 @@ class AttendancesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Attendance_' . date('YmdHis');
+        return 'OverallAttendance_' . date('YmdHis');
     }
 }

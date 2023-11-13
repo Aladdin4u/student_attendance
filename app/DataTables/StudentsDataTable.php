@@ -87,7 +87,7 @@ class StudentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('DT_RowIndex')->title('#'),
+            Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('firstName'),
             Column::make('lastName'),
             Column::make('otherName'),
