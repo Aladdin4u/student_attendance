@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use App\Models\Student_courses;
-use App\Models\Lecturer_courses;
-use Illuminate\Support\Facades\DB;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
 
@@ -18,20 +14,7 @@ class StudentController extends Controller
     // show all students
     public function index(LecturerStudentsDataTable $dataTable)
     {
-        $student = DB::table('student_courses')
-            ->join('students', 'student_courses.student_id', '=', 'students.id')
-            ->join('courses', 'student_courses.course_id', '=', 'courses.id')
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName','students.regNumber', 'students.level', 'courses.code', 'courses.title')
-            ->get();
-        $tt = Student_courses::all();
-        foreach ($tt as $t) {
-            // print($t->student->get(["firstName"]));
-        }
-        // dd($student);
         return $dataTable->render("students.index");
-        // return view("students.index", [
-        //     "students" => $lecturer_student
-        // ]);
     }
 
     // show student students

@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Lession;
-use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use App\Models\Student_courses;
-use App\Models\Lecturer_courses;
 use App\DataTables\TakeAttendancesDataTable;
+use App\DataTables\AttendancesDataTable;
 
 class AttendanceController extends Controller
 {
     // show all students
-    public function index()
+    public function index(AttendancesDataTable $dataTable)
     {
-        $attendances = Attendance::join("students", "attendances.student_id", "=", "students.id", "left")
-            ->join("courses", "attendances.course_id", "=", "courses.id", "left")->filter(request(["date"]))->get();
+        return $dataTable->render("attendances.index");
+        // $attendances = Attendance::join("students", "attendances.student_id", "=", "students.id", "left")
+        //     ->join("courses", "attendances.course_id", "=", "courses.id", "left")->filter(request(["date"]))->get();
         // dd($request, $attendances);
-        return view("attendances.index", [
-            "attendances" => $attendances,
-            // "database" => datatables(Student::all())->toJson()
-        ]);
+        // return view("attendances.index", [
+        //     "attendances" => $attendances,
+        //     // "database" => datatables(Student::all())->toJson()
+        // ]);
     }
     // show attendance
     public function show(Attendance $attendance)
