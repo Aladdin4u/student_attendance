@@ -8,6 +8,8 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
+use App\Models\Lecturer_courses;
+use App\Models\Student_courses;
 
 class StudentController extends Controller
 {
@@ -26,8 +28,13 @@ class StudentController extends Controller
             ->join("courses", "attendances.course_id", "=", "courses.id", "left")
             ->where("code", request(["tag"]) ?? false)
             ->get();
+            $lc = Lecturer_courses::where("user_id", auth()->user()->id)->get(["course_id"])->first();
+            $total= Student_courses::where('student_courses.course_id', $lc->course_id)->join("students", "student_courses.student_id", "=", "students.id")
+            ->join("courses", "student_courses.course_id", "=", "courses.id")
+            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->get();
+            $att = Attendance::where("student_id", 2)->where("is_present", "present")->count();
         $course = Course::all();
-        // dd($attendances, $request);
+        dd($total, $att);
         return view("students.show", [
             "student" => $student,
             "courses" => $course,

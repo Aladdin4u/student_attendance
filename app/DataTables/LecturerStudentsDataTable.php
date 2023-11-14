@@ -28,16 +28,7 @@ class LecturerStudentsDataTable extends DataTable
             })
             ->rawColumns(['Attendance'])
             ->setRowId('id')
-            ->addIndexColumn()
-            ->filter(function ($query) {
-                if (request()->has('firstName')) {
-                    $query->where('firstName', 'like', "%" . request('firstName') . "%");
-                }
-
-                if (request()->has('lastName')) {
-                    $query->where('lastName', 'like', "%" . request('lastName') . "%");
-                }
-            }, true);
+            ->addIndexColumn();
     }
 
     /**

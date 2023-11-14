@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Attendance;
 use App\Models\Lecturer_courses;
+use App\Models\Student_courses;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -23,21 +24,25 @@ class OverallAttendancesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Status', function (Attendance $attendance) {
-                if ($attendance->is_present === 'present') {
+            ->addColumn('Status', function (Student_courses $sc) {
+                $att = Attendance::where("student_id", $sc->student_id)->where("is_present", "present")->count();
+                $total = ($att / 24) * 100;
+                if($total >= 50) {
                     return '<div>
-                <span class="py-1 px-2 rounded-sm text-white capitalize bg-green-600">
-                  ' . $attendance->is_present . '
-                </span></div>';
+                    <span class="py-1 px-2 rounded-sm text-white capitalize bg-green-600">
+                      qualified
+                    </span></div>';
                 } else {
                     return '<div>
-                <span class="py-1 px-2.5 rounded-sm text-white capitalize bg-red-600">
-                  ' . $attendance->is_present . '
-                </span></div>';
+                    <span class="py-1 px-2 rounded-sm text-white capitalize bg-green-600">
+                      unqualified
+                    </span></div>';
                 }
             })
-            ->addColumn('Total %', function (Attendance $attendance) {
-                return '<div>80%</div>';
+            ->addColumn('Total %', function (Student_courses $sc) {
+                $att = Attendance::where("student_id", $sc->student_id)->where("is_present", "present")->count();
+                $total = ($att / 24) * 100;
+                return '<div>' . round($total,2) . '%</div>';
             })
             ->rawColumns(['Status', 'Total %'])
             ->addIndexColumn()
@@ -47,12 +52,12 @@ class OverallAttendancesDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Attendance $model): QueryBuilder
+    public function query(Student_courses $model): QueryBuilder
     {
         $lc = Lecturer_courses::where("user_id", auth()->user()->id)->get(["course_id"])->first();
-        $data = $model->where('attendances.course_id', $lc->course_id)->join("students", "attendances.student_id", "=", "students.id")
-            ->join("courses", "attendances.course_id", "=", "courses.id")
-            ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+        $data = $model->where('student_courses.course_id', $lc->course_id)->join("students", "student_courses.student_id", "=", "students.id")
+            ->join("courses", "student_courses.course_id", "=", "courses.id")
+            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
 
         return $data;
     }
@@ -63,7 +68,7 @@ class OverallAttendancesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('ovrall-attendances-table')
+            ->setTableId('overall-attendances-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom( 'Bfrtip')
