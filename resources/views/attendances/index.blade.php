@@ -44,19 +44,20 @@
       $('#daterange span').html(start_date.format('MMMM D, YYYY') + ' - ' + end_date.format('MMMM D, YYYY'));
 
       console.log(start_date, end_date);
+      table.draw()
     });
 
-    // var table = $('#daterange_table').DataTable({
-    //     processing : true,
-    //     serverSide : true,
-    //     ajax : {
-    //         url : "/attendance",
-    //         data : function(data){
-    //             data.from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-    //             data.to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
-    //         }
-    //     },
-    // });
+    var table = $('attendances-table').DataTable({
+        processing : true,
+        serverSide : true,
+        ajax : {
+            url : "/attendance?draw=1&columns[8][data]=date",
+            data : function(data){
+                data.from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                data.to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            }
+        },
+    });
 
   });
 </script>

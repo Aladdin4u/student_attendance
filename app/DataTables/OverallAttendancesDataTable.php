@@ -41,16 +41,7 @@ class OverallAttendancesDataTable extends DataTable
             })
             ->rawColumns(['Status', 'Total %'])
             ->addIndexColumn()
-            ->setRowId('id')
-            ->filter(function (QueryBuilder $query) {
-                if (request()->has('students.firstName')) {
-                    $query->where('students.firstName', 'like', "%" . request('students.firstName') . "%");
-                }
-
-                if (request()->has('lastName')) {
-                    $query->where('lastName', 'like', "%" . request('lastName') . "%");
-                }
-            }, true);
+            ->setRowId('id');
     }
 
     /**
@@ -58,8 +49,7 @@ class OverallAttendancesDataTable extends DataTable
      */
     public function query(Attendance $model): QueryBuilder
     {
-        $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-            ->get(["course_id"])->first();
+        $lc = Lecturer_courses::where("user_id", auth()->user()->id)->get(["course_id"])->first();
         $data = $model->where('attendances.course_id', $lc->course_id)->join("students", "attendances.student_id", "=", "students.id")
             ->join("courses", "attendances.course_id", "=", "courses.id")
             ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
@@ -96,12 +86,12 @@ class OverallAttendancesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName'),
-            Column::make('lastName'),
-            Column::make('otherName'),
-            Column::make('regNumber'),
-            Column::make('code'),
-            Column::make('level'),
+            Column::make('firstName')->name('students.firstName'),
+            Column::make('lastName')->name('students.lastName'),
+            Column::make('otherName')->name('students.otherName'),
+            Column::make('regNumber')->name('students.regNumber'),
+            Column::make('code')->name('courses.code'),
+            Column::make('level')->name('students.level'),
             Column::computed('Total %'),
             Column::computed('Status'),
         ];

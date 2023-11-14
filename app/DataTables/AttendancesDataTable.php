@@ -4,7 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Attendance;
 use App\Models\Lecturer_courses;
-use GuzzleHttp\Psr7\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -39,16 +38,7 @@ class AttendancesDataTable extends DataTable
             })
             ->rawColumns(['Status'])
             ->addIndexColumn()
-            ->setRowId('id')
-            ->filter(function (QueryBuilder $query) {
-                if (request()->has('students.firstName')) {
-                    $query->where('students.firstName', 'like', "%" . request('students.firstName') . "%");
-                }
-
-                if (request()->has('lastName')) {
-                    $query->where('lastName', 'like', "%" . request('lastName') . "%");
-                }
-            }, true);
+            ->setRowId('id');
     }
 
     /**
@@ -94,12 +84,12 @@ class AttendancesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName'),
-            Column::make('lastName'),
-            Column::make('otherName'),
-            Column::make('regNumber'),
-            Column::make('code'),
-            Column::make('level'),
+            Column::make('firstName')->name('students.firstName'),
+            Column::make('lastName')->name('students.lastName'),
+            Column::make('otherName')->name('students.otherName'),
+            Column::make('regNumber')->name('students.regNumber'),
+            Column::make('code')->name('courses.code'),
+            Column::make('level')->name('students.level'),
             Column::computed('Status'),
             Column::make('date'),
         ];

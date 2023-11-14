@@ -71,10 +71,32 @@
             <h2 class="text-lg font-semibold">Analytics</h2>
             <p class="text-sm text-gray-500">Students total attendance anlytics report</p>
         </div>
-        <p class="flex h-52 items-center justify-center text-2xl text-gray-400 rounded bg-gray-50 dark:bg-gray-800 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
-            </svg>
-        </p>
+        <canvas id="myChart" style="width:100%;" class="bg-white px-3 py-5">
+        </canvas>
     </div>
 </x-layout>
+<script>
+    $(function() {
+        const myChart = new Chart("myChart", {
+            type: "line",
+            data: {
+                labels: ["wk1", "wk2", "wk3", "wk4", "wk5", "wk6", "wk7", "wk8", "wk9"],
+                datasets: [{
+                    label: 'Student Attendance',
+                    data: [65, 59, 80, 81, 56, 30, 40, 70, 40],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    });
+</script>

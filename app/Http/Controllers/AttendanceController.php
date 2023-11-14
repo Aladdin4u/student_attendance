@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\DataTables\AttendancesDataTable;
 use App\DataTables\TakeAttendancesDataTable;
 use App\DataTables\OverallAttendancesDataTable;
@@ -60,8 +61,11 @@ class AttendanceController extends Controller
     public function manage(OverallAttendancesDataTable $dataTable)
     {
 
-        $distinct = Attendance::distinct()->get();
-        dd($distinct);
+        $distinct = DB::table('attendances')->distinct()->get(['id','course_id', 'student_id']);
+        $count = Attendance::where("student_id", 1)->where("is_present", "present")->count();
+        $c = Attendance::where("student_id", 1)->where("is_present", "present")->get();
+        $perct = ($count / 90) * 100;
+        // dd($distinct, $perct, $c);
         return $dataTable->render("attendances.manage");
         // return view("attendances.manage", [
         //     "attendances" => $attendance::latest()->filter(request(["search"]))->paginate(6)
