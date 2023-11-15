@@ -1,27 +1,5 @@
 <x-layout>
   <h1 class="text-lg font-semibold text-left mb-4">Take attendance for ({{date('Y-m-d')}})</h1>
-  <div x-data="{
-            pathname: location.pathname,
-            dd: {{ request()->is('attendances/create')}}
-  }" @hashchange.window="page = location.hash">
-    <h3>Read Query Parameter Demo</h3>
-    <p class="mb-2">
-      location.search: "<span x-text="location.search"></span>"
-    </p>
-    <p>
-      Pathname: "<span x-text="pathname"></span>"
-      dd: <span x-text="dd"></span>
-    </p>
-  </div>
-
-  <div x-data="{
-    open: false,
-    toggle(){
-                this.open = this.open ? false : true
-    }}" x-init=" {{ request()->is('attendances/create')}} ? open = true : open = false ">
-    <button x-on:click="toggle()" class="border">click</button>
-    <p x-show="open">text go here!</p>
-  </div>
   <div class="card-body bg-white p-3 space-y-4 shadow-md rounded-lg space-y-4">
     <h2 class="font-semibold text-left">
       All Students
