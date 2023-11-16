@@ -6,12 +6,25 @@ use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Database\Query\JoinClause;
 
 class UserController extends Controller
 {
+    // show user dashboard
+    public function dashboard()
+    {
+        $student = Student::count();
+        $lecturer = User::where('role', 'lecturer')->count();
+        $course = Lecturer_courses::where('user_id', auth()->user()->id)->count();
+        // dd($course);
+        return view("users.dashboard", [
+            "allStudent" => $student,
+            "allLecturer" => $lecturer,
+            "classes" => $course,
+        ]);
+    }
     // show user form
     public function create()
     {

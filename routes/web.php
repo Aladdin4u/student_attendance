@@ -20,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view("welcome");
-})->middleware('auth');
+Route::get('/', [UserController::class, 'dashboard'])->middleware('auth');
 // show user create form
 Route::get('/register', [UserController::class, 'create']);
 // store user
