@@ -15,7 +15,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     @vite('resources/css/app.css')
-    <!-- @vite('resources/sass/app.scss') -->
     <title>Attendify</title>
 </head>
 
