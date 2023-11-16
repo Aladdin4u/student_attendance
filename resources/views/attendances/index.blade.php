@@ -36,27 +36,16 @@
     var end_date = moment();
 
     $('#daterange span').html(start_date.format('MMMM D, YYYY') + ' - ' + end_date.format('MMMM D, YYYY'));
-
+    $('.applyBtn').css('bg-blue');
     $('#daterange').daterangepicker({
       startDate: start_date,
-      endDate: end_date
+      endDate: end_date,
+      applyButtonClasses: "rounded-sm text-white bg-sky-400 hover:bg-sky-500"
     }, function(start_date, end_date) {
       $('#daterange span').html(start_date.format('MMMM D, YYYY') + ' - ' + end_date.format('MMMM D, YYYY'));
 
-      console.log(start_date, end_date);
-      table.draw()
-    });
-
-    var table = $('attendances-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-        url: "/attendance?draw=1&columns[8][data]=date",
-        data: function(data) {
-          data.from_date = $('#daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
-          data.to_date = $('#daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
-        }
-      },
+      let d = "?from_date=" + start_date.format('YYYY-MM-DD') + "&" + "to_date=" + end_date.format('YYYY-MM-DD');
+      window.location.href = d;
     });
 
   });
