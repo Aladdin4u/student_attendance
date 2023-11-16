@@ -50,7 +50,7 @@
       <h2 class="font-semibold">Courses List</h2>
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         @unless($student_courses->isEmpty())
-        <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 titlecase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="px-6 py-3">
               #
@@ -71,17 +71,17 @@
         <tbody>
           @foreach($student_courses as $student_course)
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{$loop->index + 1}}
             </th>
-            <td class="px-6 py-4">
+            <td class="px-6 py-3">
               {{$student_course['code']}}
             </td>
-            <td class="px-6 py-4">
+            <td class="px-6 py-3">
               {{$student_course['title']}}
             </td>
             @unless(auth()->user()->role != "admin")
-            <td class="px-6 py-4">
+            <td class="px-6 py-3">
               <form method="POST" action="/students_courses/{{$student_course['id']}}">
                 @csrf
                 @method('DELETE')
@@ -98,7 +98,7 @@
           @endforeach
           @else
           <tr class="bg-white border-0 dark:bg-gray-800 dark:border-gray-700">
-            <td colspan="9" class="flex-col px-6 py-4 text-center">
+            <td colspan="9" class="flex-col px-6 py-3 text-center">
               <button class="text-gray-400">
                 <svg class="flex-shrink-0 w-10 h-10 stroke-gray-500 transition duration-75 hover:stroke-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.875 14.25l1.214 1.942a2.25 2.25 0 001.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 011.872 1.002l.164.246a2.25 2.25 0 001.872 1.002h2.092a2.25 2.25 0 001.872-1.002l.164-.246A2.25 2.25 0 0116.954 9h4.636M2.41 9a2.25 2.25 0 00-.16.832V12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 01.382-.632l3.285-3.832a2.25 2.25 0 011.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0021.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 002.25 2.25z" />
@@ -113,107 +113,9 @@
     </div>
 
     <div>
-      <h2 class="font-semibold">Attendances</h2>
-      <div class="flex items-center justify-between my-2">
-        <p>Filter by courses:</p>
-        <ul class="flex">
-          <li class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-sm py-1 px-3 mr-2 text-xs">
-            <a href="?">
-              Clear
-            </a>
-          </li>
-          @foreach($student_courses as $student_course)
-          <li class="flex items-center justify-center bg-sky-500 hover:bg-sky-600 text-white rounded-sm py-1 px-2 mr-2 text-xs">
-            <a href="?tag={{$student_course->code}}">
-              {{$student_course->code}}
-            </a>
-          </li>
-          @endforeach
-        </ul>
-      </div>
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        @unless(count($attendances) == 0)
-        <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              #
-            </th>
-            <th scope="col" class="px-6 py-3">
-              First Name
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Last Name
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Other Name
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Reg Number
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Course Code
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Level
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Total
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($attendances as $attendance)
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{$loop->index + 1}}
-            </th>
-            <td class="px-6 py-4">
-              {{$attendance['firstName']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['lastName']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['otherName']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['regNumber']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['code']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['level']}}
-            </td>
-            <td class="px-6 py-4">
-              {{$attendance['date']}}
-            </td>
-            <td class="px-6 py-4">
-              <span class="p-1 rounded-sm text-white {{ $attendance['is_present'] === 'present' ? 'bg-green-600': 'bg-red-600'}}">
-                {{ $attendance['is_present'] === 'present' ? "Present" : "Absent" }}
-              </span>
-            </td>
-          </tr>
-          @endforeach
-          @else
-          <tr class="bg-white dark:bg-gray-8 00dark:border-gray-700">
-            <td colspan="8" class="flex-col px-6 py-4 text-center">
-              <button class="text-gray-400">
-                <svg class="flex-shrink-0 w-10 h-10 stroke-gray-500 transition duration-75 hover:stroke-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.875 14.25l1.214 1.942a2.25 2.25 0 001.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 011.872 1.002l.164.246a2.25 2.25 0 001.872 1.002h2.092a2.25 2.25 0 001.872-1.002l.164-.246A2.25 2.25 0 0116.954 9h4.636M2.41 9a2.25 2.25 0 00-.16.832V12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 01.382-.632l3.285-3.832a2.25 2.25 0 011.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0021.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-              </button>
-              <p class="font-medium text-lg"> No Data</p>
-            </td>
-          </tr>
-        </tbody>
-        @endunless
-      </table>
+      <a href="/attendances/{{$student->id}}" class="w-full text-white bg-sky-400 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        view Attendance
+      </a>
     </div>
   </div>
-
-
 </x-layout>

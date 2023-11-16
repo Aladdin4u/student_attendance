@@ -17,7 +17,7 @@
 
   </div>
 
-  <div class="relative bg-white p-3 space-y-4 shadow-md rounded-lg space-y-4">
+  <div class="bg-white p-3 space-y-4 shadow-md rounded-lg space-y-4">
     <h2 class="font-semibold text-left">
       Class Attendance
     </h2>

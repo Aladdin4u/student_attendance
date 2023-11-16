@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\DataTables\AttendancesDataTable;
 use App\DataTables\TakeAttendancesDataTable;
 use App\DataTables\OverallAttendancesDataTable;
+use App\DataTables\SingleStudentsDataTable;
 
 class AttendanceController extends Controller
 {
@@ -22,12 +23,10 @@ class AttendanceController extends Controller
         return $dataTable->render("attendances.index");
     }
     // show attendance
-    public function show(Attendance $attendance)
+    public function show(Attendance $attendance, SingleStudentsDataTable $dataTable)
     {
 
-        return view("attendances.show", [
-            "attendance" => $attendance
-        ]);
+        return $dataTable->with('id', $attendance->id)->render("attendances.show");
     }
 
     // show create form

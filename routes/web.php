@@ -52,7 +52,7 @@ Route::delete('/students/{student}', [StudentController::class, 'destroy'])->mid
 // manage student
 Route::get('/students/manage', [StudentController::class, 'manage'])->middleware('auth');
 // show single student
-Route::get('/students/{student}', [StudentController::class, 'show'])->middleware('auth');
+Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.list')->middleware('auth');
 // store student courses
 Route::post('/students/courses', [Student_coursesController::class, 'store'])->middleware('auth');
 // destroy student courses
