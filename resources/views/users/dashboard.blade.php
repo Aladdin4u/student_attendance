@@ -117,7 +117,17 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        title: {
+                            display: true,
+                            text: "Number of students present"
+                        },
+                        beginAtZero: true,
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Days of the week"
+                        }
                     }
                 }
             }

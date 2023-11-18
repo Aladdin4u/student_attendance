@@ -86,29 +86,5 @@ class DatabaseSeeder extends Seeder
         //     'student_id' => $ibeh->id,
         //     'course_id' => $cre124->id,
         // ]);
-        // \App\Models\Lession::factory()->create([
-        //     'student_id' => $eze->id,
-        //     'lecturer_id' => $lecturer->id,
-        //     'course_id' => $cre152->id,
-        //     'attendance_id' => $EzeAtt152->id,
-        // ]);
-        // \App\Models\Lession::factory()->create([
-        //     'student_id' => $eze->id,
-        //     'lecturer_id' => $lecturer->id,
-        //     'course_id' => $cre124->id,
-        //     'attendance_id' => $EzeAtt124->id,
-        // ]);
-        // \App\Models\Lession::factory()->create([
-        //     'student_id' => $ibeh->id,
-        //     'lecturer_id' => $lecturer->id,
-        //     'course_id' => $cre152->id,
-        //     'attendance_id' => $ibehAtt152->id,
-        // ]);
-        // \App\Models\Lession::factory()->create([
-        //     'student_id' => $ibeh->id,
-        //     'lecturer_id' => $lecturer->id,
-        //     'course_id' => $cre124->id,
-        //     'attendance_id' => $ibehAtt124->id,
-        // ]);
     }
 }
