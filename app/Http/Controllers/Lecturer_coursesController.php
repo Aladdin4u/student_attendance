@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class Lecturer_coursesController extends Controller
 {
+    // show all courses
+    public function index(Request $request)
+    {
+        $data = Lecturer_courses::where('user_id', $request->id)
+        ->join('courses', 'lecturer_courses.course_id', 'courses.id')
+        ->get();
+        // dd($data);
+        return $data;
+    }
     // store form data
     public function store(Request $request)
     {

@@ -17,8 +17,10 @@ class AttendanceController extends Controller
     {
         if ($request->filled('from_date') && $request->filled('to_date')) {
             return $dataTable->with(['from' => $request->from_date, 'to' => $request->to_date])->render("attendances.index");
-            dd($request->from_date, $request->to_date);
-            // $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+        }
+        if ($request->filled('course_id')) {
+            // dd($request->course_id);
+            return $dataTable->with('course_id', $request->course_id)->render("attendances.index");
         }
         return $dataTable->render("attendances.index");
     }

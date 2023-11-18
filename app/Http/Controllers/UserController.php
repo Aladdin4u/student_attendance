@@ -21,7 +21,7 @@ class UserController extends Controller
         $class = Lecturer_courses::where('user_id', auth()->user()->id)->count();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
-        dd($attendance);
+        
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,

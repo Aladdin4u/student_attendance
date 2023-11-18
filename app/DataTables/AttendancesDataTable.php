@@ -48,6 +48,11 @@ class AttendancesDataTable extends DataTable
     {
         $lc = Lecturer_courses::where("user_id", auth()->user()->id)
             ->get(["course_id"])->first();
+        if($this->course_id) {
+            $lc = Lecturer_courses::where("user_id", auth()->user()->id)
+            ->where("course_id", $this->course_id)
+            ->get(["course_id"])->first();
+        }
         if ($this->from && $this->to) {
             return $model->where('attendances.course_id', $lc->course_id)
                 ->whereBetween('attendances.date', [$this->from, $this->to])
