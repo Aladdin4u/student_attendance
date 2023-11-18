@@ -87,12 +87,46 @@
             <h2 class="text-lg font-semibold">Analytics</h2>
             <p class="text-sm text-gray-500">Students total attendance anlytics report</p>
         </div>
-        <canvas id="myChart" style="width:100%;" class="bg-white px-3 py-5">
-        </canvas>
+        <div class="bg-white space-y-4 px-4 py-3 rounded-lg">
+            <div class="flex items-center justify-between">
+                <h2 class="text-md font-semibold">Total Students Attendance</h2>
+                <div class="relative inline-block group">
+
+                    <button id="dropdownHoverButton" class="bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-200" type="button">Courses <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div class="z-10 absolute hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-36 dark:bg-gray-700 group-hover:block">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                            @unless($courses->isEmpty())
+                            <li>
+                                <a href="?" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">All</a>
+                            </li>
+                            @foreach($courses as $course)
+                            <li title="{{$course->title}}">
+                                <a href="?course_id={{$course->id}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{$course->code}}</a>
+                            </li>
+                            @endforeach
+                            @else
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">No course</a>
+                            </li>
+                            @endunless
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <canvas id="myChart" style="width:100%;" class="bg-white px-3 py-5">
+            </canvas>
+        </div>
     </div>
 </x-layout>
 <script>
     var attendance = JSON.parse('{!! json_encode($attendance) !!}');
+    console.log(attendance);
     const countMap = {}
     attendance.filter(p => p.is_present === 'present').map(d => {
         if (countMap[d.date] === undefined) {

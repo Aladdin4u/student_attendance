@@ -18,13 +18,15 @@ class UserController extends Controller
     {
         $student = Student::count();
         $lecturer = User::where('role', 'lecturer')->count();
-        $course = Lecturer_courses::where('user_id', auth()->user()->id)->count();
-        $attendance = Attendance::latest()->get(['id', 'is_present', 'date']);
-        // dd($date);
+        $class = Lecturer_courses::where('user_id', auth()->user()->id)->count();
+        $courses = Course::all();
+        $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
+        dd($attendance);
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
-            "classes" => $course,
+            "classes" => $class,
+            "courses" => $courses,
             "attendance" => $attendance
         ]);
     }
