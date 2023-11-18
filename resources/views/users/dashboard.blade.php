@@ -92,14 +92,23 @@
     </div>
 </x-layout>
 <script>
+    var attendance = JSON.parse('{!! json_encode($attendance) !!}');
+    const countMap = {}
+    attendance.filter(p => p.is_present === 'present').map(d => {
+        if (countMap[d.date] === undefined) {
+            countMap[d.date] = 1;
+        } else {
+            countMap[d.date]++;
+        }
+    })
     $(function() {
         const myChart = new Chart("myChart", {
             type: "line",
             data: {
-                labels: ["wk1", "wk2", "wk3", "wk4", "wk5", "wk6", "wk7", "wk8", "wk9"],
+                labels: Object.keys(countMap).map((key) => moment(key).format('ddd')),
                 datasets: [{
                     label: 'Student Attendance',
-                    data: [65, 59, 80, 81, 56, 30, 40, 70, 40],
+                    data: Object.keys(countMap).map((key) => countMap[key]),
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1

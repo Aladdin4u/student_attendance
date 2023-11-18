@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
@@ -18,11 +19,13 @@ class UserController extends Controller
         $student = Student::count();
         $lecturer = User::where('role', 'lecturer')->count();
         $course = Lecturer_courses::where('user_id', auth()->user()->id)->count();
-        // dd($course);
+        $attendance = Attendance::latest()->get(['id', 'is_present', 'date']);
+        // dd($date);
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
             "classes" => $course,
+            "attendance" => $attendance
         ]);
     }
     // show user form
