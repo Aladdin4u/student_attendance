@@ -1,4 +1,5 @@
 <x-layout>
+  <div id="message"></div>
   <h1 class="text-lg font-semibold text-left mb-4">Take attendance for ({{date('Y-m-d')}})</h1>
   <div class="card-body bg-white p-3 space-y-4 shadow-md rounded-lg space-y-4">
     <div class="flex items-center justify-between">
@@ -33,7 +34,6 @@
 </x-layout>
 <script>
   var id = "{{auth()->user()->id}}";
-  console.log(window.location.origin);
   $.ajax({
     url: "/api/course/" + id,
     type: "GET",
@@ -61,17 +61,7 @@
           date: $("#date").val()
         }
         formData.push(data)
-        // console.log(["is_present:" + (this.checked ? "present" : "absent"), "student_id:" + value.value, "course_id:" + $("#course_id").val(), "date:" + $("#date").val()])
       });
-      let d = formData.map(data => {
-        return {
-          is_present: data.is_present,
-          student_id: data.student_id,
-          course_id: data.course_id,
-          date: data.date
-        }
-      })
-      console.log(JSON.stringify(formData));
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -84,11 +74,15 @@
           formData: formData
         },
         success: function(data) {
-          console.log(data);
+          $('#message').text("Attendance created successfully!");
+          $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-48 py-3 z-50 rounded-lg");
+          setTimeout(function() {
+            $('#message').slideUp();
+        }, 5000);
+
           window.location.href = "/attendances";
         },
       });
-      console.log(formData);
     });
   })
 </script>

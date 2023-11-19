@@ -51,7 +51,7 @@
                     </form>
                     <div class="flex items-center">
                         <div class="flex items-center">
-                            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                            <img class="w-8 h-8 rounded-full" src={{asset("avatar.png")}} alt="user photo">
                             <span class="ml-3">{{auth()->user()->firstName}}</span>
                             <button type="button" class="flex text-sm text-black ml-2" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>

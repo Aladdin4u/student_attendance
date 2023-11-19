@@ -46,11 +46,12 @@ class AttendancesDataTable extends DataTable
      */
     public function query(Attendance $model): QueryBuilder
     {
-        $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-            ->get(["course_id"])->first();
         if($this->course_id) {
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
             ->where("course_id", $this->course_id)
+            ->get(["course_id"])->first();
+        } else {
+            $lc = Lecturer_courses::where("user_id", auth()->user()->id)
             ->get(["course_id"])->first();
         }
         if ($this->from && $this->to) {

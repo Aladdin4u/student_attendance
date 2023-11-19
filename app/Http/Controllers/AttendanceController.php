@@ -36,7 +36,7 @@ class AttendanceController extends Controller
     {
         if ($request->filled('course_id')) {
             // dd($request->course_id);
-            return $dataTable->with('course_id', $request->course_id)->render("attendances.index");
+            return $dataTable->with('course_id', $request->course_id)->render("attendances.create");
         }
         return $dataTable->render("attendances.create");
     }
