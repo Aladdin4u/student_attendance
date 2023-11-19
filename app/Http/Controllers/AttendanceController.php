@@ -32,8 +32,12 @@ class AttendanceController extends Controller
     }
 
     // show create form
-    public function create(TakeAttendancesDataTable $dataTable)
+    public function create(TakeAttendancesDataTable $dataTable, Request $request)
     {
+        if ($request->filled('course_id')) {
+            // dd($request->course_id);
+            return $dataTable->with('course_id', $request->course_id)->render("attendances.index");
+        }
         return $dataTable->render("attendances.create");
     }
 

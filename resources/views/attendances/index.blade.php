@@ -45,28 +45,24 @@
   {{ $dataTable->scripts() }}
   @endpush
 </x-layout>
-<script type="text/javascript">
-  var courses;
-  var id = "{{auth()->user()->id}}"
+<script>
+  var id = "{{auth()->user()->id}}";
   $.ajax({
     url: "api/course/" + id,
     type: "GET",
     success: function(data) {
-      console.log(data[0].course_id);
       $.each(data, function(index, value) {
-        console.log(value);
-        let liElement = $("<li></li>");
-        liElement.attr('title', value.title)
-        liElement.addClass("block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white");
+        let listElement = $("<li></li>");
+        listElement.attr('title', value.title)
+        listElement.addClass("block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white");
         let link = $("<a></a>")
         link.append(value.code)
         link.attr('href', '?course_id=' + value.course_id);
-        liElement.append(link)
-        $('#list').append(liElement)
+        listElement.append(link)
+        $('#list').append(listElement)
       })
     }
   });
-  console.log(courses);
   $(function() {
 
     var start_date = moment().subtract(1, 'M');
