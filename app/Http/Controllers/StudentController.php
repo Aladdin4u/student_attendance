@@ -13,8 +13,12 @@ use App\DataTables\SingleStudentsDataTable;
 class StudentController extends Controller
 {
     // show all students
-    public function index(LecturerStudentsDataTable $dataTable)
+    public function index(LecturerStudentsDataTable $dataTable, Request $request)
     {
+        if ($request->filled('course_id')) {
+            // dd($request->course_id);
+            return $dataTable->with('course_id', $request->course_id)->render("students.index");
+        }
         return $dataTable->render("students.index");
     }
 
