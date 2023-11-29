@@ -8,8 +8,12 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Lecturer_courses;
 use App\Models\Student;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -21,7 +25,7 @@ class UserController extends Controller
         $class = Lecturer_courses::where('user_id', auth()->user()->id)->count();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
-        
+
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
@@ -96,6 +100,59 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with("message", "Lecturer Deleted Successfully!");
+    }
+
+    // show user forget password form
+    public function forgot()
+    {
+        return view("users.forget-password");
+    }
+
+    // reset user password
+    public function reset(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    // show reset token
+    public function resetToken(string $token)
+    {
+        return view('user.reset-password', ['token' => $token]);
+    }
+
+    // password reset token
+    public function token(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+     
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+     
+                $user->save();
+     
+                event(new PasswordReset($user));
+            }
+        );
+     
+        return $status === Password::PASSWORD_RESET
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withErrors(['email' => [__($status)]]);
     }
 
     // show single users
