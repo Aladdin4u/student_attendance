@@ -28,13 +28,13 @@ Route::post('/register', [UserController::class, 'store']);
 // show user login form
 Route::get('/login', [UserController::class, 'login'])->name('login');
 // show forget password
-Route::get('/forgot-password', [UserController::class, 'forgot'])->middleware('guest');
+Route::get('/forgot-password', [UserController::class, 'forgotPassword'])->middleware('guest');
 // reset forget password
-Route::post('/forgot-password', [UserController::class, 'reset'])->middleware('guest');
+Route::post('/forgot-password', [UserController::class, 'forgotPasswordEmail'])->middleware('guest');
 // get reset password token
-Route::get('/reset-password/{token}', [UserController::class, 'resetToken'])->middleware('guest');
+Route::get('/reset-password/{token}', [UserController::class, 'PasswordReset'])->middleware('guest')->name('password.reset');
 // reset password
-Route::post('/password-reset', [UserController::class, 'token'])->middleware('guest');
+Route::post('/reset-password', [UserController::class, 'PasswordUpdate'])->middleware('guest')->name('password.update');
 // login user
 Route::post('/login', [UserController::class, 'authenticate']);
 // log User Out

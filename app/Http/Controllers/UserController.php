@@ -48,7 +48,7 @@ class UserController extends Controller
             "email" => ['required', 'email', Rule::unique('users', 'email')],
             "role" => "required",
             "phoneNumber" => "required",
-            "password" => "required|confirmed|min:6",
+            "password" => "required|confirmed|min:8",
         ]);
 
         // Hash Password
@@ -103,13 +103,13 @@ class UserController extends Controller
     }
 
     // show user forget password form
-    public function forgot()
+    public function forgotPassword()
     {
         return view("users.forget-password");
     }
 
     // reset user password
-    public function reset(Request $request)
+    public function forgotPasswordEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
@@ -123,13 +123,13 @@ class UserController extends Controller
     }
 
     // show reset token
-    public function resetToken(string $token)
+    public function PasswordReset(string $token)
     {
         return view('user.reset-password', ['token' => $token]);
     }
 
     // password reset token
-    public function token(Request $request)
+    public function PasswordUpdate(Request $request)
     {
         $request->validate([
             'token' => 'required',
