@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
-use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Lecturer_courses;
 use App\Models\Student;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Password;
+use App\Models\Attendance;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Models\Lecturer_courses;
+use App\DataTables\UsersDataTable;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
 class UserController extends Controller
 {
@@ -118,19 +120,20 @@ class UserController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->with('message', __($status))
+            : back()->withErrors('email', __($status));
     }
 
     // show reset token
     public function PasswordReset(string $token)
     {
-        return view('user.reset-password', ['token' => $token]);
+        return view('users.reset-password', ['token' => $token]);
     }
 
     // password reset token
     public function PasswordUpdate(Request $request)
     {
+        // dd($request);
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
@@ -151,8 +154,8 @@ class UserController extends Controller
         );
      
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+                    ? redirect()->route('login')->with('message', __($status))
+                    : back()->withErrors('email', __($status));
     }
 
     // show single users
