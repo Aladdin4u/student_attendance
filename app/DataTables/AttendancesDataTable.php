@@ -55,13 +55,13 @@ class AttendancesDataTable extends DataTable
             ->get(["course_id"])->first();
         }
         if ($this->from && $this->to) {
-            return $model->where('attendances.course_id', $lc->course_id)
+            return $model->where('attendances.course_id', $lc->course_id ?? 0)
                 ->whereBetween('attendances.date', [$this->from, $this->to])
                 ->join("students", "attendances.student_id", "=", "students.id")
                 ->join("courses", "attendances.course_id", "=", "courses.id")
                 ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
         }
-        return $model->where('attendances.course_id', $lc->course_id)
+        return $model->where('attendances.course_id', $lc->course_id ?? 0)
             ->join("students", "attendances.student_id", "=", "students.id")
             ->join("courses", "attendances.course_id", "=", "courses.id")
             ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();

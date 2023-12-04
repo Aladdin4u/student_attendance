@@ -36,6 +36,7 @@ class LecturerStudentsDataTable extends DataTable
      */
     public function query(Student_courses $model): QueryBuilder
     {
+        $lecturerCourse = Lecturer_courses::where(auth()->user()->id, "user_id");
         if ($this->course_id) {
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
                 ->where("course_id", $this->course_id)
@@ -44,7 +45,7 @@ class LecturerStudentsDataTable extends DataTable
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
                 ->get(["course_id"])->first();
         }
-        return $model->where('student_courses.course_id', $lc->course_id)->join('students', 'student_courses.student_id', '=', 'students.id')
+        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.student_id', '=', 'students.id')
             ->join('courses', 'student_courses.course_id', '=', 'courses.id')
             ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
     }

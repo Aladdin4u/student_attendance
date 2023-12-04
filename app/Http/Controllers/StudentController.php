@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Student;
-use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
-use App\DataTables\SingleStudentsDataTable;
 
 class StudentController extends Controller
 {

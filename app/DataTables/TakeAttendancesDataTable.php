@@ -46,7 +46,7 @@ class TakeAttendancesDataTable extends DataTable
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
                 ->get(["course_id"])->first();
         }
-        return $model->where('student_courses.course_id', $lc->course_id)->join('students', 'student_courses.student_id', '=', 'students.id')
+        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.student_id', '=', 'students.id')
             ->join('courses', 'student_courses.course_id', '=', 'courses.id')
             ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
     }

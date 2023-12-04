@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Lecturer_courses;
 use App\DataTables\UsersDataTable;
 use App\Mail\ForgotPasswordMail;
+use App\Models\Student_courses;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -22,16 +23,30 @@ class UserController extends Controller
     // show user dashboard
     public function dashboard()
     {
-        $student = Student::count();
         $lecturer = User::where('role', 'lecturer')->count();
-        $class = Lecturer_courses::where('user_id', auth()->user()->id)->count();
+        $class = Lecturer_courses::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
+        if (auth()->user()->role === "admin") {
+            $student = Student::count();
+        } else {
+            if(count($class) > 0) {
+                $item = [];
+                foreach($class as $c){
+                    print($c);
+                    $item = Student_courses::where('course_id', $c->course_id);
+                }
+                $student = $item->count();
+            } else {
+                $student = 0;
+            }
+        }
+        // dd($student);
 
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
-            "classes" => $class,
+            "classes" => count($class) > 0 ? $class->count() : 0,
             "courses" => $courses,
             "attendance" => $attendance
         ]);
@@ -139,23 +154,23 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
         ]);
-     
+
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
-     
+
                 $user->save();
-     
+
                 event(new PasswordReset($user));
             }
         );
-     
+
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('message', __($status))
-                    : back()->withErrors('email', __($status));
+            ? redirect()->route('login')->with('message', __($status))
+            : back()->withErrors('email', __($status));
     }
 
     // show single users
