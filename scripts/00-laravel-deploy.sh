@@ -12,6 +12,9 @@ php artisan route:cache
 echo "Running migrations..."
 php artisan migrate --force
 
+echo "Running seeders..."
+php artisan db:seed
+
 echo "Running vite..."
 npm install
 npm run build

@@ -68,6 +68,16 @@
             </div>
 
             <div>
+              <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
+              <div class="mt-2">
+                <input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+              </div>
+              @error('phoneNumber')
+              <x-alert>{{$message}}</x-alert>
+              @enderror
+            </div>
+
+            <div>
               <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
               <div class="mt-2">
                 <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
@@ -80,7 +90,7 @@
             <div>
               <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
               <div class="mt-2">
-                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password_confirmation')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
               </div>
               @error('password_confirmation')
               <x-alert>{{$message}}</x-alert>
