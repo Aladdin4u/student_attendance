@@ -11,7 +11,7 @@
 
             Export</button>
     </div>
-    <div class="grid grid-cols-4 gap-4 mb-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
         <x-card>
             <x-slot:title>
                 Total Students
