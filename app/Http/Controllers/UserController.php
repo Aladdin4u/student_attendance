@@ -33,7 +33,6 @@ class UserController extends Controller
             if(count($class) > 0) {
                 $item = [];
                 foreach($class as $c){
-                    print($c);
                     $item = Student_courses::where('course_id', $c->course_id);
                 }
                 $student = $item->count();
