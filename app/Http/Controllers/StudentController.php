@@ -41,7 +41,6 @@ class StudentController extends Controller
     // store form data
     public function store(Request $request)
     {
-        dd($request);
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
