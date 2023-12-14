@@ -81,11 +81,6 @@ class CoursesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            // Column::computed('action')
-            //       ->exportable(false)
-            //       ->printable(false)
-            //       ->width(60)
-            //       ->addClass('text-center'),
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('code'),
             Column::make('title'),
