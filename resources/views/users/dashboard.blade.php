@@ -134,7 +134,7 @@
             countMap[d.date]++;
         }
     })
-    $(function() {
+    $(document).ready(function() {
         const myChart = new Chart("myChart", {
             type: "line",
             data: {

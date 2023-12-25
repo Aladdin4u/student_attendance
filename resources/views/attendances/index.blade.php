@@ -47,23 +47,27 @@
 </x-layout>
 <script>
   var id = "{{auth()->user()->id}}";
-  $.ajax({
-    url: "api/course/" + id,
-    type: "GET",
-    success: function(data) {
-      $.each(data, function(index, value) {
-        let listElement = $("<li></li>");
-        listElement.attr('title', value.title)
-        listElement.addClass("block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white");
-        let link = $("<a></a>")
-        link.append(value.code)
-        link.attr('href', '?course_id=' + value.course_id);
-        listElement.append(link)
-        $('#list').append(listElement)
-      })
-    }
+
+  $(document).ready(function() {
+    $.ajax({
+      url: "api/course/" + id,
+      type: "GET",
+      success: function(data) {
+        $.each(data, function(index, value) {
+          let listElement = $("<li></li>");
+          listElement.attr('title', value.title)
+          listElement.addClass("block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white");
+          let link = $("<a></a>")
+          link.append(value.code)
+          link.attr('href', '?course_id=' + value.course_id);
+          listElement.append(link)
+          $('#list').append(listElement)
+        })
+      }
+    });
   });
-  $(function() {
+  
+  $(document).ready(function() {
 
     var start_date = moment().subtract(1, 'M');
 
