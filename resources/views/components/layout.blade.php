@@ -12,6 +12,13 @@
     <script src="{{ asset('js/dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/daterangepicker.min.js') }}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
+    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-icons.js') }}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-icons.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.bootstrap5.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap5.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/select.bootstrap5.css') }}" />
     <script src="{{ asset('js/chart.js')}}"></script>
     @vite('resources/js/app.js')
     <title>Attendify</title>
