@@ -30,7 +30,7 @@
         <div class="hidden md:block fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700">
             @include("partials._sidebar")
         </div>
-        <div class="p-4 sm:ml-64 bg-gray-100">
+        <div class="sm:ml-64 bg-gray-100">
             <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
                 {{$slot}}
             </div>

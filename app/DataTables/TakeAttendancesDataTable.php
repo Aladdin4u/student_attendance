@@ -25,8 +25,7 @@ class TakeAttendancesDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('Check', function (Student_courses $student) {
                 return '<div id="form"><input type="checkbox" id="' . $student->id . '" name="is_present" value="' . $student->student_id . '"  class="checked:accent-sky-500 accent-sky-400" />
-                <input type="text" id="course_id" name="course_id" value="' . $student->course_id . '" class="sr-only" />
-                <input type="date" id="date" name="date" value="' . date('Y-m-d') . '" class="sr-only" /><div>';
+                <input type="text" id="course_id" name="course_id" value="' . $student->course_id . '" class="sr-only" /><div>';
             })
             ->rawColumns(['Check'])
             ->addIndexColumn()
