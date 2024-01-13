@@ -27,6 +27,8 @@ Route::get('/register', [UserController::class, 'create']);
 Route::post('/register', [UserController::class, 'store']);
 // show user login form
 Route::get('/login', [UserController::class, 'login'])->name('login');
+// show student login form
+Route::get('/login/student', [StudentController::class, 'login']);
 // show forget password
 Route::get('/forgot-password', [UserController::class, 'forgotPassword'])->middleware('guest');
 // reset forget password
@@ -37,6 +39,8 @@ Route::get('/reset-password/{token}', [UserController::class, 'PasswordReset'])-
 Route::post('/reset-password', [UserController::class, 'PasswordUpdate'])->middleware('guest')->name('password.update');
 // login user
 Route::post('/login', [UserController::class, 'authenticate']);
+// login student
+Route::post('/login/student', [StudentController::class, 'authenticate']);
 // log User Out
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 // get all user
@@ -47,6 +51,8 @@ Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
 // show all students
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
+// show students dashboard
+Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->middleware('auth');
 // store student
 Route::post('/students', [StudentController::class, 'store'])->middleware('auth');
 // show student create form

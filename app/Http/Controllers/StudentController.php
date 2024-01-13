@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
 
@@ -49,13 +50,45 @@ class StudentController extends Controller
             "firstName" => "required",
             "lastName" => "required",
             "otherName" => "required",
-            "regNumber" => "required",
+            "email" => ["required", "email", Rule::unique("students", "email")],
+            "regNumber" => ["required", "regNumber", Rule::unique("students", "regNumber")],
             "level" => "required",
         ]);
+
+        $formFields['password'] = bcrypt($formFields['lastName']);
 
         Student::create($formFields);
 
         return back()->with("message", "Student created successfully!");
+    }
+
+    // show user login form
+    public function login()
+    {
+        return view("students.login");
+    }
+    // show user login form
+    public function dashboard()
+    {
+        return view("students.dashboard");
+    }
+
+    // authenticate Student
+    public function authenticate(Request $request)
+    {
+        // dd($request);
+        $formFields = $request->validate([
+            "email" => ['required', 'email'],
+            "password" => "required",
+        ]);
+
+        if (auth()->guard('student')->attempt($formFields)) {
+            $request->session()->regenerate();
+
+            return redirect('/student/dashboard')->with('message', 'You are now logged in!');
+        }
+
+        return back()->withErrors(['email' => "Invalid Credentials"])->onlyInput('email');
     }
 
     // show edit form

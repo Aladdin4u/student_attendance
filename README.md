@@ -20,7 +20,7 @@ I utilized building a well structured UML(Unified Modeling Language) diagram to 
 
 1. Clone repo
 1. Run `cp .env.example .env`
-1. composer install
+1. Run `composer install`
 1. Run `npm intall`
 1. Set up Database configuration inside .env file
 1. Run `php artisan key:generate --show` Copy the output for **APP_KEY** inside the .env file

@@ -17,9 +17,9 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->buildingNumber(),
-            'title' => $this->faker->stateAbbr(),
-            'semester' => 'First',
+            'code' => $this->faker->unique()->word(5),
+            'title' => $this->faker->unique()->stateAbbr(),
+            'semester' => $this->faker->randomElement(['First', 'Second']),
             'session' => '2022/2023'
         ];
     }

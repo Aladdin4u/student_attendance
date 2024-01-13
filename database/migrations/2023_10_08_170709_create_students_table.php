@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('otherName');
+            $table->string('email')->unique();
             $table->string('regNumber')->unique();
             $table->string('level');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

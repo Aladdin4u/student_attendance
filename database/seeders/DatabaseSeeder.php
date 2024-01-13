@@ -35,56 +35,26 @@ class DatabaseSeeder extends Seeder
             'phoneNumber' => '090000000',
             'password' => '123456789',
         ]);
-        
+
         $eze = \App\Models\Student::factory()->create([
             'firstName' => 'Chizoma',
             'lastName' => 'Eze',
             'otherName' => 'Francis',
+            'email' => 'eze@example.com',
             'regNumber' => '2019/0000',
             'level' => '400',
+            'password' => '123456789'
         ]);
         $ibeh = \App\Models\Student::factory()->create([
             'firstName' => 'Uchechukwu',
             'lastName' => 'Ibeh',
             'otherName' => 'john',
+            'email' => 'ibeh@example.com',
             'regNumber' => '2019/0001',
             'level' => '400',
+            'password' => '123456789'
         ]);
-        $cre152 = \App\Models\Course::factory()->create([
-            'code' => 'CRE 152',
-            'title' => 'Foundation of Robotics Education',
-            'semester' => 'first',
-            'session' => '2019',
-        ]);
-        $cre124 = \App\Models\Course::factory()->create([
-            'code' => 'CRE 124',
-            'title' => 'word Processing',
-            'semester' => 'first',
-            'session' => '2019',
-        ]);
-        // $EzeAtt152 = \App\Models\Attendance::factory()->create([
-        //     'is_present' => 'present',
-        //     'date' => '2023-10-14',
-        //     'student_id' => $eze->id,
-        //     'course_id' => $cre152->id,
-        // ]);
-        // $EzeAtt124 = \App\Models\Attendance::factory()->create([
-        //     'is_present' => 'present',
-        //     'date' => '2023-10-14',
-        //     'student_id' => $eze->id,
-        //     'course_id' => $cre124->id,
-        // ]);
-        // $ibehAtt152 = \App\Models\Attendance::factory()->create([
-        //     'is_present' => 'present',
-        //     'date' => '2023-10-14',
-        //     'student_id' => $ibeh->id,
-        //     'course_id' => $cre152->id,
-        // ]);
-        // $ibehAtt124 = \App\Models\Attendance::factory()->create([
-        //     'is_present' => 'present',
-        //     'date' => '2023-10-14',
-        //     'student_id' => $ibeh->id,
-        //     'course_id' => $cre124->id,
-        // ]);
+
+        \App\Models\Course::factory(50)->create();
     }
 }
