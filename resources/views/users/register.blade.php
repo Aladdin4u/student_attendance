@@ -29,6 +29,7 @@
                 <option value="" class="hover:bg-sky-100">-- select role --</option>
                 <option value="admin" class="hover:bg-sky-100">Admin</option>
                 <option value="lecturer" class="hover:bg-sky-100">Lecturer</option>
+                <option value="student" class="hover:bg-sky-100">Student</option>
               </select>
             </div>
             @error('role')

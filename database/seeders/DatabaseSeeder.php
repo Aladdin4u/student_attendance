@@ -36,22 +36,19 @@ class DatabaseSeeder extends Seeder
             'password' => '123456789',
         ]);
 
-        $eze = \App\Models\Student::factory()->create([
+        $eze = \App\Models\User::factory()->create([
             'firstName' => 'Chizoma',
             'lastName' => 'Eze',
-            'otherName' => 'Francis',
+            'role' => 'student',
             'email' => 'eze@example.com',
-            'regNumber' => '2019/0000',
-            'level' => '400',
+            'phoneNumber' => '090000000',
             'password' => '123456789'
         ]);
-        $ibeh = \App\Models\Student::factory()->create([
+        $ibeh = \App\Models\User::factory()->create([
             'firstName' => 'Uchechukwu',
             'lastName' => 'Ibeh',
-            'otherName' => 'john',
+            'role' => 'student',
             'email' => 'ibeh@example.com',
-            'regNumber' => '2019/0001',
-            'level' => '400',
             'password' => '123456789'
         ]);
 
