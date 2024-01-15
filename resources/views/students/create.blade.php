@@ -7,16 +7,9 @@
             <div class="w-full flex flex-row items-center justify-between space-x-4">
 
                 <div class="basis-1/2">
-                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
-                    <input type="text" name="firstName" placeholder="First Name" value="{{old('firstName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
-                    @error('firstName')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
-                </div>
-                <div class="basis-1/2">
-                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-                    <input type="text" name="lastName" placeholder="Last Name" value="{{old('lastName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
-                    @error('lastName')
+                    <label for="user_id" class="block text-sm font-medium leading-6 text-gray-900">First Name-</label>
+                    <input type="number" name="user_id" placeholder="First Name" value="{{old('user_id')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    @error('user_id')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
@@ -41,15 +34,15 @@
             </div>
 
             <div class="basis-1/2">
-                <label for="level" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
-                <select name="level" id="level" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                <label for="department" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
+                <select name="department" id="level" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
                     <option value="" class="hover:bg-sky-100">-- select level --</option>
                     <option value="100" class="hover:bg-sky-100">100</option>
                     <option value="200" class="hover:bg-sky-100">200</option>
                     <option value="300" class="hover:bg-sky-100">300</option>
                     <option value="400" class="hover:bg-sky-100">400</option>
                 </select>
-                @error('level')
+                @error('department')
                 <x-alert>{{$message}}</x-alert>
                 @enderror
             </div>

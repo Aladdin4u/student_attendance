@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
+use App\Models\User;
 
 class StudentController extends Controller
 {
@@ -45,17 +46,18 @@ class StudentController extends Controller
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
+        $user = User::find($request->user_id);
+        dd($user, $user->firstName);
 
         $formFields = $request->validate([
-            "firstName" => "required",
-            "lastName" => "required",
             "otherName" => "required",
-            "email" => ["required", "email", Rule::unique("students", "email")],
             "regNumber" => ["required", "regNumber", Rule::unique("students", "regNumber")],
-            "level" => "required",
+            "department" => "required",
+            "user_id" => "required",
         ]);
 
-        $formFields['password'] = bcrypt($formFields['lastName']);
+        $formFields['firstName'] = $user->firstName;
+        $formFields['lastName'] = $user->lastName;
 
         Student::create($formFields);
 

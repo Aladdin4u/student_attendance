@@ -92,7 +92,7 @@ class StudentsDataTable extends DataTable
             Column::make('lastName'),
             Column::make('otherName'),
             Column::make('regNumber'),
-            Column::make('level'),
+            Column::make('department'),
             Column::computed('View'),
             Column::computed('Edit'),
             Column::computed('Delete'),

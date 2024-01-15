@@ -41,7 +41,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     // Admin dashbord
-    Route::get('/', [UserController::class, 'dashboard'])->middleware('auth')->name('admin.dashboard');
+    Route::get('/admin', [UserController::class, 'dashboard'])->middleware('auth')->name('admin.dashboard');
     // get all user
     Route::get('/users', [UserController::class, 'index'])->middleware('auth');
     // manage user
@@ -105,8 +105,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {
+     // show all students
+     Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
     // Lecturer dashboard
-    Route::get('/', [UserController::class, 'dashboard'])->name('lecturer.dashboard');
+    Route::get('/lecturer', [UserController::class, 'dashboard'])->name('lecturer.dashboard');
     // store lecturer courses
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
     // destroy lecturer courses
