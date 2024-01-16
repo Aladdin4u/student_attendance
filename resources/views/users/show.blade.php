@@ -19,7 +19,7 @@
               </button>
               <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Register Course</h3>
-                <form method="POST" action="/lecturers/courses" class="space-y-6">
+                <form method="POST" action="{{$user->role == 'lecturer' ? '/lecturers/courses' : '/students/courses'}}" class="space-y-6">
                   @csrf
                   <div>
                     <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>

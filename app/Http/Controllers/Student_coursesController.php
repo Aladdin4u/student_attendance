@@ -10,16 +10,16 @@ class Student_coursesController extends Controller
     // store form data
     public function store(Request $request)
     {
+        // dd($request);
         $item = Student_courses::latest()->where("course_id", "=", $request->course_id)
-            ->where("student_id", "=", $request->student_id)
+            ->where("user_id", "=", $request->user_id)
             ->get();
-        // dd($item, $request, !$item->isEmpty());
 
         if (!$item->isEmpty()) {
             return back()->with("message", "This course is already in the list");
         }
         $formFields = $request->validate([
-            "student_id" => "required",
+            "user_id" => "required",
             "course_id" => "required"
         ]);
 

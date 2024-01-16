@@ -181,13 +181,18 @@ class UserController extends Controller
     // show single users
     public function show(User $user)
     {
-        $lecturer_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
-        // dd($lecturer_course);
+        // dd($user, $user->role);
+        $user_course = "";
+        if($user->role == "lecturer") {
+            $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+        } else {
+            $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+        }
         $course = Course::all();
         return view("users.show", [
             "user" => $user,
             "courses" => $course,
-            "user_courses" => $lecturer_course,
+            "user_courses" => $user_course,
         ]);
     }
 

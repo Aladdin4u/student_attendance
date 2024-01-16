@@ -23,5 +23,9 @@ class Student
         if(Auth::user()->role == "student") {
             return $next($request);
         }
+
+        if(Auth::user()->role == "admin") {
+            return $next($request);
+        }
     }
 }
