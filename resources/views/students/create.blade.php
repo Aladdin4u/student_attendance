@@ -5,11 +5,17 @@
         <form method="POST" action="/students" class="space-y-4">
             @csrf
             <div class="w-full flex flex-row items-center justify-between space-x-4">
-
                 <div class="basis-1/2">
-                    <label for="user_id" class="block text-sm font-medium leading-6 text-gray-900">First Name-</label>
-                    <input type="number" name="user_id" placeholder="First Name" value="{{old('user_id')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
-                    @error('user_id')
+                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+                    <input type="text" name="firstName" placeholder="First Name" value="{{auth()->user()->firstName}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    @error('firstName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+                <div class="basis-1/2">
+                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+                    <input type="text" name="lastName" placeholder="Last Name" value="{{auth()->user()->lastName}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    @error('lastName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
@@ -46,6 +52,7 @@
                 <x-alert>{{$message}}</x-alert>
                 @enderror
             </div>
+            <input type="number" name="user_id" value="{{auth()->user()->id}}" class="sr-only" />
 
             <div class="mx-auto flex flex-row items-center justify-between space-x-2">
                 <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">

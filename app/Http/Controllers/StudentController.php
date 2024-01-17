@@ -43,21 +43,17 @@ class StudentController extends Controller
     // store form data
     public function store(Request $request)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
         $user = User::find($request->user_id);
-        dd($user, $user->firstName);
+        // dd($user, $user->firstName, $request);
 
         $formFields = $request->validate([
+            "firstName" => "required",
+            "lastName" => "required",
             "otherName" => "required",
-            "regNumber" => ["required", "regNumber", Rule::unique("students", "regNumber")],
+            "regNumber" => "required",
             "department" => "required",
             "user_id" => "required",
         ]);
-
-        $formFields['firstName'] = $user->firstName;
-        $formFields['lastName'] = $user->lastName;
 
         Student::create($formFields);
 

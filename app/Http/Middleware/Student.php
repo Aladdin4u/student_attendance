@@ -27,5 +27,7 @@ class Student
         if(Auth::user()->role == "admin") {
             return $next($request);
         }
+
+        return abort(403);
     }
 }

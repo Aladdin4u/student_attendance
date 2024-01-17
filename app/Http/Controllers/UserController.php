@@ -183,17 +183,29 @@ class UserController extends Controller
     {
         // dd($user, $user->role);
         $user_course = "";
+        $student_form = "";
+        $course = Course::all();
         if($user->role == "lecturer") {
             $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+            
+            return view("users.show", [
+                "user" => $user,
+                "courses" => $course,
+                "user_courses" => $user_course,
+            ]);
         } else {
             $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+            $student_form = $user->students;
+            // dd($student_form, $user->students);
+
+            return view("students.profile", [
+                "user" => $user,
+                "courses" => $course,
+                "user_courses" => $user_course,
+                "student_form" => $student_form,
+            ]);
         }
-        $course = Course::all();
-        return view("users.show", [
-            "user" => $user,
-            "courses" => $course,
-            "user_courses" => $user_course,
-        ]);
+        
     }
 
     public function manage(User $user, UsersDataTable $dataTable)

@@ -127,6 +127,12 @@ Route::middleware(['auth', 'lecturer'])->group(function () {
 Route::middleware(['auth', 'student'])->group(function () {
     // Lecturer dashbord
     Route::get('/', [UserController::class, 'dashboard'])->name('student.dashboard');
+    // show single user
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    // store student
+    Route::post('/students', [StudentController::class, 'store']);
+    // show student create form
+    Route::get('/students/create', [StudentController::class, 'create']);
     // show student edit form
     Route::get('/students/{student}/edit', [StudentController::class, 'edit']);
     // update student edit form

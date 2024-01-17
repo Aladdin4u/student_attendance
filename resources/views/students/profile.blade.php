@@ -19,7 +19,7 @@
               </button>
               <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Register Course</h3>
-                <form method="POST" action="/lecturers/courses" class="space-y-6">
+                <form method="POST" action="/students/courses" class="space-y-6">
                   @csrf
                   <div>
                     <label for="course_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
@@ -104,4 +104,19 @@
     </table>
     @endunless
   </div>
+
+  @unless($student_form->isEmpty())
+  @foreach($student_form as $user)
+<div class="w-full mt-10">
+  <p>{{$user->otherName}}</p>
+  <p>{{$user->regNumber}}</p>
+  <p>{{$user->email}}</p>
+</div>
+@endforeach
+@else
+<div>Complete your registration <a href="/students/create">link</a>
+</div>
+@endunless
+
+
 </x-layout>
