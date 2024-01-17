@@ -24,7 +24,7 @@ class TakeAttendancesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('Check', function (Student_courses $student) {
-                return '<div id="form"><input type="checkbox" id="' . $student->id . '" name="is_present" value="' . $student->student_id . '"  class="checked:accent-sky-500 accent-sky-400" />
+                return '<div id="form"><input type="checkbox" id="' . $student->id . '" name="is_present" value="' . $student->user_id . '"  class="checked:accent-sky-500 accent-sky-400" />
                 <input type="text" id="course_id" name="course_id" value="' . $student->course_id . '" class="sr-only" /><div>';
             })
             ->rawColumns(['Check'])
@@ -45,9 +45,9 @@ class TakeAttendancesDataTable extends DataTable
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
                 ->get(["course_id"])->first();
         }
-        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.student_id', '=', 'students.id')
+        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.user_id', '=', 'students.user_id')
             ->join('courses', 'student_courses.course_id', '=', 'courses.id')
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
     }
 
     /**
@@ -84,7 +84,7 @@ class TakeAttendancesDataTable extends DataTable
             Column::make('otherName')->name('students.otherName'),
             Column::make('regNumber')->name('students.regNumber'),
             Column::make('code')->name('courses.code'),
-            Column::make('level')->name('students.level'),
+            Column::make('department')->name('students.department'),
             Column::computed('Check'),
         ];
     }

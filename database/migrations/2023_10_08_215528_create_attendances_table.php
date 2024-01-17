@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('is_present');
             $table->date('date');
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();
         });
     }

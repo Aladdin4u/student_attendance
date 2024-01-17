@@ -186,7 +186,8 @@ class UserController extends Controller
         $student_form = "";
         $course = Course::all();
         if($user->role == "lecturer") {
-            $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+            $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")
+            ->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
             
             return view("users.show", [
                 "user" => $user,
@@ -194,7 +195,8 @@ class UserController extends Controller
                 "user_courses" => $user_course,
             ]);
         } else {
-            $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+            $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")
+            ->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
             $student_form = $user->students;
             // dd($student_form, $user->students);
 

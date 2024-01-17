@@ -57,14 +57,14 @@ class AttendancesDataTable extends DataTable
         if ($this->from && $this->to) {
             return $model->where('attendances.course_id', $lc->course_id ?? 0)
                 ->whereBetween('attendances.date', [$this->from, $this->to])
-                ->join("students", "attendances.student_id", "=", "students.id")
+                ->join("students", "attendances.user_id", "=", "students.user_id")
                 ->join("courses", "attendances.course_id", "=", "courses.id")
-                ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+                ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
         }
         return $model->where('attendances.course_id', $lc->course_id ?? 0)
-            ->join("students", "attendances.student_id", "=", "students.id")
+            ->join("students", "attendances.user_id", "=", "students.user_id")
             ->join("courses", "attendances.course_id", "=", "courses.id")
-            ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+            ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
     }
 
     /**
@@ -101,7 +101,7 @@ class AttendancesDataTable extends DataTable
             Column::make('otherName')->name('students.otherName'),
             Column::make('regNumber')->name('students.regNumber'),
             Column::make('code')->name('courses.code'),
-            Column::make('level')->name('students.level'),
+            Column::make('department')->name('students.department'),
             Column::computed('Status'),
             Column::make('date'),
         ];

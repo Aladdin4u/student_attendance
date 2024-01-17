@@ -45,10 +45,10 @@ class SingleStudentsDataTable extends DataTable
      */
     public function query(Attendance $model): QueryBuilder
     {
-        return $model->where('attendances.student_id', $this->id)
-            ->join("students", "attendances.student_id", "=", "students.id")
+        return $model->where('attendances.user_id', $this->id)
+            ->join("students", "attendances.user_id", "=", "students.user_id")
             ->join("courses", "attendances.course_id", "=", "courses.id")
-            ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+            ->select('attendances.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
     }
 
     /**

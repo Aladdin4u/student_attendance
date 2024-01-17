@@ -24,10 +24,10 @@ class OverallAttendancesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Status', function (Student_courses $sc) {
-                $att = Attendance::where("student_id", $sc->student_id)->where("is_present", "present")->count();
+            ->addColumn('Status', function (Student_courses $student) {
+                $att = Attendance::where("user_id", $student->user_id)->where("is_present", "present")->count();
                 $total = ($att / 24) * 100;
-                if($total >= 50) {
+                if ($total >= 50) {
                     return '<div>
                     <span class="py-1 px-2 rounded-sm text-white capitalize bg-green-600">
                       qualified
@@ -39,10 +39,10 @@ class OverallAttendancesDataTable extends DataTable
                     </span></div>';
                 }
             })
-            ->addColumn('Total %', function (Student_courses $sc) {
-                $att = Attendance::where("student_id", $sc->student_id)->where("is_present", "present")->count();
+            ->addColumn('Total %', function (Student_courses $student) {
+                $att = Attendance::where("user_id", $student->user_id)->where("is_present", "present")->count();
                 $total = ($att / 24) * 100;
-                return '<div>' . round($total,2) . '%</div>';
+                return '<div>' . round($total, 2) . '%</div>';
             })
             ->rawColumns(['Status', 'Total %'])
             ->addIndexColumn()
@@ -55,9 +55,10 @@ class OverallAttendancesDataTable extends DataTable
     public function query(Student_courses $model): QueryBuilder
     {
         $lc = Lecturer_courses::where("user_id", auth()->user()->id)->get(["course_id"])->first();
-        $data = $model->where('student_courses.course_id', $lc->course_id ?? 0)->join("students", "student_courses.student_id", "=", "students.id")
+        $data = $model->where('student_courses.course_id', $lc->course_id ?? 0)
+            ->join("students", "student_courses.user_id", "=", "students.user_id")
             ->join("courses", "student_courses.course_id", "=", "courses.id")
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
 
         return $data;
     }
@@ -96,7 +97,7 @@ class OverallAttendancesDataTable extends DataTable
             Column::make('otherName')->name('students.otherName'),
             Column::make('regNumber')->name('students.regNumber'),
             Column::make('code')->name('courses.code'),
-            Column::make('level')->name('students.level'),
+            Column::make('department')->name('students.department'),
             Column::computed('Total %'),
             Column::computed('Status'),
         ];

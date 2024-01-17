@@ -24,7 +24,7 @@ class LecturerStudentsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('Attendance', function (Student_courses $student) {
-                return '<a href="/students/' . $student->student_id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
+                return '<a href="/students/' . $student->user_id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
             })
             ->rawColumns(['Attendance'])
             ->setRowId('id')
@@ -45,9 +45,10 @@ class LecturerStudentsDataTable extends DataTable
             $lc = Lecturer_courses::where("user_id", auth()->user()->id)
                 ->get(["course_id"])->first();
         }
-        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.student_id', '=', 'students.id')
+        return $model->where('student_courses.course_id', $lc->course_id ?? 0)
+            ->join('students', 'student_courses.user_id', '=', 'students.user_id')
             ->join('courses', 'student_courses.course_id', '=', 'courses.id')
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.level', 'courses.code', 'courses.title')->newQuery();
+            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
     }
 
     /**
@@ -84,7 +85,7 @@ class LecturerStudentsDataTable extends DataTable
             Column::make('otherName')->name('students.otherName'),
             Column::make('regNumber')->name('students.regNumber'),
             Column::make('code')->name('courses.code'),
-            Column::make('level')->name('students.level'),
+            Column::make('department')->name('students.department'),
             Column::computed('Attendance'),
         ];
     }
