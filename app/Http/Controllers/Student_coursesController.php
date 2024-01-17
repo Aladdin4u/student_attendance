@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\Student_courses;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,11 @@ class Student_coursesController extends Controller
     // store form data
     public function store(Request $request)
     {
-        // dd($request);
+        $findStudent = Student::where("user_id",$request->user_id)->get();
+        
+        if($findStudent->isEmpty()) {
+            return back()->with("message", "Student registration is not completed!");
+        }
         $item = Student_courses::latest()->where("course_id", "=", $request->course_id)
             ->where("user_id", "=", $request->user_id)
             ->get();

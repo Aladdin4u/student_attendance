@@ -3,7 +3,7 @@
   <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-lg">
 
     <div class="w-full flex items-center justify-between">
-      <h2 class="font-semibold text-left"> welcome {{$user['firstName']}}</h2>
+      <h2 class="font-semibold text-left"> Welcome back {{$user['firstName']}}!</h2>
       <div x-data="{ open: false }">
         <button x-on:click="open = ! open" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">Register Course</button>
         <!-- Main modal -->
@@ -42,6 +42,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="w-full flex items-center justify-between mt-4">
+      <div class="bg-sky-400 p-4 rounded-md">completed registration</div>
+      <div class="bg-sky-400 p-4 rounded-md">View course form</div>
+      <div class="bg-sky-400 p-4 rounded-md">View Attendance</div>
     </div>
 
     <h2 class="font-semibold">Courses List</h2>

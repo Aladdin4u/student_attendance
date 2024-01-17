@@ -115,10 +115,6 @@ class UserController extends Controller
     // destroy user data 
     public function destroy(User $user)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $user->delete();
 
         return back()->with("message", "Lecturer Deleted Successfully!");
@@ -181,7 +177,7 @@ class UserController extends Controller
     // show single users
     public function show(User $user)
     {
-        // dd($user, $user->role);
+        $isShow = "";
         $user_course = "";
         $student_form = "";
         $course = Course::all();
