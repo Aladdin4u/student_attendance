@@ -37,10 +37,6 @@ class Student_coursesController extends Controller
     // destroy student_courses data 
     public function destroy(Student_courses $student_courses)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $student_courses->delete();
 
         return back()->with("message", "Course Deleted Successfully!");

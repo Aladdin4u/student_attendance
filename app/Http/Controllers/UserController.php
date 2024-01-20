@@ -20,25 +20,39 @@ use Illuminate\Auth\Events\PasswordReset;
 
 class UserController extends Controller
 {
-    // show user dashboard
-    public function dashboard()
+    // show admin dashboard
+    public function adminDashboard()
     {
         $lecturer = User::where('role', 'lecturer')->count();
         $class = Lecturer_courses::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
-        if (auth()->user()->role === "admin") {
-            $student = Student::count();
-        } else {
-            if(count($class) > 0) {
-                $item = [];
-                foreach($class as $c){
-                    $item = Student_courses::where('course_id', $c->course_id);
-                }
-                $student = $item->count();
-            } else {
-                $student = 0;
+        $student = Student::count();
+        // dd($student);
+
+        return view("users.dashboard", [
+            "allStudent" => $student,
+            "allLecturer" => $lecturer,
+            "classes" => count($class) > 0 ? $class->count() : 0,
+            "courses" => $courses,
+            "attendance" => $attendance
+        ]);
+    }
+    // show Lecturer dashboard
+    public function lecturerDashboard()
+    {
+        $lecturer = User::where('role', 'lecturer')->count();
+        $class = Lecturer_courses::where('user_id', auth()->user()->id)->get();
+        $courses = Course::all();
+        $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
+        if (count($class) > 0) {
+            $item = [];
+            foreach ($class as $c) {
+                $item = Student_courses::where('course_id', $c->course_id);
             }
+            $student = $item->count();
+        } else {
+            $student = 0;
         }
         // dd($student);
 
@@ -50,6 +64,21 @@ class UserController extends Controller
             "attendance" => $attendance
         ]);
     }
+    // show student dashboard
+    public function dashboard()
+    {
+        $class = Student_courses::where('user_id', auth()->user()->id)->count();
+        $courses = Course::all();
+        $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
+        // dd($class);
+
+        return view("students.dashboard", [
+            "classes" => $class,
+            "courses" => $courses,
+            "attendance" => $attendance
+        ]);
+    }
+
     // show user form
     public function create()
     {
@@ -71,8 +100,8 @@ class UserController extends Controller
         $formFields['password'] = bcrypt($formFields['password']);
 
         $user = User::create($formFields);
-// dd($user->id);
-        if($request->role === "student") {
+        // dd($user->id);
+        if ($request->role === "student") {
             $studentFields = [
                 "firstName" => $user->firstName,
                 "lastName" => $user->lastName,
@@ -103,9 +132,9 @@ class UserController extends Controller
             // return redirect('/')->with('message', 'You are now logged in!');
             if (auth()->user()->role == 'admin') {
                 return redirect()->route('admin.dashboard')->with('message', 'You are now logged in!');
-            }else if (auth()->user()->role == 'lecturer') {
+            } else if (auth()->user()->role == 'lecturer') {
                 return redirect()->route('lecturer.dashboard')->with('message', 'You are now logged in!');
-            }else{
+            } else {
                 return redirect()->route('student.dashboard')->with('message', 'You are now logged in!');
             }
         }
@@ -191,10 +220,10 @@ class UserController extends Controller
         $user_course = "";
         $student_form = "";
         $course = Course::all();
-        if($user->role == "lecturer") {
+        if ($user->role == "lecturer") {
             $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")
-            ->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
-            
+                ->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+
             return view("users.show", [
                 "user" => $user,
                 "courses" => $course,
@@ -202,7 +231,7 @@ class UserController extends Controller
             ]);
         } else {
             $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")
-            ->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+                ->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
             $student_form = $user->students;
             // dd($student_form, $user->students);
 
@@ -213,13 +242,11 @@ class UserController extends Controller
                 "student_form" => $student_form,
             ]);
         }
-        
     }
 
     public function manage(User $user, UsersDataTable $dataTable)
     {
         return $dataTable->render('users.manage');
-        
     }
 
     public function index(User $user, UsersDataTable $dataTable)

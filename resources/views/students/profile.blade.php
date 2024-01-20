@@ -71,7 +71,7 @@
               {{$user_course['title']}}
             </td>
             <td class="p-2">
-              <form method="POST" action="/lecturers_courses/{{$user_course['id']}}">
+              <form method="POST" action="/students_courses/{{$user_course['id']}}">
                 @csrf
                 @method('DELETE')
                 <button>

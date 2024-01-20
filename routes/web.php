@@ -41,7 +41,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     // Admin dashbord
-    Route::get('/admin', [UserController::class, 'dashboard'])->middleware('auth')->name('admin.dashboard');
+    Route::get('/admin', [UserController::class, 'adminDashboard'])->middleware('auth')->name('admin.dashboard');
     // get all user
     Route::get('/users', [UserController::class, 'index'])->middleware('auth');
     // manage user
@@ -105,10 +105,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {
-     // show all students
-     Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
+    // show all students
+    Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
     // Lecturer dashboard
-    Route::get('/lecturer', [UserController::class, 'dashboard'])->name('lecturer.dashboard');
+    Route::get('/lecturer', [UserController::class, 'lecturerDashboard'])->name('lecturer.dashboard');
     // store lecturer courses
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
     // destroy lecturer courses
@@ -125,7 +125,7 @@ Route::middleware(['auth', 'lecturer'])->group(function () {
     Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 });
 Route::middleware(['auth', 'student'])->group(function () {
-    // Lecturer dashbord
+    // Student dashbord
     Route::get('/', [UserController::class, 'dashboard'])->name('student.dashboard');
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show']);
