@@ -44,17 +44,17 @@
             </div>
 
             <div class="basis-1/2">
-                <label for="level" class="block text-sm font-medium leading-6 text-gray-900">
-                    Level
+                <label for="department" class="block text-sm font-medium leading-6 text-gray-900">
+                    Department
                 </label>
-                <select name="level" id="level" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    <option value="" class="hover:bg-sky-100">-- select level --</option>
-                    <option value="100" {{$student->level == 100 ? 'selected' : '' }} class="hover:bg-sky-100">100</option>
-                    <option value="200" {{$student->level == 200 ? 'selected' : '' }} class="hover:bg-sky-100">200</option>
-                    <option value="300" {{$student->level == 300 ? 'selected' : '' }} class="hover:bg-sky-100">300</option>
-                    <option value="400" {{$student->level == 400 ? 'selected' : '' }} class="hover:bg-sky-100">400</option>
+                <select name="department" id="department" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                    <option value="" class="hover:bg-sky-100">-- select department --</option>
+                    <option value="100" {{$student->department == 100 ? 'selected' : '' }} class="hover:bg-sky-100">100</option>
+                    <option value="200" {{$student->department == 200 ? 'selected' : '' }} class="hover:bg-sky-100">200</option>
+                    <option value="300" {{$student->department == 300 ? 'selected' : '' }} class="hover:bg-sky-100">300</option>
+                    <option value="400" {{$student->department == 400 ? 'selected' : '' }} class="hover:bg-sky-100">400</option>
                 </select>
-                @error('level')
+                @error('department')
                 <x-alert>{{$message}}</x-alert>
                 @enderror
             </div>

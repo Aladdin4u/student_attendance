@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('otherName');
-            $table->string('regNumber')->unique();
-            $table->string('department');
+            $table->string('otherName')->nullable();
+            $table->string('regNumber')->unique()->nullable();
+            $table->string('department')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

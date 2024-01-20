@@ -71,24 +71,6 @@ class StudentController extends Controller
         return view("students.dashboard");
     }
 
-    // authenticate Student
-    public function authenticate(Request $request)
-    {
-        // dd($request);
-        $formFields = $request->validate([
-            "email" => ['required', 'email'],
-            "password" => "required",
-        ]);
-
-        if (auth()->guard('student')->attempt($formFields)) {
-            $request->session()->regenerate();
-
-            return redirect('/student/dashboard')->with('message', 'You are now logged in!');
-        }
-
-        return back()->withErrors(['email' => "Invalid Credentials"])->onlyInput('email');
-    }
-
     // show edit form
     public function edit(Student $student)
     {
@@ -98,17 +80,13 @@ class StudentController extends Controller
     // update form data
     public function update(Request $request, Student $student)
     {
-        // dd($request);
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
 
         $formFields = $request->validate([
             "firstName" => "required",
             "lastName" => "required",
             "otherName" => "required",
             "regNumber" => "required",
-            "level" => "required",
+            "department" => "required",
         ]);
 
         $student->update($formFields);
@@ -119,10 +97,6 @@ class StudentController extends Controller
     // destroy student data 
     public function destroy(Student $student)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $student->delete();
 
         return redirect("/students")->with("message", "Student Deleted Successfully!");

@@ -70,7 +70,17 @@ class UserController extends Controller
         // Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
 
-        User::create($formFields);
+        $user = User::create($formFields);
+// dd($user->id);
+        if($request->role === "student") {
+            $studentFields = [
+                "firstName" => $user->firstName,
+                "lastName" => $user->lastName,
+                "user_id" => $user->id,
+            ];
+
+            Student::create($studentFields);
+        }
 
         return redirect("/login")->with("message", "User created successfully!");
     }
