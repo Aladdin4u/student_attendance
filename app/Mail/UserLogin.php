@@ -17,7 +17,7 @@ class UserLogin extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $userDetails)
+    public function __construct(protected $userDetails)
     {
         $this->userDetails = $userDetails;
     }
@@ -38,8 +38,8 @@ class UserLogin extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.user-login',
-            with: [ "users" => $this->userDetails]
+            view: 'mail.userLogin',
+            with: ["users" => $this->userDetails]
         );
     }
 

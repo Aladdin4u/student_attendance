@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
 use App\Mail\UserLogin;
@@ -92,7 +93,8 @@ class UserController extends Controller
     // store user form
     public function store(Request $request)
     {
-        // dd($request->all());
+        $year = Carbon::now()->format('y');
+
         $formFields = $request->validate([
             "firstName" => "required",
             "lastName" => "required",
@@ -116,12 +118,13 @@ class UserController extends Controller
             ];
 
             if ($request->role === "student") {
+                $count = Student::all()->count() + 1;
                 $studentFields = [
                     "firstName" => $user->firstName,
                     "lastName" => $user->lastName,
                     "user_id" => $user->id,
+                    "regNumber" => 'REG/'. $year . '/' . $count
                 ];
-
                 Student::create($studentFields);
                 Mail::to($request->email)->send(new UserLogin($userDetails));
             } elseif ($request->role === "lecturer") {
