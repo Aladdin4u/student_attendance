@@ -48,6 +48,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
+    // show lecturer register 
+Route::get('/lecturers/create', [UserController::class, 'createLecturer']);
     // show all students
     Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
     // show students dashboard

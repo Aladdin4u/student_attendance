@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Course;
+use App\Mail\UserLogin;
 use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Student_courses;
 use Illuminate\Validation\Rule;
 use App\Models\Lecturer_courses;
 use App\DataTables\UsersDataTable;
-use App\Mail\ForgotPasswordMail;
-use App\Models\Student_courses;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -84,9 +84,15 @@ class UserController extends Controller
     {
         return view("users.register");
     }
+    // show lecturer form
+    public function createLecturer()
+    {
+        return view("lecturers.create");
+    }
     // store user form
     public function store(Request $request)
     {
+        // dd($request->all());
         $formFields = $request->validate([
             "firstName" => "required",
             "lastName" => "required",
@@ -96,20 +102,35 @@ class UserController extends Controller
             "password" => "required|confirmed|min:8"
         ]);
 
-        // Hash Password
-        $formFields['password'] = bcrypt($formFields['password']);
+        if ($request->role !== "admin") {
+            $pass = Str::random(10);
+            // Hash Password
+            $formFields['password'] = Hash::make($pass);
 
-        $user = User::create($formFields);
-        // dd($user->id);
-        if ($request->role === "student") {
-            $studentFields = [
+            $user = User::create($formFields);
+            
+            $userDetails = [
                 "firstName" => $user->firstName,
-                "lastName" => $user->lastName,
-                "user_id" => $user->id,
+                "email" => $user->email,
+                "password" => $pass,
             ];
 
-            Student::create($studentFields);
+            if ($request->role === "student") {
+                $studentFields = [
+                    "firstName" => $user->firstName,
+                    "lastName" => $user->lastName,
+                    "user_id" => $user->id,
+                ];
+
+                Student::create($studentFields);
+                Mail::to($request->email)->send(new UserLogin($userDetails));
+            } elseif ($request->role === "lecturer") {
+                Mail::to($request->email)->send(new UserLogin($userDetails));
+            }
         }
+
+        // Hash Password
+        $formFields['password'] = bcrypt($formFields['password']);
 
         return redirect("/login")->with("message", "User created successfully!");
     }

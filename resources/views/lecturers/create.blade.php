@@ -1,7 +1,7 @@
 <x-layout>
-    <h1 class="text-lg font-semibold text-left mb-4">Create Student</h1>
+    <h1 class="text-lg font-semibold text-left mb-4">Create Lecturer</h1>
     <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-xl pb-12 space-y-2">
-        <h2 class="font-semibold text-left">Student Datails</h2>
+        <h2 class="font-semibold text-left">Lecturer Datails</h2>
         <form method="POST" action="/register" class="space-y-4">
             @csrf
             <div class="w-full flex flex-row items-center justify-between space-x-4">
@@ -45,7 +45,7 @@
 
             <div class="basis-1/2 sr-only">
                 <div class="mt-2">
-                    <input id="role" name="role" type="text" required value="student" class="sr-only">
+                    <input id="role" name="role" type="text" required value="lecturer" class="sr-only">
                     <input name="password" type="password" value="password123" class="sr-only" />
                     <input name="password_confirmation" type="password" value="password123" class="sr-only" />
                 </div>
@@ -55,7 +55,7 @@
                 <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
                     Save
                 </button>
-                <a href="/students/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                <a href="/users/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
                     Back
                 </a>
             </div>
