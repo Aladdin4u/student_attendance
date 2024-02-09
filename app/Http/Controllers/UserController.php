@@ -240,7 +240,6 @@ class UserController extends Controller
     // show single users
     public function show(User $user)
     {
-        $isShow = "";
         $user_course = "";
         $student_form = "";
         $course = Course::all();

@@ -71,7 +71,7 @@ $now = date('Y-m-d H:i:s');
       $('#form > input[type="checkbox"]').each(function(index, value) {
         let data = {
           is_present: (this.checked ? "present" : "absent"),
-          student_id: value.value,
+          user_id: value.value,
           course_id: $("#course_id").val(),
           date: $("#date").val(),
           created_at: now,

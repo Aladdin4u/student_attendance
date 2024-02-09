@@ -19,8 +19,8 @@
         </svg>
     </div>
     <ul class="space-y-2 font-medium pl-10" x-show="open">
-        <li><a href="/lecturers/create" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100">Create Lecturers</a></li>
-        <li><a href="/users/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('users/*') ? 'bg-sky-100 text-sky-500' : ''}}">View All Lecturers</a></li>
+        <li><a href="/users/create" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('users/create') ? 'bg-sky-100 text-sky-500' : ''}}">Create Lecturers</a></li>
+        <li><a href="/users/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('users/manage') ? 'bg-sky-100 text-sky-500' : ''}}">View All Lecturers</a></li>
     </ul>
 </li>
 <li x-data="{ 
@@ -45,7 +45,7 @@
     </div>
     <ul class="space-y-2 font-medium pl-10" x-show="open">
         <li><a href="/students/create" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('students/create') ? 'bg-sky-100 text-sky-500' : ''}}">Create Students</a></li>
-        <li><a href="/students/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('students/manage') ? 'bg-sky-100 text-sky-500' : ''}} {{ request()->is('students/*') ? 'bg-sky-100 text-sky-500' : ''}}">View All Students</a></li>
+        <li><a href="/students/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('students/manage') ? 'bg-sky-100 text-sky-500' : ''}} {{ request()->is('students/manage') ? 'bg-sky-100 text-sky-500' : ''}}">View All Students</a></li>
     </ul>
 </li>
 <li x-data="{ 

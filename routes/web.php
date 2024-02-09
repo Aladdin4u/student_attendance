@@ -44,12 +44,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [UserController::class, 'adminDashboard'])->middleware('auth')->name('admin.dashboard');
     // get all user
     Route::get('/users', [UserController::class, 'index'])->middleware('auth');
+    // show lecturer register 
+    Route::get('/users/create', [UserController::class, 'createLecturer']);
     // manage user
     Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
-    // show lecturer register 
-Route::get('/lecturers/create', [UserController::class, 'createLecturer']);
     // show all students
     Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
     // show students dashboard
@@ -109,12 +109,16 @@ Route::get('/lecturers/create', [UserController::class, 'createLecturer']);
 Route::middleware(['auth', 'lecturer'])->group(function () {
     // show all students
     Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
+    // show single student
+    Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.list');
     // Lecturer dashboard
     Route::get('/lecturer', [UserController::class, 'lecturerDashboard'])->name('lecturer.dashboard');
     // store lecturer courses
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
     // destroy lecturer courses
     Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy']);
+    // show all attendances
+    Route::get('/attendances', [AttendanceController::class, 'index']);
     // show attendance create form
     Route::get('/attendances/create', [AttendanceController::class, 'create']);
     // store attendance create form
@@ -145,6 +149,8 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::post('/students/courses', [Student_coursesController::class, 'store']);
     // destroy student courses
     Route::delete('/students_courses/{student_courses}', [Student_coursesController::class, 'destroy']);
+    // show single attendance
+    Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 });
 
 

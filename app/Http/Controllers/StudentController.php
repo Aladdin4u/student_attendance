@@ -60,17 +60,6 @@ class StudentController extends Controller
         return back()->with("message", "Student created successfully!");
     }
 
-    // show user login form
-    public function login()
-    {
-        return view("students.login");
-    }
-    // show user login form
-    public function dashboard()
-    {
-        return view("students.dashboard");
-    }
-
     // show edit form
     public function edit(Student $student)
     {

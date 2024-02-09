@@ -24,7 +24,7 @@ class LecturerStudentsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('Attendance', function (Student_courses $student) {
-                return '<a href="/students/' . $student->user_id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
+                return '<a href="/attendances/' . $student->user_id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
             })
             ->rawColumns(['Attendance'])
             ->setRowId('id')
