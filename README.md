@@ -16,6 +16,19 @@ One of the first thing I would do improve the architectures and design patterns 
 
 I utilized building a well structured UML(Unified Modeling Language) diagram to visually represent the architecture, design, and implementation of the system. Also implement Yajra DataTables to manage querying and sorting and searching of data.
 
+## Environment value:
+setup your mail service information to send mails
+``
+MAIL_MAILER=
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=
+MAIL_FROM_ADDRESS=
+MAIL_FROM_NAME=
+``
+
 ## Installation:
 
 1. Clone repo
