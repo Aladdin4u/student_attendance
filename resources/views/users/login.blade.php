@@ -18,8 +18,8 @@
 </head>
 
 <body>
-	<main class="grid grid-cols-5 min-h-screen">
-		<div class="grid col-span-2 place-items-center content-center space-y-4 items-center justify-center bg-black text-white bg-image">
+	<main class="grid grid-cols-1 md:grid-cols-5 min-h-screen">
+		<div class="hidden md:grid col-span-2 place-items-center content-center space-y-4 items-center justify-center text-white bg-image">
 			<div class="flex space-x-2">
 				<svg class="w-8 h-8 flex-shrink-0 w-6 h-6 text-sky-500 transition duration-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
 					<path d="M2.7 15V9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -32,7 +32,7 @@
 			<h2 class="text-2xl font-md">Welcome Back!</h2>
 			<p class="text-wrap w-60 text-center">Please, provide your log in details in the form.</p>
 		</div>
-		<div class="grid col-span-3 place-items-center content-center sm:mx-auto sm:w-full sm:max-w-sm py-4 px-6">
+		<div class="grid md:col-span-3 content-center sm:mx-auto sm:w-full sm:max-w-sm py-4 px-6">
 
 			<h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login</h2>
 

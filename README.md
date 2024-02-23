@@ -6,7 +6,7 @@ A Design and development of student dashboard for monitoring and evaluating stud
 
 ## How It's Made:
 
-**Tech used:** <p>![HTML5 BADGE](https://img.shields.io/static/v1?label=|&message=HTML5&color=23555f&style=plastic&logo=html5) ![CSS BADGE](https://img.shields.io/static/v1?label=|&message=CSS3&color=285f65&style=plastic&logo=css3) ![JAVASCRIPT BADGE](https://img.shields.io/static/v1?label=|&message=JAVASCRIPT&color=3c7f5d&style=plastic&logo=javascript) ![REACT BADGE](https://img.shields.io/static/v1?label=|&message=LARAVEL&color=red&style=plastic&logo=laravel) ![BOOTSTRAP BADGE](https://img.shields.io/static/v1?label=|&message=BOOTSRAP&color=purple&style=plastic&logo=bootstrap) ![TAILWINDCSS BADGE](https://img.shields.io/static/v1?label=%7C&message=TAILWIND&color=15b8c5&style=plastic&logo=tailwindcss)</p>
+**Tech used:** <p>![HTML5 BADGE](https://img.shields.io/static/v1?label=|&message=HTML5&color=23555f&style=plastic&logo=html5) ![CSS BADGE](https://img.shields.io/static/v1?label=|&message=CSS3&color=285f65&style=plastic&logo=css3) ![JAVASCRIPT BADGE](https://img.shields.io/static/v1?label=|&message=JAVASCRIPT&color=3c7f5d&style=plastic&logo=javascript) ![REACT BADGE](https://img.shields.io/static/v1?label=|&message=LARAVEL&color=red&style=plastic&logo=laravel) ![BOOTSTRAP BADGE](https://img.shields.io/static/v1?label=|&message=BOOTSRAP&color=purple&style=plastic&logo=bootstrap) ![TAILWINDCSS BADGE](https://img.shields.io/static/v1?label=%7C&message=TAILWIND&color=15b8c5&style=plastic&logo=tailwindcss) ![DOCKER BADGE](https://img.shields.io/static/v1?label=%7C&message=DOCKER&color=blue&style=plastic&logo=docker)</p>
 
 ## Optimizations
 
@@ -18,7 +18,7 @@ I utilized building a well structured UML(Unified Modeling Language) diagram to 
 
 ## Environment value:
 setup your mail service information to send mails
-``
+```
 MAIL_MAILER=
 MAIL_HOST=
 MAIL_PORT=
@@ -27,7 +27,7 @@ MAIL_PASSWORD=
 MAIL_ENCRYPTION=
 MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
-``
+```
 
 ## Installation:
 
