@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/select.bootstrap5.css') }}" />
     <script src="{{ asset('js/chart.js')}}"></script>
     @vite('resources/js/app.js')
-    <title>Attendify</title>
+    <title>ClassMonitor</title>
 </head>
 
 <body>

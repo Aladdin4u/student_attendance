@@ -27,7 +27,7 @@
 					<path d="M5.63012 13.08L5.62012 17.77C5.62012 19.04 6.60012 20.4 7.80012 20.8L10.9901 21.86C11.5401 22.04 12.4501 22.04 13.0101 21.86L16.2001 20.8C17.4001 20.4 18.3801 19.04 18.3801 17.77V13.13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 				</svg>
 
-				<span class="self-center text-md">Attendify</span>
+				<span class="self-center text-md">ClassMonitor</span>
 			</div>
 			<h2 class="text-2xl font-md">Welcome Back!</h2>
 			<p class="text-wrap w-60 text-center">Please, provide your log in details in the form.</p>

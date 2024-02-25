@@ -271,12 +271,4 @@ class UserController extends Controller
     {
         return $dataTable->render('users.manage');
     }
-
-    public function index(User $user, UsersDataTable $dataTable)
-    {
-        return view("users.index", [
-            "users" => $user::latest()->where("role", "=", "lecturer")->filter(request(["search"]))->paginate(6)
-        ]);
-        // return $dataTable->render('users.index');
-    }
 }
