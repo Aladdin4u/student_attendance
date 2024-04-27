@@ -30,7 +30,6 @@ class CourseController extends Controller
     // store form data
     public function store(Request $request)
     {
-        // dd($request);
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
@@ -56,7 +55,6 @@ class CourseController extends Controller
     // update form data
     public function update(Request $request, Course $course)
     {
-        // dd($request);
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
@@ -76,7 +74,6 @@ class CourseController extends Controller
     // destroy course data 
     public function destroy(Course $course)
     {
-        // dd(auth()->user());
         if (auth()->user()->role != "admin") {
             abort(403, "Unauthorized Action");
         }
@@ -85,12 +82,11 @@ class CourseController extends Controller
 
         return back()->with("message", "course Deleted Successfully!");
     }
-    public function manage(Course $course, CoursesDataTable $dataTable)
+
+    // manage course 
+    public function manage(CoursesDataTable $dataTable)
     {
 
         return $dataTable->render("courses.manage");
-        // return view("courses.manage", [
-        //     "courses" => $course::latest()->filter(request(["search"]))->paginate(6),
-        // ]);
     }
 }
