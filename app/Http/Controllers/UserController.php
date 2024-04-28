@@ -10,9 +10,8 @@ use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Student_courses;
+use App\Models\Courses_offer;
 use Illuminate\Validation\Rule;
-use App\Models\Lecturer_courses;
 use App\DataTables\UsersDataTable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -25,7 +24,7 @@ class UserController extends Controller
     public function adminDashboard()
     {
         $lecturer = User::where('role', 'lecturer')->count();
-        $class = Lecturer_courses::where('user_id', auth()->user()->id)->get();
+        $class = Courses_offer::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         $student = Student::count();
@@ -43,13 +42,13 @@ class UserController extends Controller
     public function lecturerDashboard()
     {
         $lecturer = User::where('role', 'lecturer')->count();
-        $class = Lecturer_courses::where('user_id', auth()->user()->id)->get();
+        $class = Courses_offer::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         if (count($class) > 0) {
             $item = [];
             foreach ($class as $c) {
-                $item = Student_courses::where('course_id', $c->course_id);
+                $item = Courses_offer::where('course_id', $c->course_id);
             }
             $student = $item->count();
         } else {
@@ -68,7 +67,7 @@ class UserController extends Controller
     // show student dashboard
     public function dashboard()
     {
-        $class = Student_courses::where('user_id', auth()->user()->id)->count();
+        $class = Courses_offer::where('user_id', auth()->user()->id)->count();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         // dd($class);
@@ -104,36 +103,38 @@ class UserController extends Controller
             "password" => "required|confirmed|min:8"
         ]);
 
-        if ($request->role !== "admin") {
-            $pass = Str::random(10);
-            // Hash Password
-            $formFields['password'] = Hash::make($pass);
+        User::create($formFields);
 
-            $user = User::create($formFields);
-            
-            $userDetails = [
-                "firstName" => $user->firstName,
-                "email" => $user->email,
-                "password" => $pass,
-            ];
+        // if ($request->role !== "admin") {
+        //     $pass = Str::random(10);
+        //     // Hash Password
+        //     $formFields['password'] = Hash::make($pass);
 
-            if ($request->role === "student") {
-                $count = Student::all()->count() + 1;
-                $studentFields = [
-                    "firstName" => $user->firstName,
-                    "lastName" => $user->lastName,
-                    "user_id" => $user->id,
-                    "regNumber" => 'REG/'. $year . '/' . $count
-                ];
-                Student::create($studentFields);
-                Mail::to($request->email)->send(new UserLogin($userDetails));
-            } elseif ($request->role === "lecturer") {
-                Mail::to($request->email)->send(new UserLogin($userDetails));
-            }
-        }
+        //     $user = User::create($formFields);
+        //     dd($formFields);
+        //     $userDetails = [
+        //         "firstName" => $user->firstName,
+        //         "email" => $user->email,
+        //         "password" => $pass,
+        //     ];
+
+        //     if ($request->role === "student") {
+        //         $count = Student::all()->count() + 1;
+        //         $studentFields = [
+        //             "firstName" => $user->firstName,
+        //             "lastName" => $user->lastName,
+        //             "user_id" => $user->id,
+        //             "regNumber" => 'REG/'. $year . '/' . $count
+        //         ];
+        //         Student::create($studentFields);
+        //         Mail::to($request->email)->send(new UserLogin($userDetails));
+        //     } elseif ($request->role === "lecturer") {
+        //         Mail::to($request->email)->send(new UserLogin($userDetails));
+        //     }
+        // }
 
         // Hash Password
-        $formFields['password'] = bcrypt($formFields['password']);
+        // $formFields['password'] = bcrypt($formFields['password']);
 
         return redirect("/login")->with("message", "User created successfully!");
     }
@@ -240,34 +241,15 @@ class UserController extends Controller
     // show single users
     public function show(User $user)
     {
-        $user_course = "";
-        $student_form = "";
-        $course = Course::all();
-        if ($user->role == "lecturer") {
-            $user_course = $user->lecturer_courses()->join("courses", "lecturer_courses.course_id", "=", "courses.id")
-                ->get(["lecturer_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
+        $course = User::find($user->id)->courses()->get();
 
-            return view("users.show", [
-                "user" => $user,
-                "courses" => $course,
-                "user_courses" => $user_course,
-            ]);
-        } else {
-            $user_course = $user->student_courses()->join("courses", "student_courses.course_id", "=", "courses.id")
-                ->get(["student_courses.id", "courses.id  as courses_id", "courses.title", "courses.code"]);
-            $student_form = $user->students;
-            // dd($student_form, $user->students);
-
-            return view("students.profile", [
-                "user" => $user,
-                "courses" => $course,
-                "user_courses" => $user_course,
-                "student_form" => $student_form,
-            ]);
-        }
+        return view("users.show", [
+            "user" => $user,
+            "courses" => $course,
+        ]);
     }
 
-    public function manage(User $user, UsersDataTable $dataTable)
+    public function manage(UsersDataTable $dataTable)
     {
         return $dataTable->render('users.manage');
     }

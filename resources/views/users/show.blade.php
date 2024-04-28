@@ -46,7 +46,7 @@
 
     <h2 class="font-semibold">Courses List</h2>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      @unless($user_courses->isEmpty())
+      @unless($courses->isEmpty())
       <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="p-2">
@@ -59,24 +59,30 @@
             Course Title
           </th>
           <th scope="col" class="p-2">
+            Unit
+          </th>
+          <th scope="col" class="p-2">
             <span>Delete</span>
           </th>
         </tr>
       </thead>
       <tbody>
-        @foreach($user_courses as $user_course)
+        @foreach($courses as $course)
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
           <th scope="row" class="p-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{$loop->index + 1}}
           </th>
           <td class="p-2">
-            {{$user_course['code']}}
+            {{$course['code']}}
           </td>
           <td class="p-2">
-            {{$user_course['title']}}
+            {{$course['title']}}
           </td>
           <td class="p-2">
-            <form method="POST" action="/lecturers_courses/{{$user_course['id']}}">
+            {{$course['unit']}}
+          </td>
+          <td class="p-2">
+            <form method="POST" action="/courses_offer/{{$course['id']}}">
               @csrf
               @method('DELETE')
               <button>

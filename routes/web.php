@@ -4,6 +4,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Lecturer_coursesController;
 use App\Http\Controllers\LessionController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Student_coursesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -76,8 +77,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
     // destroy lecturer courses
     Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy']);
-    // show all course
-    Route::get('/courses', [CourseController::class, 'index']);
     // show course create form
     Route::get('/courses/create', [CourseController::class, 'create']);
     // store course create form
@@ -90,8 +89,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
     // manage courses
     Route::get('/courses/manage', [CourseController::class, 'manage']);
-    // show single course
-    Route::get('/courses/{course}', [CourseController::class, 'show']);
     // show all attendances
     Route::get('/attendances', [AttendanceController::class, 'index']);
     // show attendance create form
@@ -104,6 +101,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/attendances/manage', [AttendanceController::class, 'manage']);
     // show single attendance
     Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
+    // show section create form
+    Route::get('/sections/create', [SectionController::class, 'create']);
+    // store section form
+    Route::post('/sections', [SectionController::class, 'store']);
+    // show edit section form
+    Route::get('/sections/{section}/edit', [SectionController::class, 'edit']);
+    // update section form
+    Route::put('/sections/{section}', [SectionController::class, 'update']);
+    // delete section
+    Route::delete('/sections/{section}', [SectionController::class, 'destory']);
+    // manage section
+    Route::get('/sections/manage', [SectionController::class, 'manage']);
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {

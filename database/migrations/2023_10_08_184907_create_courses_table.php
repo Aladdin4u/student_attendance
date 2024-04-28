@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('title')->unique();
-            $table->string('semester');
-            $table->string('session');
+            $table->integer('unit');
             $table->timestamps();
         });
     }

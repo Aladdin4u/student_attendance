@@ -2,26 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\CoursesDataTable;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\DataTables\CoursesDataTable;
 
 class CourseController extends Controller
 {
-    // show all courses
-    public function index()
-    {
-        return view("courses.index", [
-            "courses" => Course::all()
-        ]);
-    }
-    // show course courses
-    public function show(Course $course)
-    {
-        return view("courses.show", [
-            "course" => $course
-        ]);
-    }
     // show create form
     public function create()
     {
@@ -37,8 +23,7 @@ class CourseController extends Controller
         $formFields = $request->validate([
             "code" => "required",
             "title" => "required",
-            "semester" => "required",
-            "session" => "required",
+            "department" => "required",
         ]);
 
         Course::create($formFields);
@@ -62,8 +47,7 @@ class CourseController extends Controller
         $formFields = $request->validate([
             "code" => "required",
             "title" => "required",
-            "semester" => "required",
-            "session" => "required",
+            "department" => "required",
         ]);
 
         $course->update($formFields);

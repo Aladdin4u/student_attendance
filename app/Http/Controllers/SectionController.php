@@ -4,23 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use Illuminate\Http\Request;
+use App\DataTables\SectionsDataTable;
 
 class SectionController extends Controller
 {
-    // show all section
-    public function index()
-    {
-        return view("sections.index", [
-            "sections" => Section::all()
-        ]);
-    }
-
-    // show section sections
-    public function show(Section $section)
-    {
-        return view("sections.show", ["section" => $section]);
-    }
-
     // show create section form
     public function create()
     {
@@ -84,8 +71,8 @@ class SectionController extends Controller
     }
 
     // manage section
-    public function manage()
+    public function manage(SectionsDataTable $dataTable)
     {
-        return view("sections.manage");
+        return $dataTable->render("sections.manage");
     }
 }

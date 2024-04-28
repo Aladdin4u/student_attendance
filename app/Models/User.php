@@ -44,32 +44,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function scopeFilter($query, array $filters)
+    // Relationship to courses offered
+    public function courses()
     {
-
-        if ($filters['search'] ?? false) {
-            $query->where('firstName', 'like', '%' . request('search') . '%')
-                ->orWhere('lastName', 'like', '%' . request('search') . '%')
-                ->orWhere('email', 'like', '%' . request('search') . '%')
-                ->orWhere('phoneNumber', 'like', '%' . request('search') . '%')
-                ->orWhere('level', 'like', '%' . request('search') . '%');
-        }
-    }
-
-    public function students()
-    {
-        return $this->hasMany(Student::class, "user_id");
-    }
-
-    //Lecturer Relationship to course
-    public function lecturer_courses()
-    {
-        return $this->hasMany(Lecturer_courses::class, "user_id");
-    }
-
-    //Student Relationship to course
-    public function student_courses()
-    {
-        return $this->hasMany(Student_courses::class, "user_id");
+        return $this->belongsToMany(Course::class, 'courses_offers');
     }
 }

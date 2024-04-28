@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('section', function (Blueprint $table) {
+        Schema::create('courses_offers', function (Blueprint $table) {
             $table->id();
-            $table->enum("semester", ["first", "second"]);
-            $table->string("year");
-            $table->date("start_date");
-            $table->date("end_date");
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('section');
+        Schema::dropIfExists('courses_offers');
     }
 };

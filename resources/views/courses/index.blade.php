@@ -14,8 +14,6 @@
       <td>{{$course['id']}}</td>
       <td>{{$course['code']}}</td>
       <td>{{$course['title']}}</td>
-      <td>{{$course['semester']}}</td>
-      <td>{{$course['session']}}</td>
       <td><a href="/courses/{{$course['id']}}">view</a></td>
       <td>
         <form method="POST" action="/courses/{{$course->id}}">
