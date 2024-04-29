@@ -59,7 +59,7 @@ class SectionsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('courses-table')
+            ->setTableId('section-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')

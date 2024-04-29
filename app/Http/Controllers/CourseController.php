@@ -8,9 +8,20 @@ use App\DataTables\CoursesDataTable;
 
 class CourseController extends Controller
 {
+    // course api
+    public function index(Request $request)
+    {
+        $course = Course::find($request->id)->lectures()->whereNot("users.role", "lecturer")->join('courses', 'courses_offers.course_id', '=', 'courses.id')
+            ->select('courses.id as course_id', 'courses.code', 'courses.title')->get();
+
+        return response()->json($course);
+    }
+
     // show create form
     public function create()
     {
+        $c = Course::find(1)->lectures()->whereNot("users.role", "lecturer")->join('students', 'users.id', '=', 'students.user_id')->join('courses', 'courses_offers.course_id', '=', 'courses.id') ->select('users.id as id','users.firstName', 'users.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title');
+        dd($c);
         return view("courses.create");
     }
     // store form data

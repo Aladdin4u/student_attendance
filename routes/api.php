@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Lecturer_coursesController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/course/{id}', [Lecturer_coursesController::class, 'index']);
+Route::get('/course/{id}', [CourseController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

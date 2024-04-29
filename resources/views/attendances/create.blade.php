@@ -42,13 +42,8 @@ $now = date('Y-m-d H:i:s');
 </x-layout>
 <script>
   const now = "{{$now}}";
-  const d = $('#currentdate').text();
-  console.log(d);
   var id = "{{auth()->user()->id}}";
-  $('input').on('change', function(e) {
-    $d = $(this).val()
-    $('#currentdate').text($d);
-  })
+
   $.ajax({
     url: "/api/course/" + id,
     type: "GET",
@@ -70,7 +65,7 @@ $now = date('Y-m-d H:i:s');
     $('#save-btn').on('click', function() {
       $('#form > input[type="checkbox"]').each(function(index, value) {
         let data = {
-          is_present: (this.checked ? "present" : "absent"),
+          status: (this.checked ? "present" : "absent"),
           user_id: value.value,
           course_id: $("#course_id").val(),
           date: $("#date").val(),
@@ -91,7 +86,7 @@ $now = date('Y-m-d H:i:s');
           formData: formData
         },
         success: function(data) {
-          $('#message').text("Attendance created successfully!");
+          $('#message').text("Attendance checked!");
           $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-48 py-3 z-50 rounded-lg");
           setTimeout(function() {
             $('#message').slideUp();
@@ -102,4 +97,8 @@ $now = date('Y-m-d H:i:s');
       });
     });
   })
+
+  function handleAttendance(user_id) {
+    console.log("attendace submitted", user_id);
+  }
 </script>

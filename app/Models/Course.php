@@ -9,8 +9,9 @@ class Course extends Model
 {
     use HasFactory;
 
-    //Relationship to lession
-    public function lessions(){
-        return $this->hasMany(Lession::class, "course_id");
+    // Relationship to courses offered
+    public function lectures()
+    {
+        return $this->belongsToMany(User::class, 'courses_offers');
     }
 }

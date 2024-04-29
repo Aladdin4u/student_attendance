@@ -2,8 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Student_courses;
-use App\Models\Lecturer_courses;
+use App\Models\User;
+use App\Models\Course;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -12,6 +12,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class TakeAttendancesDataTable extends DataTable
 {
@@ -20,12 +21,12 @@ class TakeAttendancesDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable(BelongsToMany $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Check', function (Student_courses $student) {
-                return '<div id="form"><input type="checkbox" id="' . $student->id . '" name="is_present" value="' . $student->user_id . '"  class="checked:accent-sky-500 accent-sky-400" />
-                <input type="text" id="course_id" name="course_id" value="' . $student->course_id . '" class="sr-only" /><div>';
+            ->addColumn('Check', function (User $user) {
+                return '<div id="form"><input type="checkbox"   class="checked:accent-sky-500 accent-sky-400" onclick="handleAttendance(this.value)"  value="' . $user->id . '" />
+                <input type="text" id="course_id" name="course_id" class="sr-only" value="' . $user->course_id . '"  /><div>';
             })
             ->rawColumns(['Check'])
             ->addIndexColumn()
@@ -35,19 +36,21 @@ class TakeAttendancesDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Student_courses $model): QueryBuilder
+    public function query(Course $model): BelongsToMany
     {
         if ($this->course_id) {
-            $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-                ->where("course_id", $this->course_id)
-                ->get(["course_id"])->first();
+            $course_id = User::find(auth()->user()->id)
+                ->courses()
+                ->where("courses.id", $this->course_id)
+                ->get(["courses.id"])->first();
         } else {
-            $lc = Lecturer_courses::where("user_id", auth()->user()->id)
-                ->get(["course_id"])->first();
+            $course_id = User::find(auth()->user()->id)
+                ->courses()
+                ->get(["courses.id"])->first();
         }
-        return $model->where('student_courses.course_id', $lc->course_id ?? 0)->join('students', 'student_courses.user_id', '=', 'students.user_id')
-            ->join('courses', 'student_courses.course_id', '=', 'courses.id')
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
+
+        return $model->find($course_id->id)->lectures()->whereNot("users.role", "lecturer")->join('students', 'users.id', '=', 'students.user_id')->join('courses', 'courses_offers.course_id', '=', 'courses.id')
+            ->select('users.id as id', 'users.firstName', 'users.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.id as course_id', 'courses.code', 'courses.title')->newQuery();
     }
 
     /**
@@ -79,8 +82,8 @@ class TakeAttendancesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName')->name('students.firstName'),
-            Column::make('lastName')->name('students.lastName'),
+            Column::make('firstName')->name('users.firstName'),
+            Column::make('lastName')->name('users.lastName'),
             Column::make('otherName')->name('students.otherName'),
             Column::make('regNumber')->name('students.regNumber'),
             Column::make('code')->name('courses.code'),
