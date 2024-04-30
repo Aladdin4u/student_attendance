@@ -30,7 +30,7 @@ class StudentsDataTable extends DataTable
               </svg></button></a>';
             })
             ->addColumn('Edit', function (User $student) {
-                return '<a href="/users/' . $student->id . '/edit"><button>
+                return '<a href="/users/' . $student->contact_id . '/edit"><button>
             <svg class="flex-shrink-0 w-6 h-6 stroke-gray-500 transition duration-75 hover:stroke-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.2601 3.6L5.0501 12.29C4.7401 12.62 4.4401 13.27 4.3801 13.72L4.0101 16.96C3.8801 18.13 4.7201 18.93 5.8801 18.73L9.1001 18.18C9.5501 18.1 10.1801 17.77 10.4901 17.43L18.7001 8.74C20.1201 7.24 20.7601 5.53 18.5501 3.44C16.3501 1.37 14.6801 2.1 13.2601 3.6Z M11.8899 5.05C12.3199 7.81 14.5599 9.92 17.3399 10.2 M3 22H21" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
             </svg></button></a>';
@@ -57,7 +57,7 @@ class StudentsDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->where('role', 'student')->newQuery();
+        return $model->where('role', 'student')->join('personal_details', 'users.id', '=' , 'personal_details.user_id')->select('users.id as id', 'personal_details.id as contact_id', 'personal_details.firstName', 'personal_details.lastName', 'personal_details.otherName', 'personal_details.phoneNumber')->newQuery();
     }
 
     /**
@@ -91,7 +91,8 @@ class StudentsDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('firstName'),
             Column::make('lastName'),
-            Column::make('email'),
+            Column::make('otherName'),
+            Column::make('phoneNumber'),
             Column::computed('View'),
             Column::computed('Edit'),
             Column::computed('Delete'),

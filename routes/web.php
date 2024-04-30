@@ -3,10 +3,10 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Lecturer_coursesController;
-use App\Http\Controllers\LessionController;
+use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Student_coursesController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentAdmissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,13 +28,13 @@ Route::post('/register', [UserController::class, 'store']);
 // show user login form
 Route::get('/login', [UserController::class, 'login'])->name('login');
 // show forget password
-Route::get('/forgot-password', [UserController::class, 'forgotPassword'])->middleware('guest');
+Route::get('/forgot-password', [UserController::class, 'forgotPassword']);
 // reset forget password
-Route::post('/forgot-password', [UserController::class, 'forgotPasswordEmail'])->middleware('guest');
+Route::post('/forgot-password', [UserController::class, 'forgotPasswordEmail']);
 // get reset password token
-Route::get('/reset-password/{token}', [UserController::class, 'PasswordReset'])->middleware('guest')->name('password.reset');
+Route::get('/reset-password/{token}', [UserController::class, 'PasswordReset'])->name('password.reset');
 // reset password
-Route::post('/reset-password', [UserController::class, 'PasswordUpdate'])->middleware('guest')->name('password.update');
+Route::post('/reset-password', [UserController::class, 'PasswordUpdate'])->name('password.update');
 // login user
 Route::post('/login', [UserController::class, 'authenticate']);
 // log User Out
@@ -51,24 +51,28 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
+    // show edit user form
+    Route::get('/users/{user}/edit', [PersonalDetailController::class, 'edit'])->middleware('auth');
+    // update user
+    Route::put('/users/{user}', [PersonalDetailController::class, 'update'])->middleware('auth');
+    // delete user
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware('auth');
     // show all students
-    Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
+    Route::get('/students', [StudentAdmissionController::class, 'index'])->middleware('auth');
     // show students dashboard
-    Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->middleware('auth');
+    Route::get('/student/dashboard', [StudentAdmissionController::class, 'dashboard'])->middleware('auth');
     // store student
-    Route::post('/students', [StudentController::class, 'store'])->middleware('auth');
+    Route::post('/students', [StudentAdmissionController::class, 'store'])->middleware('auth');
     // show student create form
-    Route::get('/students/create', [StudentController::class, 'create'])->middleware('auth');
+    Route::get('/students/create', [StudentAdmissionController::class, 'create'])->middleware('auth');
     // show student edit form
-    Route::get('/students/{student}/edit', [StudentController::class, 'edit']);
+    Route::get('/students/{student}/edit', [StudentAdmissionController::class, 'edit']);
     // update student edit form
-    Route::put('/students/{student}', [StudentController::class, 'update']);
-    // destroy student
-    Route::delete('/students/{student}', [StudentController::class, 'destroy']);
+    Route::put('/students/{student}', [StudentAdmissionController::class, 'update']);
     // manage student
-    Route::get('/students/manage', [StudentController::class, 'manage']);
+    Route::get('/students/manage', [StudentAdmissionController::class, 'manage']);
     // show single student
-    Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.list');
+    Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
     // store student courses
     Route::post('/students/courses', [Student_coursesController::class, 'store']);
     // destroy student courses
@@ -117,9 +121,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'lecturer'])->group(function () {
     // show all students
-    Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
+    Route::get('/students', [StudentAdmissionController::class, 'index'])->middleware('auth');
     // show single student
-    Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.list');
+    Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
     // Lecturer dashboard
     Route::get('/lecturer', [UserController::class, 'lecturerDashboard'])->name('lecturer.dashboard');
     // store lecturer courses
@@ -145,15 +149,15 @@ Route::middleware(['auth', 'student'])->group(function () {
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show']);
     // store student
-    Route::post('/students', [StudentController::class, 'store']);
+    Route::post('/students', [StudentAdmissionController::class, 'store']);
     // show student create form
-    Route::get('/students/create', [StudentController::class, 'create']);
+    Route::get('/students/create', [StudentAdmissionController::class, 'create']);
     // show student edit form
-    Route::get('/students/{student}/edit', [StudentController::class, 'edit']);
+    Route::get('/students/{student}/edit', [StudentAdmissionController::class, 'edit']);
     // update student edit form
-    Route::put('/students/{student}', [StudentController::class, 'update']);
+    Route::put('/students/{student}', [StudentAdmissionController::class, 'update']);
     // show single student
-    Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.list');
+    Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
     // store student courses
     Route::post('/students/courses', [Student_coursesController::class, 'store']);
     // destroy student courses

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('title')->unique();
             $table->integer('unit');
+            $table->unsignedBigInteger('level_id');
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->timestamps();
         });
     }

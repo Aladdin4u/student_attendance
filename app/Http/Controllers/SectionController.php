@@ -17,15 +17,10 @@ class SectionController extends Controller
     // store section data
     public function store(Request $request)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $formFields = $request->validate([
-            "semester" => "required",
             "year" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
+            "user_id" => "required",
+            "level_id" => "required",
         ]);
 
         Section::create($formFields);
@@ -47,10 +42,9 @@ class SectionController extends Controller
         }
 
         $formFields = $request->validate([
-            "semester" => "required",
             "year" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
+            "user_id" => "required",
+            "level_id" => "required",
         ]);
 
         $section->update($formFields);

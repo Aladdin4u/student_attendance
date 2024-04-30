@@ -6,13 +6,13 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
 use App\Mail\UserLogin;
-use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Courses_offer;
+use App\Models\CoursesOffer;
 use Illuminate\Validation\Rule;
 use App\DataTables\UsersDataTable;
+use App\Models\PersonalDetail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -24,10 +24,10 @@ class UserController extends Controller
     public function adminDashboard()
     {
         $lecturer = User::where('role', 'lecturer')->count();
-        $class = Courses_offer::where('user_id', auth()->user()->id)->get();
+        $class = CoursesOffer::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
-        $student = Student::count();
+        $student = User::where('role', 'student')->count();
         // dd($student);
 
         return view("users.dashboard", [
@@ -42,13 +42,13 @@ class UserController extends Controller
     public function lecturerDashboard()
     {
         $lecturer = User::where('role', 'lecturer')->count();
-        $class = Courses_offer::where('user_id', auth()->user()->id)->get();
+        $class = CoursesOffer::where('user_id', auth()->user()->id)->get();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         if (count($class) > 0) {
             $item = [];
             foreach ($class as $c) {
-                $item = Courses_offer::where('course_id', $c->course_id);
+                $item = CoursesOffer::where('course_id', $c->course_id);
             }
             $student = $item->count();
         } else {
@@ -67,7 +67,7 @@ class UserController extends Controller
     // show student dashboard
     public function dashboard()
     {
-        $class = Courses_offer::where('user_id', auth()->user()->id)->count();
+        $class = CoursesOffer::where('user_id', auth()->user()->id)->count();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         // dd($class);
@@ -92,49 +92,34 @@ class UserController extends Controller
     // store user form
     public function store(Request $request)
     {
-        $year = Carbon::now()->format('y');
-
         $formFields = $request->validate([
+            "role" => "required",
             "firstName" => "required",
             "lastName" => "required",
-            "email" => ['required', 'email', Rule::unique('users', 'email')],
-            "role" => "required",
+            "otherName" => "required",
             "phoneNumber" => "required",
+            "email" => ['required', 'email', Rule::unique('users', 'email')],
             "password" => "required|confirmed|min:8"
         ]);
 
-        User::create($formFields);
 
-        // if ($request->role !== "admin") {
-        //     $pass = Str::random(10);
-        //     // Hash Password
-        //     $formFields['password'] = Hash::make($pass);
+        $loginDetails = [
+            "role" => $formFields['role'],
+            "email" => $formFields['email'],
+            "password" => bcrypt($formFields['password']),
+        ];
 
-        //     $user = User::create($formFields);
-        //     dd($formFields);
-        //     $userDetails = [
-        //         "firstName" => $user->firstName,
-        //         "email" => $user->email,
-        //         "password" => $pass,
-        //     ];
+        $user = User::create($loginDetails);
 
-        //     if ($request->role === "student") {
-        //         $count = Student::all()->count() + 1;
-        //         $studentFields = [
-        //             "firstName" => $user->firstName,
-        //             "lastName" => $user->lastName,
-        //             "user_id" => $user->id,
-        //             "regNumber" => 'REG/'. $year . '/' . $count
-        //         ];
-        //         Student::create($studentFields);
-        //         Mail::to($request->email)->send(new UserLogin($userDetails));
-        //     } elseif ($request->role === "lecturer") {
-        //         Mail::to($request->email)->send(new UserLogin($userDetails));
-        //     }
-        // }
+        $contactDetails = [
+            "firstName" => $formFields['firstName'],
+            "lastName" => $formFields['lastName'],
+            "otherName" => $formFields['otherName'],
+            "phoneNumber" => $formFields['phoneNumber'],
+            "user_id" => $user->id,
+        ];
 
-        // Hash Password
-        // $formFields['password'] = bcrypt($formFields['password']);
+        PersonalDetail::create($contactDetails);
 
         return redirect("/login")->with("message", "User created successfully!");
     }
@@ -154,7 +139,6 @@ class UserController extends Controller
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            // return redirect('/')->with('message', 'You are now logged in!');
             if (auth()->user()->role == 'admin') {
                 return redirect()->route('admin.dashboard')->with('message', 'You are now logged in!');
             } else if (auth()->user()->role == 'lecturer') {
@@ -181,7 +165,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return back()->with("message", "Lecturer Deleted Successfully!");
+        return back()->with("message", "User Deleted Successfully!");
     }
 
     // show user forget password form
@@ -241,11 +225,12 @@ class UserController extends Controller
     // show single users
     public function show(User $user)
     {
-        $course = User::find($user->id)->courses()->get();
-
+        $contact = User::find($user->id)->contacts()->get();
+        // dd($contact, $user);
         return view("users.show", [
             "user" => $user,
-            "courses" => $course,
+            "contact" => $contact,
+            "courses" => [],
         ]);
     }
 

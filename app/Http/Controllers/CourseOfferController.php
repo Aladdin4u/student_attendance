@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Courses_offer;
+use App\Models\CoursesOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class Courses_offerController extends Controller
+class CourseOfferController extends Controller
 {
     // store form data
     public function store(Request $request)
@@ -16,7 +16,7 @@ class Courses_offerController extends Controller
         if($ifCourseExist->isEmpty()) {
             return back()->with("message", "Student registration is not completed!");
         }
-        $item = Courses_offer::latest()->where("course_id", "=", $request->course_id)
+        $item = CoursesOffer::latest()->where("course_id", "=", $request->course_id)
             ->where("user_id", "=", $request->user_id)
             ->get();
 
@@ -28,14 +28,14 @@ class Courses_offerController extends Controller
             "course_id" => "required"
         ]);
 
-        Courses_offer::create($formFields);
+        CoursesOffer::create($formFields);
 
 
         return back()->with("message", "Course added successfully!");
     }
 
     // destroy student_courses data 
-    public function destroy(Courses_offer $courses_offer)
+    public function destroy(CoursesOffer $courses_offer)
     {
         $courses_offer->delete();
 
