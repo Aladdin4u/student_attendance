@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Attendify'),
+    'name' => env('APP_NAME', 'Class Monitor'),
 
     /*
     |--------------------------------------------------------------------------

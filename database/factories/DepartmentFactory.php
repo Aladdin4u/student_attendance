@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CourseStudent>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Department>
  */
-class LessionFactory extends Factory
+class DepartmentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class LessionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'Computer Science',
+            'faculty_id' => 14
         ];
     }
 }

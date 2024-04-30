@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
  */
-class StudentFactory extends Factory
+class StudentAdmissionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,11 +18,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'firstName' => $this->faker->name(),
-            'lastName' => $this->faker->name(),
-            'otherName' => $this->faker->name(),
-            'regNumber' => $this->faker->postcode(),
-            'level' => '400',
+            'department_id' => 1,
         ];
     }
 }

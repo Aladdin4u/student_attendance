@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('title')->unique();
-            $table->integer('unit');
+            $table->tinyInteger('unit');
             $table->unsignedBigInteger('level_id');
             $table->unsignedBigInteger('department_id');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
