@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\Lecturer_coursesController;
 use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SectionController;
@@ -117,6 +119,30 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/sections/{section}', [SectionController::class, 'destory']);
     // manage section
     Route::get('/sections/manage', [SectionController::class, 'manage']);
+    // show faculty create form
+    Route::get('/faculties/create', [FacultyController::class, 'create']);
+    // store faculty form data
+    Route::post('/faculties', [FacultyController::class, 'store']);
+    // show faculty edit form
+    Route::get('/faculties/{faculty}/edit', [FacultyController::class, 'edit']);
+    // update faculty form data
+    Route::put('/faculties/{faculty}', [FacultyController::class, 'update']);
+    // delete faculty data
+    Route::delete('/faculties/{faculty}', [FacultyController::class, 'destroy']);
+    // manage faculty
+    Route::get('/faculties/{faculty}', [FacultyController::class, 'manage']);
+    // show department create form
+    Route::get('/departments/create', [DepartmentController::class, 'create']);
+    // store department form data
+    Route::post('/departments', [DepartmentController::class, 'store']);
+    // show departments edit form
+    Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit']);
+    // update departments form data
+    Route::put('/departments/{department}', [DepartmentController::class, 'update']);
+    // delete department data
+    Route::delete('/departments/{department}', [DepartmentController::class, 'destroy']);
+    // manage department
+    Route::get('/departments/manage', [DepartmentController::class, 'manage']);
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {

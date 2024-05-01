@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::create('programmees', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ["present", "absent"])->default("present");
-            $table->date('date');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('session_id');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->unsignedBigInteger('section_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendances');
+        Schema::dropIfExists('programmees');
     }
 };

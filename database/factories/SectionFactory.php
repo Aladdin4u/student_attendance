@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CourseStudent>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Section>
  */
-class LevelFactory extends Factory
+class SectionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,10 @@ class LevelFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'start_date' => fake()->date('Y-m-d'),
+            'end_date' => fake()->date('Y-m-d'),
+            'level_id' => 1,
+            'is_active' => true
         ];
     }
 }

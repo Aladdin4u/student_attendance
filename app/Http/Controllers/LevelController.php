@@ -20,8 +20,6 @@ class LevelController extends Controller
         $formFields = $request->validate([
             "name" => "required",
             "semester" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
         ]);
 
         Level::create($formFields);
@@ -41,9 +39,6 @@ class LevelController extends Controller
         $formFields = $request->validate([
             "name" => "required",
             "semester" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
-            "is_active" => "required",
         ]);
 
         $level->update($formFields);

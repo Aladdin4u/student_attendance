@@ -9,9 +9,10 @@ use App\Models\Level;
 use App\Models\Course;
 use App\Models\Faculty;
 use App\Models\Department;
+use App\Models\Programmee;
 use App\Models\PersonalDetail;
-use App\Models\StudentAdmission;
 use Illuminate\Database\Seeder;
+use App\Models\StudentAdmission;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
@@ -83,6 +84,11 @@ class DatabaseSeeder extends Seeder
                 'regNumber' => $reg[$sequence->index],
                 'user_id' => $userId[$sequence->index],
             ])
+            ->create();
+
+            Programmee::factory()
+            ->count(18)
+            ->sequence(fn (Sequence $sequence) => ['user_id' => $sequence->index + 3])
             ->create();
         // \App\Models\Course::factory(50)->create();
     }

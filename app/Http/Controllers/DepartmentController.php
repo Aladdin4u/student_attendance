@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\DataTables\DepartmentDataTable;
-use App\Models\Department;
 
 class DepartmentController extends Controller
 {
     // show department form
     public function create()
     {
-        return view("departments.create");
+        $faculties = Faculty::all();
+        return view("departments.create", ['faculties' => $faculties]);
     }
 
     // store department form
@@ -30,7 +32,8 @@ class DepartmentController extends Controller
     // show department edit form
     public function edit(Department $department)
     {
-        return view("departments.edit", ["department" => $department]);
+        $faculties = Faculty::all();
+        return view("departments.edit", ["department" => $department, 'faculties' => $faculties]);
     }
 
     // update department form
@@ -44,6 +47,14 @@ class DepartmentController extends Controller
         $department->update($formFields);
 
         return redirect("/departments/manage")->with("message", "Department updated successfully!");
+    }
+
+    // destroy department
+    public function destroy(Department $department)
+    {
+        $department->delete();
+
+        return back()->with("message", "Department deleted successfully!");
     }
 
     // manage department

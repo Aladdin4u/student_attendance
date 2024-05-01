@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->date("start_date");
+            $table->date("end_date");
             $table->unsignedBigInteger('level_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->boolean("is_active")->default(false);
             $table->timestamps();
         });
     }

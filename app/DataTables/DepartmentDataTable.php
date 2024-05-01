@@ -50,7 +50,10 @@ class DepartmentDataTable extends DataTable
      */
     public function query(Department $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model
+            ->join('faculties', 'departments.faculty_id', '=', 'faculties.id')
+            ->select('departments.id as id', 'departments.name', 'faculties.name as faculty')
+            ->newQuery();
     }
 
     /**
@@ -82,8 +85,8 @@ class DepartmentDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('name'),
-            Column::make('faculty_id'),
+            Column::make('name')->title('Department'),
+            Column::make('faculty'),
             Column::computed('Edit'),
             Column::computed('Delete'),
         ];

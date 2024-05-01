@@ -84,9 +84,6 @@ class LevelDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('name'),
             Column::make('semester'),
-            Column::make('start_date'),
-            Column::make('end_date'),
-            Column::make('is_active'),
             Column::computed('Edit'),
             Column::computed('Delete'),
         ];

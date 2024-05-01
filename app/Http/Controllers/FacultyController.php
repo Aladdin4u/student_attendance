@@ -44,6 +44,14 @@ class FacultyController extends Controller
         return redirect("/faculties/manage")->with("message", "Faculty updated successfully!");
     }
 
+    // destroy faculty 
+    public function destroy(Faculty $faculty)
+    {
+        $faculty->delete();
+
+        return back()->with("message", "Faculty deleted successfully!");
+    }
+
     // manage faculty
     public function manage(FacultyDataTable $dataTable)
     {

@@ -18,8 +18,8 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            "year" => "required",
-            "user_id" => "required",
+            "start_date" => "required",
+            "end_date" => "required",
             "level_id" => "required",
         ]);
 
@@ -42,9 +42,10 @@ class SectionController extends Controller
         }
 
         $formFields = $request->validate([
-            "year" => "required",
-            "user_id" => "required",
+            "start_date" => "required",
+            "end_date" => "required",
             "level_id" => "required",
+            "is_active" => "required",
         ]);
 
         $section->update($formFields);
