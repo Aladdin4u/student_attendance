@@ -98,7 +98,7 @@ class UserController extends Controller
             "lastName" => "required",
             "otherName" => "required",
             "phoneNumber" => "required",
-            "email" => ['required', 'email', Rule::unique('users', 'email')],
+            "email" => 'required|unique:users',
             "password" => "required|confirmed|min:8"
         ]);
 

@@ -18,6 +18,7 @@ class ProgrammeeFactory extends Factory
     {
         return [
             'level_id' => 1,
+            'section_id' => 1,
         ];
     }
 }

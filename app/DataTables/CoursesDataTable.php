@@ -84,9 +84,9 @@ class CoursesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('title')->title('Course Title'),
-            Column::make('code'),
-            Column::make('name')->title('Department'),
+            Column::make('title')->name('courses.title')->title('Course Title'),
+            Column::make('code')->name('courses.code'),
+            Column::make('name')->name('departments.name')->title('Department'),
             Column::computed('Edit'),
             Column::computed('Delete'),
         ];

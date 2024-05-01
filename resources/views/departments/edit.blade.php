@@ -1,5 +1,5 @@
 <x-layout>
-    <h1 class="text-lg font-semibold text-left mb-4">Create Department</h1>
+    <h1 class="text-lg font-semibold text-left mb-4">Edit Department</h1>
     <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-xl pb-12 space-y-2">
         <h2 class="font-semibold text-left">Department Datails</h2>
         <form method="POST" action="/departments/{{$department->id}}" class="space-y-4">

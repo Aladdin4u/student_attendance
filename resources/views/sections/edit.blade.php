@@ -29,8 +29,8 @@
                     <div>
                         <select name="is_active" id="is_active" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
                             <option value="" class="hover:bg-sky-100">-- select active --</option>
-                            <option value="{{$level->id}}" class="hover:bg-sky-100" {{$section->is_active == 1 ? 'selected' : ''}}>true</option>
-                            <option value="{{$level->id}}" class="hover:bg-sky-100" {{$section->is_active == 0 ? 'selected' : ''}}>false</option>
+                            <option value="1" class="hover:bg-sky-100" {{$section->is_active == 1 ? 'selected' : ''}}>Session on</option>
+                            <option value="0" class="hover:bg-sky-100" {{$section->is_active == 0 ? 'selected' : ''}}>Session off</option>
                         </select>
                     </div>
                     @error('is_active')

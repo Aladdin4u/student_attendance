@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseOfferController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\Lecturer_coursesController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\PersonalDetailController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Student_coursesController;
@@ -144,6 +145,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/departments/{department}', [DepartmentController::class, 'destroy']);
     // manage department
     Route::get('/departments/manage', [DepartmentController::class, 'manage']);
+    // show level create form
+    Route::get('/levels/create', [LevelController::class, 'create']);
+    // store level form data
+    Route::post('/levels', [LevelController::class, 'store']);
+    // show level edit form
+    Route::get('/levels/{level}/edit', [LevelController::class, 'edit']);
+    // update departments form data
+    Route::put('/levels/{level}', [LevelController::class, 'update']);
+    // delete department data
+    Route::delete('/levels/{level}', [LevelController::class, 'destroy']);
+    // manage department
+    Route::get('/levels/manage', [LevelController::class, 'manage']);
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {

@@ -6,7 +6,6 @@ use App\Models\Level;
 use App\Models\Course;
 use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\DataTables\CoursesDataTable;
 
 class CourseController extends Controller
@@ -35,7 +34,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            "code" => ['required', 'code', Rule::unique('courses', 'email')],
+            "code" => 'required|unique:courses',
             "title" => "required",
             "unit" => "required",
             "level_id" => "required",
@@ -64,7 +63,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $formFields = $request->validate([
-            "code" => ['required', 'code'],
+            "code" => "required|unique:courses,code," . $course->id,
             "title" => "required",
             "unit" => "required",
             "level_id" => "required",

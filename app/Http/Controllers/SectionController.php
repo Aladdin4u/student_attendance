@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Level;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\DataTables\SectionsDataTable;
@@ -12,8 +11,7 @@ class SectionController extends Controller
     // show create section form
     public function create()
     {
-        $levels = Level::all();
-        return view("sections.create", ['levels' => $levels]);
+        return view("sections.create");
     }
 
     // store section data
@@ -32,8 +30,7 @@ class SectionController extends Controller
     // show section edit form
     public function edit(Section $section)
     {
-        $levels = Level::all();
-        return view("sections.edit", ["section" => $section, 'levels' => $levels]);
+        return view("sections.edit", ["section" => $section]);
     }
 
     // show edit section form

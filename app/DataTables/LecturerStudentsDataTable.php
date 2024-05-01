@@ -74,10 +74,10 @@ class LecturerStudentsDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName'),
-            Column::make('lastName'),
-            Column::make('title')->title('Course Title'),
-            Column::make('code'),
+            Column::make('firstName')->name('personal_details.firstName'),
+            Column::make('lastName')->name('personal_details.lastName'),
+            Column::make('title')->name('courses.title')->title('Course Title'),
+            Column::make('code')->name('courses.code'),
             Column::computed('Attendance'),
         ];
     }

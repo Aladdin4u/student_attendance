@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Level;
 use App\Models\Course;
 use App\Models\Faculty;
+use App\Models\Section;
 use App\Models\Department;
 use App\Models\Programmee;
 use App\Models\PersonalDetail;
@@ -30,19 +31,14 @@ class DatabaseSeeder extends Seeder
 
         $titles = ["Introduction to Computer Science", "Introduction to Computer Studies", "USE of ENGLISH l", "General Physics I (Mechanics)", "General Physics III", "Experimental Physics"];
 
-        $units = [3, 3, 3, 2, 2, 2];
+        $units = [3, 3, 2, 2, 2, 2];
         $userId = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20];
-        // \App\Models\User::factory(5)->create();
-        // \App\Models\Course::factory(5)->create();
-        // \App\Models\Student::factory(5)->create();
-        // \App\Models\Lecturer::factory(10)->create();
-
 
         User::factory()
             ->count(2)
             ->state(new Sequence(
                 ['role' => 'admin', 'email' => 'admin@example.com'],
-                ['role' => 'lecturer'],
+                ['role' => 'lecturer', 'email' => 'lecturer@example.com'],
             ))->create();
 
         User::factory()
@@ -59,7 +55,7 @@ class DatabaseSeeder extends Seeder
         Level::factory()
             ->count(2)
             ->state(new Sequence(
-                ['name' => '100', 'semester' => 'first', 'is_active' => true],
+                ['name' => '100', 'semester' => 'first'],
                 ['name' => '100', 'semester' => 'second'],
             ))->create();
 
@@ -86,13 +82,13 @@ class DatabaseSeeder extends Seeder
             ])
             ->create();
 
-            Programmee::factory()
+        Section::factory()->create();
+
+        Programmee::factory()
             ->count(18)
             ->sequence(fn (Sequence $sequence) => [
                 'user_id' => $sequence->index + 3,
-                'section_id' => $sequence->index,
-                ])
+            ])
             ->create();
-        // \App\Models\Course::factory(50)->create();
     }
 }
