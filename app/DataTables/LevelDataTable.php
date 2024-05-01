@@ -50,7 +50,7 @@ class LevelDataTable extends DataTable
      */
     public function query(Level $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->select('id', 'name', 'semester')->newQuery();
     }
 
     /**

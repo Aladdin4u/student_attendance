@@ -5,23 +5,23 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Models\StudentAdmission;
 use App\DataTables\StudentsDataTable;
-use App\Models\Department;
+use App\DataTables\LecturerStudentsDataTable;
 
 class StudentAdmissionController extends Controller
 {
     // show all students
-    // public function index(LecturerStudentsDataTable $dataTable, Request $request)
-    // {
-    //     if ($request->filled('course_id')) {
-    //         // dd($request->course_id);
-    //         return $dataTable->with('course_id', $request->course_id)->render("students.index");
-    //     }
-    //     return $dataTable->render("students.index");
-    // }
+    public function index(LecturerStudentsDataTable $dataTable, Request $request)
+    {
+        if ($request->filled('course_id')) {
+            // dd($request->course_id);
+            return $dataTable->with('course_id', $request->course_id)->render("students.index");
+        }
+        return $dataTable->render("students.index");
+    }
 
     // show student students
     public function show(StudentAdmission $student)
@@ -44,17 +44,25 @@ class StudentAdmissionController extends Controller
     // store form data
     public function store(Request $request)
     {
-        $year = Carbon::now()->format('y');
-        $dept = Department::find($request->department_id);
-        $count = User::where('role', 'student')->count() + 1;
-        // dd($dept, $dept->name, $count);
-
         $formFields = $request->validate([
             "department_id" => "required",
             "user_id" => "required",
         ]);
 
-        $formFields["regNumber"] = 'REG/'. $year . '/' . $count;
+        $year = Carbon::now()->format('y');
+        $dept = Department::find($request->department_id);
+        $count = User::where('role', 'student')->count() + 1;
+        // dd($dept, $dept->name, $count);
+
+        if ($count > 10) {
+            $count = '00' . $count;
+        } else if ($count > 100) {
+            $count = '0' . $count;
+        } else {
+            $count;
+        }
+
+        $formFields["regNumber"] = 'REG/' . $year . '/' . $count;
 
         StudentAdmission::create($formFields);
 

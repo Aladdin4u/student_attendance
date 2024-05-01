@@ -25,20 +25,40 @@
             <div class="w-full flex flex-row items-center justify-between space-x-4">
 
                 <div class="basis-1/2">
-                    <label for="semester" class="block text-sm font-medium leading-6 text-gray-900">Semester</label>
-                    <select name="semester" id="semester" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                        <option value="" class="hover:bg-sky-100">-- select semester --</option>
-                        <option value="first" class="hover:bg-sky-100">First Semester</option>
-                        <option value="second" class="hover:bg-sky-100">Second Semester</option>
-                    </select>
-                    @error('semester')
+                    <label for="department_id" class="block text-sm font-medium leading-6 text-gray-900">Department</label>
+                    <div>
+                        <select name="department_id" id="department_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select department --</option>
+                            @foreach($departments as $department)
+                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('department_id')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="session" class="block text-sm font-medium leading-6 text-gray-900">Session</label>
-                    <input type="text" name="session" placeholder="Session" value="{{old('session')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
-                    @error('session')
+                    <label for="level_id" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
+                    <div>
+                        <select name="level_id" id="level_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select level --</option>
+                            @foreach($levels as $level)
+                            <option value="{{$level->id}}" class="hover:bg-sky-100">{{$level->semester}} semster - {{$level->name}} level</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('level_id')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+            </div>
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
+
+                <div class="basis-1/2">
+                    <label for="unit" class="block text-sm font-medium leading-6 text-gray-900">Course Unit</label>
+                    <input type="number" name="unit" placeholder="Session" value="{{old('unit')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    @error('unit')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>

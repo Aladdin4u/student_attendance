@@ -2,6 +2,7 @@
 $dashboardLink = (auth()->user()->role == 'admin') ? '/admin' : ((auth()->user()->role == 'lecturer') ? '/lecturer' : '/');
 $user = request()->is('users*') ? 1 : 0;
 $student = request()->is('students*')? 1 : 0;
+$lectures = request()->is('lectures*')? 1 : 0;
 $course = request()->is('courses*') ? 1 : 0;
 $section = request()->is('sections*') ? 1 : 0;
 $attendances = request()->is('attendances*') ? 1 : 0;

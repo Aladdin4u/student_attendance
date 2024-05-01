@@ -50,7 +50,7 @@ class FacultyDataTable extends DataTable
      */
     public function query(Faculty $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->select('id', 'name')->newQuery();
     }
 
     /**

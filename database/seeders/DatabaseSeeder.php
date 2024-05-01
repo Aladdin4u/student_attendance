@@ -88,7 +88,10 @@ class DatabaseSeeder extends Seeder
 
             Programmee::factory()
             ->count(18)
-            ->sequence(fn (Sequence $sequence) => ['user_id' => $sequence->index + 3])
+            ->sequence(fn (Sequence $sequence) => [
+                'user_id' => $sequence->index + 3,
+                'section_id' => $sequence->index,
+                ])
             ->create();
         // \App\Models\Course::factory(50)->create();
     }

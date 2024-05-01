@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\DataTables\SectionsDataTable;
@@ -11,7 +12,8 @@ class SectionController extends Controller
     // show create section form
     public function create()
     {
-        return view("sections.create");
+        $levels = Level::all();
+        return view("sections.create", ['levels' => $levels]);
     }
 
     // store section data
@@ -20,7 +22,6 @@ class SectionController extends Controller
         $formFields = $request->validate([
             "start_date" => "required",
             "end_date" => "required",
-            "level_id" => "required",
         ]);
 
         Section::create($formFields);
@@ -31,7 +32,8 @@ class SectionController extends Controller
     // show section edit form
     public function edit(Section $section)
     {
-        return view("sections.edit", ["section" => $section]);
+        $levels = Level::all();
+        return view("sections.edit", ["section" => $section, 'levels' => $levels]);
     }
 
     // show edit section form
@@ -44,7 +46,6 @@ class SectionController extends Controller
         $formFields = $request->validate([
             "start_date" => "required",
             "end_date" => "required",
-            "level_id" => "required",
             "is_active" => "required",
         ]);
 

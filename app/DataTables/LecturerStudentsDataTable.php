@@ -14,7 +14,7 @@ use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class TakeAttendancesDataTable extends DataTable
+class LecturerStudentsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,13 +24,12 @@ class TakeAttendancesDataTable extends DataTable
     public function dataTable(BelongsToMany $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Check', function (Course $user) {
-                return '<div id="form"><input type="checkbox"   class="checked:accent-sky-500 accent-sky-400" onclick="handleAttendance(this.value)"  value="' . $user->id . '" />
-                <input type="text" id="course_id" name="course_id" class="sr-only" value="' . $user->course_id . '"  /><div>';
+            ->addColumn('Attendance', function (User $user) {
+                return '<a href="/attendances/' . $user->id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
             })
-            ->rawColumns(['Check'])
-            ->addIndexColumn()
-            ->setRowId('id');
+            ->rawColumns(['Attendance'])
+            ->setRowId('id')
+            ->addIndexColumn();
     }
 
     /**
@@ -38,20 +37,9 @@ class TakeAttendancesDataTable extends DataTable
      */
     public function query(Course $model): BelongsToMany
     {
-        if ($this->course_id) {
-            $course_id = User::find(auth()->user()->id)
-                ->courses()
-                ->where("courses.id", $this->course_id)
-                ->get(["courses.id"])->first();
-        } else {
-            $course_id = User::find(auth()->user()->id)
-                ->courses()
-                ->get(["courses.id"])->first();
-        }
-
-        return $model->find($course_id->id)
-            ->lectures()->whereNot("users.role", "lecturer")
-            ->join('personal_details', 'users.id', '=' , 'personal_details.user_id')
+        return $model->find($this->course_id)
+            ->lectures()->whereNot("users.id", auth()->user()->id)
+            ->join('personal_details', 'users.id', '=', 'personal_details.user_id')
             ->join('courses', 'courses_offers.course_id', '=', 'courses.id')
             ->select('users.id as id', 'personal_details.firstName', 'personal_details.lastName', 'courses.code', 'courses.title')
             ->newQuery();
@@ -63,7 +51,7 @@ class TakeAttendancesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('take-attendances-table')
+            ->setTableId('lecturer-student-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -86,11 +74,11 @@ class TakeAttendancesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName')->name('personal_details.firstName'),
-            Column::make('lastName')->name('personal_details.lastName'),
-            Column::make('title')->name('courses.title'),
-            Column::make('code')->name('courses.code'),
-            Column::computed('Check'),
+            Column::make('firstName'),
+            Column::make('lastName'),
+            Column::make('title')->title('Course Title'),
+            Column::make('code'),
+            Column::computed('Attendance'),
         ];
     }
 
@@ -99,6 +87,6 @@ class TakeAttendancesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'TakeAttendance_' . date('YmdHis');
+        return 'LecturerStudents_' . date('YmdHis');
     }
 }

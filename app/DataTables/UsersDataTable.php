@@ -56,7 +56,11 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->where('role', 'lecturer')->join('personal_details', 'users.id', '=', 'personal_details.user_id')->select('users.id as id', 'personal_details.id as contact_id', 'personal_details.firstName', 'personal_details.lastName', 'personal_details.otherName', 'personal_details.phoneNumber')->newQuery();
+        return $model
+            ->where('role', 'lecturer')
+            ->join('personal_details', 'users.id', '=', 'personal_details.user_id')
+            ->select('users.id as id', 'personal_details.id as contact_id', 'personal_details.firstName', 'personal_details.lastName', 'personal_details.otherName', 'personal_details.phoneNumber')
+            ->newQuery();
     }
 
     /**

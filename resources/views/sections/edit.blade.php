@@ -5,27 +5,6 @@
         <form method="POST" action="/sections/{{$section->id}}" class="space-y-4">
             @csrf
             @method('PUT')
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
-
-                <div class="basis-1/2">
-                    <label for="semester" class="block text-sm font-medium leading-6 text-gray-900">Semester</label>
-                    <select name="semester" id="semester" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                        <option value="" class="hover:bg-sky-100">-- select semester --</option>
-                        <option value="first" {{$section->semester == 'first' ? 'selected' : '' }} class="hover:bg-sky-100">First Semester</option>
-                        <option value="second" {{$section->semester == 'second' ? 'selected' : '' }} class="hover:bg-sky-100">Second Semester</option>
-                    </select>
-                    @error('semester')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
-                </div>
-                <div class="basis-1/2">
-                    <label for="year" class="block text-sm font-medium leading-6 text-gray-900">Session/Year</label>
-                    <input type="text" name="year" placeholder="2023/2034" pattern="\d{4}/\d{4}" value="{{$section->year}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
-                    @error('year')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
-                </div>
-            </div>
 
             <div class="w-full flex flex-row items-center justify-between space-x-4">
                 <div class="basis-1/2">
@@ -44,6 +23,21 @@
                 </div>
             </div>
 
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
+                <div class="basis-1/2">
+                    <label for="is_active" class="block text-sm font-medium leading-6 text-gray-900">Active</label>
+                    <div>
+                        <select name="is_active" id="is_active" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select active --</option>
+                            <option value="{{$level->id}}" class="hover:bg-sky-100" {{$section->is_active == 1 ? 'selected' : ''}}>true</option>
+                            <option value="{{$level->id}}" class="hover:bg-sky-100" {{$section->is_active == 0 ? 'selected' : ''}}>false</option>
+                        </select>
+                    </div>
+                    @error('is_active')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+            </div>
             <div class="mx-auto flex flex-row items-center justify-between space-x-2">
                 <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
                     Save

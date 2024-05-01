@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseOfferController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\Lecturer_coursesController;
@@ -83,13 +84,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
     // destroy lecturer courses
     Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy']);
-    // show course create form
+    // show create course form
     Route::get('/courses/create', [CourseController::class, 'create']);
-    // store course create form
+    // store course form
     Route::post('/courses', [CourseController::class, 'store']);
-    // edit course form
+    // show edit course form
     Route::get('/courses/{course}/edit', [CourseController::class, 'edit']);
-    // update course edit form
+    // update edit course form
     Route::put('/courses/{course}', [CourseController::class, 'update']);
     // destroy course
     Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
@@ -146,6 +147,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {
+    // show all lectures
+    Route::get('/lectures', [CourseOfferController::class, 'index'])->middleware('auth');
+    // show all lectures
+    Route::get('/lectures/{lecture}', [CourseOfferController::class, 'show'])->middleware('auth');
     // show all students
     Route::get('/students', [StudentAdmissionController::class, 'index'])->middleware('auth');
     // show single student

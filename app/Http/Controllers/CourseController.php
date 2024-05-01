@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Course;
+use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\DataTables\CoursesDataTable;
 
 class CourseController extends Controller
@@ -20,21 +23,23 @@ class CourseController extends Controller
     // show create form
     public function create()
     {
-        $c = Course::find(1)->lectures()->whereNot("users.role", "lecturer")->join('students', 'users.id', '=', 'students.user_id')->join('courses', 'courses_offers.course_id', '=', 'courses.id') ->select('users.id as id','users.firstName', 'users.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title');
-        dd($c);
-        return view("courses.create");
+        $levels = Level::all();
+        $departments = Department::all();
+
+        return view("courses.create", [
+            'levels' => $levels,
+            'departments' => $departments,
+        ]);
     }
     // store form data
     public function store(Request $request)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $formFields = $request->validate([
-            "code" => "required",
+            "code" => ['required', 'code', Rule::unique('courses', 'email')],
             "title" => "required",
-            "department" => "required",
+            "unit" => "required",
+            "level_id" => "required",
+            "department_id" => "required",
         ]);
 
         Course::create($formFields);
@@ -45,20 +50,25 @@ class CourseController extends Controller
     // show edit form
     public function edit(Course $course)
     {
-        return view("courses.edit", ["course" => $course]);
+        $levels = Level::all();
+        $departments = Department::all();
+
+        return view("courses.edit", [
+            "course" => $course,
+            'levels' => $levels,
+            'departments' => $departments,
+        ]);
     }
 
     // update form data
     public function update(Request $request, Course $course)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $formFields = $request->validate([
-            "code" => "required",
+            "code" => ['required', 'code'],
             "title" => "required",
-            "department" => "required",
+            "unit" => "required",
+            "level_id" => "required",
+            "department_id" => "required",
         ]);
 
         $course->update($formFields);
@@ -69,10 +79,6 @@ class CourseController extends Controller
     // destroy course data 
     public function destroy(Course $course)
     {
-        if (auth()->user()->role != "admin") {
-            abort(403, "Unauthorized Action");
-        }
-
         $course->delete();
 
         return back()->with("message", "course Deleted Successfully!");

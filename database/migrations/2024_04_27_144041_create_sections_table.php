@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->date("start_date");
             $table->date("end_date");
-            $table->unsignedBigInteger('level_id');
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->boolean("is_active")->default(false);
             $table->timestamps();
         });

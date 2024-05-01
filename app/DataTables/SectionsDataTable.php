@@ -51,8 +51,7 @@ class SectionsDataTable extends DataTable
     public function query(Section $model): QueryBuilder
     {
         return $model
-            ->join('levels', 'sections.level_id', '=', 'levels.id')
-            ->select('sections.id as id', 'sections.start_date', 'sections.end_date', 'sections.is_active', 'levels.name', 'levels.semester')
+            ->select('id', 'start_date', 'end_date', 'is_active')
             ->newQuery();
     }
 
@@ -85,8 +84,6 @@ class SectionsDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('name'),
-            Column::make('semester'),
             Column::make('start_date'),
             Column::make('end_date'),
             Column::make('is_active')->name('Active'),

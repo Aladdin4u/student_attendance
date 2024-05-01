@@ -19,7 +19,6 @@ class SectionFactory extends Factory
         return [
             'start_date' => fake()->date('Y-m-d'),
             'end_date' => fake()->date('Y-m-d'),
-            'level_id' => 1,
             'is_active' => true
         ];
     }
