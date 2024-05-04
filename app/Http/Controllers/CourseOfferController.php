@@ -20,7 +20,6 @@ class CourseOfferController extends Controller
     // show lecturer lecture
     public function show($lecture,LecturerStudentsDataTable $dataTable)
     {
-        // dd($request->all(), $lecture);
         return $dataTable->with('course_id', $lecture)->render('lecturers.show');
     }
 

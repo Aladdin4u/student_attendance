@@ -45,14 +45,19 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         $records = $request->formData;
-        $formFields = [];
+        $date = $records[0]['date'];
+        $course_id = $records[0]['course_id'];
+        $ifAttendanceExist = Attendance::where('date', $date)->where('course_id', $course_id)->firstorFail();
+        if ($ifAttendanceExist) {
+            // dd($ifAttendanceExist);
+            $data = ['message' => 'multiple entry is now allowed'];
+            return response()->json($data, 422);
+        }
         foreach ($records as $record) {
             $formFields[] = $record;
         }
 
         Attendance::insert($formFields);
-
-        return redirect("/attendances")->with("message", "Attendance created successfully!");
     }
 
     // destroy attendance data 

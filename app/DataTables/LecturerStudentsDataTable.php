@@ -25,7 +25,7 @@ class LecturerStudentsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('Attendance', function (User $user) {
-                return '<a href="/attendances/' . $user->id . '" class="text-sky-400 hover:text-sky-500 underline">view attendance</a>';
+                return '<input type="checkbox" name="mark_attendance" value="' . $user->id . '" />';
             })
             ->rawColumns(['Attendance'])
             ->setRowId('id')

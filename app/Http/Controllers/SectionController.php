@@ -9,6 +9,15 @@ use App\DataTables\SectionsDataTable;
 class SectionController extends Controller
 {
     // show create section form
+    public function index()
+    {
+        $section = Section::first()->where("is_active", true)
+            ->select('id')->get();
+
+        return response()->json($section);
+    }
+
+    // show create section form
     public function create()
     {
         return view("sections.create");
