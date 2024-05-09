@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Models\PersonalDetail;
 use App\Models\StudentAdmission;
 use App\DataTables\StudentsDataTable;
 use App\DataTables\LecturerStudentsDataTable;
@@ -39,20 +40,46 @@ class StudentAdmissionController extends Controller
     // show create form
     public function create()
     {
-        return view("students.create");
+        $departments = Department::all(['id', 'name']);
+
+        return view("students.create", ["departments" => $departments]);
     }
     // store form data
     public function store(Request $request)
     {
         $formFields = $request->validate([
+            "firstName" => "required",
+            "lastName" => "required",
+            "otherName" => "required",
+            "phoneNumber" => "required",
             "department_id" => "required",
-            "user_id" => "required",
+            "email" => 'required|unique:users',
         ]);
 
+        $loginDetails = [
+            "role" => 'student',
+            "email" => $formFields['email'],
+            "password" => bcrypt($formFields['firstName']),
+        ];
+
+        $user = User::create($loginDetails);
+
+        $contactDetails = [
+            "firstName" => $formFields['firstName'],
+            "lastName" => $formFields['lastName'],
+            "otherName" => $formFields['otherName'],
+            "phoneNumber" => $formFields['phoneNumber'],
+            "user_id" => $user->id,
+        ];
+
+        PersonalDetail::create($contactDetails);
+        $departmentDetails = [
+            "department_id" => $formFields['department_id'],
+            "user_id" => $user->id,
+        ];
+
         $year = Carbon::now()->format('y');
-        $dept = Department::find($request->department_id);
         $count = User::where('role', 'student')->count() + 1;
-        // dd($dept, $dept->name, $count);
 
         if ($count > 10) {
             $count = '00' . $count;
@@ -62,34 +89,34 @@ class StudentAdmissionController extends Controller
             $count;
         }
 
-        $formFields["regNumber"] = 'REG/' . $year . '/' . $count;
+        $departmentDetails["regNumber"] = 'REG/' . $year . '/' . $count;
 
-        StudentAdmission::create($formFields);
+        StudentAdmission::create($departmentDetails);
 
-        return back()->with("message", "Admission number generated successfully!");
+        return back()->with("message", "Student admission is successfully!");
     }
 
     // show edit form
     public function edit(StudentAdmission $student)
     {
-        return view("students.edit", ["student" => $student]);
+        $departments = Department::all(['id', 'name']);
+
+        return view("students.edit", [
+            "student" => $student,
+            "departments" => $departments
+        ]);
     }
 
     // update form data
     public function update(Request $request, StudentAdmission $student)
     {
-
         $formFields = $request->validate([
-            "department" => "required",
+            "department_id" => "required",
         ]);
 
         $student->update($formFields);
+        $user = $student->user_id;
 
-        return redirect("/students/manage")->with("message", "Department changed Successfully!");
-    }
-
-    public function manage(StudentAdmission $student, StudentsDataTable $dataTable)
-    {
-        return $dataTable->render("students.manage");
+        return redirect("/users/".$user)->with("message", "Student admission updated Successfully!");
     }
 }

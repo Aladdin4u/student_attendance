@@ -77,14 +77,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/students/manage', [StudentAdmissionController::class, 'manage']);
     // show single student
     Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
-    // store student courses
-    Route::post('/students/courses', [Student_coursesController::class, 'store']);
-    // destroy student courses
-    Route::delete('/students_courses/{student_courses}', [Student_coursesController::class, 'destroy']);
-    // store lecturer courses
-    Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
-    // destroy lecturer courses
-    Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy']);
     // show create course form
     Route::get('/courses/create', [CourseController::class, 'create']);
     // store course form

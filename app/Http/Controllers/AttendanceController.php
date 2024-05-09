@@ -49,8 +49,7 @@ class AttendanceController extends Controller
         $course_id = $records[0]['course_id'];
         $ifAttendanceExist = Attendance::where('date', $date)->where('course_id', $course_id)->firstorFail();
         if ($ifAttendanceExist) {
-            // dd($ifAttendanceExist);
-            $data = ['message' => 'multiple entry is now allowed'];
+            $data = ['message' => 'Multiple entry for a day is not allowed'];
             return response()->json($data, 422);
         }
         foreach ($records as $record) {

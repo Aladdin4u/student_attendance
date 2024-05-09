@@ -12,11 +12,15 @@ use Illuminate\Http\Request;
 use App\Models\CoursesOffer;
 use Illuminate\Validation\Rule;
 use App\DataTables\UsersDataTable;
+use App\Models\Faculty;
 use App\Models\PersonalDetail;
+use App\Models\StudentAdmission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -226,11 +230,22 @@ class UserController extends Controller
     public function show(User $user)
     {
         $contact = User::find($user->id)->contacts()->get();
-        // dd($contact, $user);
+        $admission = StudentAdmission::where('student_admissions.user_id', '=', $user->id)
+            ->join('departments', 'student_admissions.department_id', '=', 'department_id')
+            ->get(['student_admissions.id as student_id','regNumber', 'name as departmentName', 'faculty_id']);
+        
+            if (!$admission->isEmpty()) {
+            $faculty = Faculty::first()
+                ->where('id', $admission[0]->faculty_id)
+                ->get('name');
+        }
+        
         return view("users.show", [
             "user" => $user,
             "contact" => $contact,
             "courses" => [],
+            "admissions" => $admission,
+            "faculty" => $faculty ?? "",
         ]);
     }
 
