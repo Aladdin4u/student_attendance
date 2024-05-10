@@ -38,12 +38,10 @@ $now = date('Y-m-d H:i:s');
       $('input[type="checkbox"]').each(function(index, value) {
         let data = {
           status: (this.checked ? "present" : "absent"),
-          user_id: value.value,
-          course_id: course_id,
+          user_id: parseInt(value.value),
+          course_id: parseInt(course_id),
           section_id: section_id,
           date: date,
-          created_at: now,
-          updated_at: now
         }
         formData.push(data)
       });
@@ -59,7 +57,7 @@ $now = date('Y-m-d H:i:s');
           formData: formData
         },
         success: function(data) {
-          $('#save-btn').addClass("disabled")
+          $('#save-btn').attr("disabled", true)
           $('#message').text("Class attendance marked for today!");
           $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-48 py-3 z-50 rounded-lg");
           setTimeout(function() {

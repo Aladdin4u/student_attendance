@@ -72,10 +72,8 @@ class CourseOfferController extends Controller
         $records = $request->formData;
 
         foreach ($records as $record) {
-            $formFields[] = $record;
+            CoursesOffer::create($record);
         }
-
-        CoursesOffer::insert($formFields);
     }
 
     // store lecture form data

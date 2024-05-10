@@ -47,16 +47,14 @@ class AttendanceController extends Controller
         $records = $request->formData;
         $date = $records[0]['date'];
         $course_id = $records[0]['course_id'];
-        $ifAttendanceExist = Attendance::where('date', $date)->where('course_id', $course_id)->firstorFail();
+        $ifAttendanceExist = Attendance::where('date', $date)->where('course_id', $course_id)->get();
         if ($ifAttendanceExist) {
             $data = ['message' => 'Multiple entry for a day is not allowed'];
             return response()->json($data, 422);
         }
         foreach ($records as $record) {
-            $formFields[] = $record;
+            Attendance::create($record);
         }
-
-        Attendance::insert($formFields);
     }
 
     // destroy attendance data 
