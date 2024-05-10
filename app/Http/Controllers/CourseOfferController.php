@@ -8,6 +8,9 @@ use App\Models\CoursesOffer;
 use App\DataTables\LecturesDataTable;
 use App\DataTables\LecturerStudentsDataTable;
 use App\Models\Course;
+use App\Models\Department;
+use App\Models\Programmee;
+use App\Models\StudentAdmission;
 
 class CourseOfferController extends Controller
 {
@@ -18,35 +21,45 @@ class CourseOfferController extends Controller
     }
 
     // show lecturer lecture
-    public function show($lecture,LecturerStudentsDataTable $dataTable)
+    public function show($lecture, LecturerStudentsDataTable $dataTable)
     {
         return $dataTable->with('course_id', $lecture)->render('lecturers.show');
+    }
+
+    // show create course offerser
+    public function create($user)
+    {
+        $coursesoffer = CoursesOffer::where('user_id', $user)->get();
+        if(!$coursesoffer->isEmpty()) {
+            return back()->with("message", "Course registration is completed");
+        }
+        $dept = StudentAdmission::where('user_id', $user)->get('department_id');
+        $level = Programmee::where('user_id', $user)
+            ->join('sections', 'programmees.section_id', '=', 'sections.id')
+            ->where('sections.is_active', 1)->get('level_id');
+        if (!$dept->isEmpty() && !$level->isEmpty()) {
+
+            $courses = Course::where('department_id', $dept[0]->department_id)
+                ->where('level_id', $level[0]->level_id)
+                ->get();
+        }
+        // dd($dept, $level, $courses);
+        return view('courseoffers.create', [
+            'courses' => $courses,
+            'user' => $user
+        ]);
     }
 
     // store form data
     public function store(Request $request)
     {
-        $ifCourseExist = User::find("user_id", $request->user_id)->courses();
+        $records = $request->formData;
 
-        if ($ifCourseExist->isEmpty()) {
-            return back()->with("message", "Student registration is not completed!");
+        foreach ($records as $record) {
+            $formFields[] = $record;
         }
-        $item = CoursesOffer::latest()->where("course_id", "=", $request->course_id)
-            ->where("user_id", "=", $request->user_id)
-            ->get();
 
-        if (!$item->isEmpty()) {
-            return back()->with("message", "This course is already in the list");
-        }
-        $formFields = $request->validate([
-            "user_id" => "required",
-            "course_id" => "required"
-        ]);
-
-        CoursesOffer::create($formFields);
-
-
-        return back()->with("message", "Course added successfully!");
+        CoursesOffer::insert($formFields);
     }
 
     // destroy student_courses data 

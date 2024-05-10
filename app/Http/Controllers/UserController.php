@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use App\DataTables\UsersDataTable;
 use App\Models\Faculty;
 use App\Models\PersonalDetail;
+use App\Models\Programmee;
 use App\Models\StudentAdmission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -127,6 +128,40 @@ class UserController extends Controller
 
         return redirect("/login")->with("message", "User created successfully!");
     }
+    // store lecturer form
+    public function storeLecturer(Request $request)
+    {
+        $formFields = $request->validate([
+            "role" => "required",
+            "firstName" => "required",
+            "lastName" => "required",
+            "otherName" => "required",
+            "phoneNumber" => "required",
+            "email" => 'required|unique:users',
+        ]);
+
+        $pass = strtoupper($formFields['firstName']);
+
+        $loginDetails = [
+            "role" => $formFields['role'],
+            "email" => $formFields['email'],
+            "password" => bcrypt($pass),
+        ];
+
+        $user = User::create($loginDetails);
+
+        $contactDetails = [
+            "firstName" => $formFields['firstName'],
+            "lastName" => $formFields['lastName'],
+            "otherName" => $formFields['otherName'],
+            "phoneNumber" => $formFields['phoneNumber'],
+            "user_id" => $user->id,
+        ];
+
+        PersonalDetail::create($contactDetails);
+
+        return back()->with("message", "Lecturer created successfully!");
+    }
     // show user login form
     public function login()
     {
@@ -232,20 +267,26 @@ class UserController extends Controller
         $contact = User::find($user->id)->contacts()->get();
         $admission = StudentAdmission::where('student_admissions.user_id', '=', $user->id)
             ->join('departments', 'student_admissions.department_id', '=', 'department_id')
-            ->get(['student_admissions.id as student_id','regNumber', 'name as departmentName', 'faculty_id']);
-        
-            if (!$admission->isEmpty()) {
+            ->get(['student_admissions.id as student_id', 'regNumber', 'name as departmentName', 'faculty_id']);
+
+        if (!$admission->isEmpty()) {
             $faculty = Faculty::first()
                 ->where('id', $admission[0]->faculty_id)
                 ->get('name');
         }
-        
+
+        $programmee = Programmee::where('user_id', $user->id)
+            ->join('levels', 'programmees.level_id', '=', 'levels.id')
+            ->join('sections', 'programmees.section_id', '=', 'sections.id')
+            ->where('sections.is_active', 1)
+            ->get(['level_id', 'name', 'semester', 'start_date']);
+
         return view("users.show", [
             "user" => $user,
             "contact" => $contact,
-            "courses" => [],
             "admissions" => $admission,
             "faculty" => $faculty ?? "",
+            "programmees" => $programmee,
         ]);
     }
 

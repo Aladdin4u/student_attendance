@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Level;
 use App\Models\Course;
+use App\Models\Section;
 use App\Models\Department;
+use App\Models\Programmee;
 use Illuminate\Http\Request;
 use App\Models\PersonalDetail;
 use App\Models\StudentAdmission;
@@ -40,9 +43,16 @@ class StudentAdmissionController extends Controller
     // show create form
     public function create()
     {
+        $levels = Level::all(['id', 'name', 'semester']);
+        $sections = Section::first()->where('is_active', 1)->get(['id', 'start_date', 'end_date']);
+        // dd($sections);
         $departments = Department::all(['id', 'name']);
 
-        return view("students.create", ["departments" => $departments]);
+        return view("students.create", [
+            "levels" => $levels,
+            "sections" => $sections,
+            "departments" => $departments,
+        ]);
     }
     // store form data
     public function store(Request $request)
@@ -53,13 +63,17 @@ class StudentAdmissionController extends Controller
             "otherName" => "required",
             "phoneNumber" => "required",
             "department_id" => "required",
+            "level_id" => "required",
+            "section_id" => "required",
             "email" => 'required|unique:users',
         ]);
+
+        $pass = strtoupper($formFields['firstName']);
 
         $loginDetails = [
             "role" => 'student',
             "email" => $formFields['email'],
-            "password" => bcrypt($formFields['firstName']),
+            "password" => bcrypt($pass),
         ];
 
         $user = User::create($loginDetails);
@@ -93,6 +107,14 @@ class StudentAdmissionController extends Controller
 
         StudentAdmission::create($departmentDetails);
 
+        $program = [
+            "user_id" => $user->id,
+            "level_id" => $formFields['level_id'],
+            "section_id" => $formFields['section_id'],
+        ];
+
+        Programmee::create($program);
+
         return back()->with("message", "Student admission is successfully!");
     }
 
@@ -118,5 +140,11 @@ class StudentAdmissionController extends Controller
         $user = $student->user_id;
 
         return redirect("/users/".$user)->with("message", "Student admission updated Successfully!");
+    }
+
+    // manage student
+    public function manage(StudentAdmission $student, StudentsDataTable $dataTable)
+    {
+        return $dataTable->render("students.manage");
     }
 }

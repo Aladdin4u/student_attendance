@@ -59,7 +59,7 @@ $now = date('Y-m-d H:i:s');
           formData: formData
         },
         success: function(data) {
-          $('#save-btn').attr("disabled", true)
+          $('#save-btn').addClass("disabled")
           $('#message').text("Class attendance marked for today!");
           $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-48 py-3 z-50 rounded-lg");
           setTimeout(function() {

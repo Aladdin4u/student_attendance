@@ -77,6 +77,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/students/manage', [StudentAdmissionController::class, 'manage']);
     // show single student
     Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
+    // show lecturer create form
+    Route::get('/lecturers/create', [UserController::class, 'createLecturer'])->middleware('auth');
+    // store lecturer create form
+    Route::post('/lecturers', [UserController::class, 'storeLecturer'])->middleware('auth');
     // show create course form
     Route::get('/courses/create', [CourseController::class, 'create']);
     // store course form
@@ -149,6 +153,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/levels/{level}', [LevelController::class, 'destroy']);
     // manage department
     Route::get('/levels/manage', [LevelController::class, 'manage']);
+    // show create courses offer
+    Route::get('/coursesoffer/create/{user}', [CourseOfferController::class, 'create']);
+    // store course form
+    Route::post('/coursesoffer/student', [CourseOfferController::class, 'store']);
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {

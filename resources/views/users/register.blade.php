@@ -48,9 +48,9 @@
             <div>
               <select name="role" id="role" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
                 <option value="" class="hover:bg-sky-100">-- select role --</option>
-                <option value="admin" class="hover:bg-sky-100">Admin</option>
-                <option value="lecturer" class="hover:bg-sky-100">Lecturer</option>
-                <option value="student" class="hover:bg-sky-100">Student</option>
+                <option value="admin" selected class="hover:bg-sky-100">Admin</option>
+                <!-- <option value="lecturer" class="hover:bg-sky-100">Lecturer</option>
+                <option value="student" class="hover:bg-sky-100">Student</option> -->
               </select>
             </div>
             @error('role')

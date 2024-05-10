@@ -33,7 +33,6 @@
             </svg></button></a>
       </div>
       <div class="w-full mt-10">
-
         <p class="font-semibold text-sky-500">Reg Number: <span class="text-gray-900">{{$admission->regNumber}}</span></p>
         <p class="font-semibold text-sky-500">Department: <span class="text-gray-900">{{$admission->departmentName}}</span></p>
         <p class="font-semibold text-sky-500">Faculty: <span class="text-gray-900">{{$faculty[0]->name}}</span></p>
@@ -45,7 +44,27 @@
         complete your admission
       </a>
       @endunless
+
+      @unless($programmees->isEmpty())
+      @foreach($programmees as $programmee)
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">Programmee</h2>
+      </div>
+      <div class="w-full mt-10">
+        <p class="font-semibold text-sky-500">Academic Session: <span class="text-gray-900">{{$programmee->start_date}}</span></p>
+        <p class="font-semibold text-sky-500">Current semester: <span class="text-gray-900">{{$programmee->semester}} semester</span></p>
+        <p class="font-semibold text-sky-500">Current level: <span class="text-gray-900">{{$programmee->name}} level</span></p>
+      </div>
+      @endforeach
+      @endunless
       @endif
+
+      <a href="/coursesoffer/create/{{$user->id}}">
+        <div class="mt-2">
+          <h2 class="text-xl font-bold">Course registration</h2>
+          <p>Register your courses here</p>
+        </div>
+      </a>
 
       <div class="space-y-2">
         <h2 class="text-xl font-bold">Settings</h2>

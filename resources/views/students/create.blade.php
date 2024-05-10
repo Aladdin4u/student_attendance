@@ -73,6 +73,43 @@
                 </div>
             </div>
 
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
+                <div class="basis-1/2">
+                    <label for="level_id" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
+                    <div>
+                        <select name="level_id" id="level_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select Level --</option>
+                            @unless($levels->isEmpty())
+                            @foreach($levels as $level)
+                            <option value="{{$level->id}}" class="hover:bg-sky-100">{{$level->semester}} semester - {{$level->name}} </option>
+                            @endforeach
+                            @else
+                            <a href="/levels/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                                add level
+                            </a>
+                            @endunless
+                        </select>
+                    </div>
+                </div>
+                <div class="basis-1/2">
+                    <label for="section_id" class="block text-sm font-medium leading-6 text-gray-900">Academic Session</label>
+                    <div>
+                        <select name="section_id" id="section_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select Academic Session --</option>
+                            @unless($sections->isEmpty())
+                            @foreach($sections as $section)
+                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$section->start_date}}-{{$section->end_date}}</option>
+                            @endforeach
+                            @else
+                            <a href="/sections/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                                Add Academic Session
+                            </a>
+                            @endunless
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="mx-auto flex flex-row items-center justify-between space-x-2">
                 <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
                     Save
