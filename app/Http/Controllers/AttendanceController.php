@@ -48,7 +48,7 @@ class AttendanceController extends Controller
         $date = $records[0]['date'];
         $course_id = $records[0]['course_id'];
         $ifAttendanceExist = Attendance::where('date', $date)->where('course_id', $course_id)->get();
-        if ($ifAttendanceExist) {
+        if (!$ifAttendanceExist->isEmpty()) {
             $data = ['message' => 'Multiple entry for a day is not allowed'];
             return response()->json($data, 422);
         }
@@ -69,8 +69,8 @@ class AttendanceController extends Controller
         return redirect("/attendances")->with("message", "Attendance Deleted Successfully!");
     }
 
-    public function manage(OverallAttendancesDataTable $dataTable)
+    public function manage($lecture, OverallAttendancesDataTable $dataTable)
     {
-        return $dataTable->render("attendances.manage");
+        return $dataTable->with('course_id', $lecture)->render("attendances.manage");
     }
 }

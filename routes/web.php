@@ -189,7 +189,7 @@ Route::middleware(['auth', 'lecturer'])->group(function () {
     // destroy attendendance
     Route::delete('/attendances/{attendance}', [AttendanceController::class, 'destroy']);
     // manage attendances
-    Route::get('/attendances/manage', [AttendanceController::class, 'manage']);
+    Route::get('/attendances/manage/{lecture}', [AttendanceController::class, 'manage']);
     // show single attendance
     Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 });

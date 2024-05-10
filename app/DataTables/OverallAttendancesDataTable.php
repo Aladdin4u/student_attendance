@@ -2,9 +2,9 @@
 
 namespace App\DataTables;
 
+use App\Models\User;
+use App\Models\Course;
 use App\Models\Attendance;
-use App\Models\Lecturer_courses;
-use App\Models\Student_courses;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -13,6 +13,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class OverallAttendancesDataTable extends DataTable
 {
@@ -21,11 +22,11 @@ class OverallAttendancesDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable(BelongsToMany $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('Status', function (Student_courses $student) {
-                $att = Attendance::where("user_id", $student->user_id)->where("is_present", "present")->count();
+            ->addColumn('Status', function (User $user) {
+                $att = Attendance::where("user_id", $user->id)->where("course_id", $user->course_id)->where("status", "present")->count();
                 $total = ($att / 24) * 100;
                 if ($total >= 50) {
                     return '<div>
@@ -39,8 +40,8 @@ class OverallAttendancesDataTable extends DataTable
                     </span></div>';
                 }
             })
-            ->addColumn('Total %', function (Student_courses $student) {
-                $att = Attendance::where("user_id", $student->user_id)->where("is_present", "present")->count();
+            ->addColumn('Total %', function (User $user) {
+                $att = Attendance::where("user_id", $user->id)->where("course_id", $user->course_id)->where("status", "present")->count();
                 $total = ($att / 24) * 100;
                 return '<div>' . round($total, 2) . '%</div>';
             })
@@ -52,15 +53,14 @@ class OverallAttendancesDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Student_courses $model): QueryBuilder
+    public function query(Course $model): BelongsToMany
     {
-        $lc = Lecturer_courses::where("user_id", auth()->user()->id)->get(["course_id"])->first();
-        $data = $model->where('student_courses.course_id', $lc->course_id ?? 0)
-            ->join("students", "student_courses.user_id", "=", "students.user_id")
-            ->join("courses", "student_courses.course_id", "=", "courses.id")
-            ->select('student_courses.*', 'students.firstName', 'students.lastName', 'students.otherName', 'students.regNumber', 'students.department', 'courses.code', 'courses.title')->newQuery();
-
-        return $data;
+        return $model->find($this->course_id)
+            ->lectures()->whereNot("users.id", auth()->user()->id)
+            ->join('personal_details', 'users.id', '=', 'personal_details.user_id')
+            ->join('courses', 'courses_offers.course_id', '=', 'courses.id')
+            ->select('users.id as id', 'personal_details.firstName', 'personal_details.lastName', 'courses.id as course_id', 'courses.code', 'courses.title')
+            ->newQuery();
     }
 
     /**
@@ -92,12 +92,10 @@ class OverallAttendancesDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
-            Column::make('firstName')->name('students.firstName'),
-            Column::make('lastName')->name('students.lastName'),
-            Column::make('otherName')->name('students.otherName'),
-            Column::make('regNumber')->name('students.regNumber'),
+            Column::make('firstName')->name('personal_details.firstName'),
+            Column::make('lastName')->name('personal_details.lastName'),
+            Column::make('title')->name('courses.title')->title('Course Title'),
             Column::make('code')->name('courses.code'),
-            Column::make('department')->name('students.department'),
             Column::computed('Total %'),
             Column::computed('Status'),
         ];
