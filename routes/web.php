@@ -157,6 +157,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/coursesoffer/create/{user}', [CourseOfferController::class, 'create']);
     // store course form
     Route::post('/coursesoffer/student', [CourseOfferController::class, 'store']);
+    // show lecturer lecture form
+    Route::get('/coursesoffer/lecturer/{user}', [CourseOfferController::class, 'LecturerCourse']);
+    // store lecturer lecture form
+    Route::post('/coursesoffer/lecturer', [CourseOfferController::class, 'StoreLectures']);
+    // delete course Offer
+    Route::delete('/coursesoffers/{courses_offer}', [CourseOfferController::class, 'destroy']);
 });
 
 Route::middleware(['auth', 'lecturer'])->group(function () {

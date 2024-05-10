@@ -26,11 +26,11 @@ class CourseOfferController extends Controller
         return $dataTable->with('course_id', $lecture)->render('lecturers.show');
     }
 
-    // show create course offerser
+    // show create student course form
     public function create($user)
     {
         $coursesoffer = CoursesOffer::where('user_id', $user)->get();
-        if(!$coursesoffer->isEmpty()) {
+        if (!$coursesoffer->isEmpty()) {
             return back()->with("message", "Course registration is completed");
         }
         $dept = StudentAdmission::where('user_id', $user)->get('department_id');
@@ -50,6 +50,22 @@ class CourseOfferController extends Controller
         ]);
     }
 
+    // show create lecturer course form
+    public function LecturerCourse($user)
+    {
+        $courses = Course::all();
+        $lecture = CoursesOffer::where('user_id', $user)
+            ->join('courses', 'courses_offers.course_id', '=', "courses.id")
+            ->get(['courses_offers.id as id', 'title', 'code', 'unit']);
+
+        // dd($lecture);
+        return view('lecturers.lecture', [
+            'courses' => $courses,
+            'lectures' => $lecture,
+            'user' => $user
+        ]);
+    }
+
     // store form data
     public function store(Request $request)
     {
@@ -60,6 +76,27 @@ class CourseOfferController extends Controller
         }
 
         CoursesOffer::insert($formFields);
+    }
+
+    // store lecture form data
+    public function StoreLectures(Request $request)
+    {
+        $formFields = $request->validate([
+            "user_id" => "required",
+            "course_id" => "required",
+        ]);
+
+        $formFields['is_active'] = 1;
+
+        $lecture = CoursesOffer::where('user_id', $request->user_id)->get();
+
+        if (!$lecture->isEmpty()) {
+            return back()->with("message", "Lecture already added!");
+        }
+
+        CoursesOffer::create($formFields);
+
+        return back()->with("message", "Lecture added Successfully!");
     }
 
     // destroy student_courses data 

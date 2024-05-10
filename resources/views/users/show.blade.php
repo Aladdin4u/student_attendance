@@ -57,7 +57,6 @@
       </div>
       @endforeach
       @endunless
-      @endif
 
       <a href="/coursesoffer/create/{{$user->id}}">
         <div class="mt-2">
@@ -65,6 +64,16 @@
           <p>Register your courses here</p>
         </div>
       </a>
+      @endif
+
+      @if($user->role === "lecturer")
+      <a href="/coursesoffer/lecturer/{{$user->id}}">
+        <div class="mt-2">
+          <h2 class="text-xl font-bold">Lecture registration</h2>
+          <p>Register your lectures here</p>
+        </div>
+      </a>
+      @endif
 
       <div class="space-y-2">
         <h2 class="text-xl font-bold">Settings</h2>
