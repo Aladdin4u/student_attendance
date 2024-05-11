@@ -29,8 +29,6 @@
         </svg>
     </div>
     <ul class="space-y-2 font-medium pl-10" x-show="open">
-        <li><a href="/attendances/create" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('attendances/create') ? 'bg-sky-100 text-sky-500' : ''}}">Take Attendance</a></li>
         <li><a href="/attendances" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('attendances') ? 'bg-sky-100 text-sky-500' : ''}}">View Class Attendance</a></li>
-        <li><a href="/attendances/manage" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:text-sky-500 hover:bg-sky-100 {{ request()->is('attendances/manage') ? 'bg-sky-100 text-sky-500' : ''}}">Overall Students Attendance</a></li>
     </ul>
 </li>

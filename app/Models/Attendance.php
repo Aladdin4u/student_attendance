@@ -10,7 +10,8 @@ class Attendance extends Model
     use HasFactory;
 
     //Relationship to lession
-    public function lessions(){
+    public function lessions()
+    {
         return $this->hasMany(Lession::class, "attendance_id");
     }
 }

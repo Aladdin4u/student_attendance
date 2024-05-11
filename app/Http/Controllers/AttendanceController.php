@@ -9,6 +9,8 @@ use App\DataTables\AttendancesDataTable;
 use App\DataTables\TakeAttendancesDataTable;
 use App\DataTables\OverallAttendancesDataTable;
 use App\DataTables\SingleStudentsDataTable;
+use App\Models\Course;
+use App\Models\PersonalDetail;
 
 class AttendanceController extends Controller
 {
@@ -25,10 +27,9 @@ class AttendanceController extends Controller
         return $dataTable->render("attendances.index");
     }
     // show attendance
-    public function show(Attendance $attendance, SingleStudentsDataTable $dataTable)
+    public function show($attendance, SingleStudentsDataTable $dataTable)
     {
-
-        return $dataTable->with('id', $attendance->id)->render("attendances.show");
+        return $dataTable->with('id', $attendance)->render("attendances.show");
     }
 
     // show create form
@@ -57,6 +58,20 @@ class AttendanceController extends Controller
         }
     }
 
+    // show attendance edit form
+    public function edit(Attendance $attendance)
+    {
+        $user = PersonalDetail::where('user_id', $attendance->user_id)->get(['firstName', 'lastName']);
+        $course = Course::where('id', $attendance->course_id)->get(['id','code', 'title']);
+
+        // dd($user, $course, $attendance);
+        return view("Attendances.edit", [
+            "attendance" => $attendance,
+            "user" => $user,
+            "course" => $course,
+        ]);
+    }
+
     // destroy attendance data 
     public function destroy(Attendance $attendance)
     {
@@ -67,6 +82,19 @@ class AttendanceController extends Controller
         $attendance->delete();
 
         return redirect("/attendances")->with("message", "Attendance Deleted Successfully!");
+    }
+
+    // update department form
+    public function update(Request $request, Attendance $attendance)
+    {
+        $formFields = $request->validate([
+            "date" => "required",
+            "status" => "required",
+        ]);
+
+        $attendance->update($formFields);
+
+        return redirect("/attendances/course/".$request->course)->with("message", "Attendance updated successfully!");
     }
 
     public function manage($lecture, OverallAttendancesDataTable $dataTable)

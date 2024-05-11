@@ -170,16 +170,10 @@ Route::middleware(['auth', 'lecturer'])->group(function () {
     Route::get('/lectures', [CourseOfferController::class, 'index'])->middleware('auth');
     // show all lectures
     Route::get('/lectures/{lecture}', [CourseOfferController::class, 'show'])->middleware('auth');
-    // show all students
-    Route::get('/students', [StudentAdmissionController::class, 'index'])->middleware('auth');
-    // show single student
-    Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
     // Lecturer dashboard
     Route::get('/lecturer', [UserController::class, 'lecturerDashboard'])->name('lecturer.dashboard');
     // store lecturer courses
     Route::post('/lecturers/courses', [Lecturer_coursesController::class, 'store']);
-    // destroy lecturer courses
-    Route::delete('/lecturers_courses/{lecturer_courses}', [Lecturer_coursesController::class, 'destroy']);
     // show all attendances
     Route::get('/attendances', [AttendanceController::class, 'index']);
     // show attendance create form
@@ -188,10 +182,14 @@ Route::middleware(['auth', 'lecturer'])->group(function () {
     Route::post('/attendances', [AttendanceController::class, 'store']);
     // destroy attendendance
     Route::delete('/attendances/{attendance}', [AttendanceController::class, 'destroy']);
+    // show class attendance
+    Route::get('/attendances/course/{attendance}', [AttendanceController::class, 'show']);
+    // show attendance edit form
+    Route::get('/attendances/{attendance}/edit', [AttendanceController::class, 'edit']);
+    // update attendance form data
+    Route::put('/attendances/{attendance}', [AttendanceController::class, 'update']);
     // manage attendances
     Route::get('/attendances/manage/{lecture}', [AttendanceController::class, 'manage']);
-    // show single attendance
-    Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 });
 Route::middleware(['auth', 'student'])->group(function () {
     // Student dashbord
@@ -208,10 +206,6 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::put('/students/{student}', [StudentAdmissionController::class, 'update']);
     // show single student
     Route::get('/students/{student}', [StudentAdmissionController::class, 'show'])->name('students.list');
-    // store student courses
-    Route::post('/students/courses', [Student_coursesController::class, 'store']);
-    // destroy student courses
-    Route::delete('/students_courses/{student_courses}', [Student_coursesController::class, 'destroy']);
     // show single attendance
     Route::get('/attendances/{attendance}', [AttendanceController::class, 'show']);
 });
