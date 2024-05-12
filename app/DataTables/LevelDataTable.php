@@ -50,7 +50,7 @@ class LevelDataTable extends DataTable
      */
     public function query(Level $model): QueryBuilder
     {
-        return $model->select('id', 'name', 'semester')->newQuery();
+        return $model->select('id', 'name')->newQuery();
     }
 
     /**
@@ -83,7 +83,6 @@ class LevelDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('name'),
-            Column::make('semester'),
             Column::computed('Edit'),
             Column::computed('Delete'),
         ];

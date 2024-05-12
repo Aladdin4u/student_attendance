@@ -4,24 +4,23 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Level;
 use App\Models\Course;
 use App\Mail\UserLogin;
-use App\Models\Attendance;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\CoursesOffer;
-use Illuminate\Validation\Rule;
-use App\DataTables\UsersDataTable;
 use App\Models\Faculty;
-use App\Models\PersonalDetail;
+use App\Models\Section;
+use App\Models\Attendance;
 use App\Models\Programmee;
+use Illuminate\Support\Str;
+use App\Models\CoursesOffer;
+use Illuminate\Http\Request;
+use App\Models\PersonalDetail;
 use App\Models\StudentAdmission;
+use App\DataTables\UsersDataTable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-
-use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -33,14 +32,16 @@ class UserController extends Controller
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
         $student = User::where('role', 'student')->count();
-        // dd($student);
+        $section = Section::where('is_active', 1)->get(['session', 'semester']);
 
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
             "classes" => count($class) > 0 ? $class->count() : 0,
             "courses" => $courses,
-            "attendance" => $attendance
+            "attendance" => $attendance,
+            "section" => $section[0]->session,
+            "semester" => $section[0]->semester,
         ]);
     }
     // show Lecturer dashboard
@@ -59,14 +60,17 @@ class UserController extends Controller
         } else {
             $student = 0;
         }
-        // dd($student);
+
+        $section = Section::where('is_active', 1)->get(['session', 'semester']);
 
         return view("users.dashboard", [
             "allStudent" => $student,
             "allLecturer" => $lecturer,
             "classes" => count($class) > 0 ? $class->count() : 0,
             "courses" => $courses,
-            "attendance" => $attendance
+            "attendance" => $attendance,
+            "section" => $section[0]->session,
+            "semester" => $section[0]->semester,
         ]);
     }
     // show student dashboard
@@ -75,12 +79,14 @@ class UserController extends Controller
         $class = CoursesOffer::where('user_id', auth()->user()->id)->count();
         $courses = Course::all();
         $attendance = Attendance::latest()->where(request(['course_id']) ?? false)->get();
-        // dd($class);
+        $section = Section::where('is_active', 1)->get(['session', 'semester']);
 
         return view("students.dashboard", [
             "classes" => $class,
             "courses" => $courses,
-            "attendance" => $attendance
+            "attendance" => $attendance,
+            "section" => $section[0]->session,
+            "semester" => $section[0]->semester,
         ]);
     }
 
@@ -279,7 +285,7 @@ class UserController extends Controller
             ->join('levels', 'programmees.level_id', '=', 'levels.id')
             ->join('sections', 'programmees.section_id', '=', 'sections.id')
             ->where('sections.is_active', 1)
-            ->get(['level_id', 'name', 'semester', 'start_date']);
+            ->get(['level_id', 'name', 'semester', 'session']);
 
         return view("users.show", [
             "user" => $user,

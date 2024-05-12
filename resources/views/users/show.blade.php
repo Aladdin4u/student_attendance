@@ -51,7 +51,7 @@
         <h2 class="text-xl font-bold">Programmee</h2>
       </div>
       <div class="w-full mt-10">
-        <p class="font-semibold text-sky-500">Academic Session: <span class="text-gray-900">{{$programmee->start_date}}</span></p>
+        <p class="font-semibold text-sky-500">Academic Session: <span class="text-gray-900">{{$programmee->session}}</span></p>
         <p class="font-semibold text-sky-500">Current semester: <span class="text-gray-900">{{$programmee->semester}} semester</span></p>
         <p class="font-semibold text-sky-500">Current level: <span class="text-gray-900">{{$programmee->name}} level</span></p>
       </div>

@@ -13,19 +13,6 @@
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-                <div class="basis-1/2">
-                    <label for="semester" class="block text-sm font-medium leading-6 text-gray-900">Semester</label>
-                    <div>
-                        <select name="semester" id="semester" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select semester --</option>
-                            <option value="first" class="hover:bg-sky-100" {{$level->semester == 'first' ? 'selected' : ''}}>First</option>
-                            <option value="second" class="hover:bg-sky-100" {{$level->semester == 'second' ? 'selected' : ''}}>Second</option>
-                        </select>
-                    </div>
-                    @error('semester')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
-                </div>
             </div>
 
             <div class="mx-auto flex flex-row items-center justify-between space-x-2">

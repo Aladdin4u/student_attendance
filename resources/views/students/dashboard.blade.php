@@ -111,7 +111,7 @@
 <script>
     var attendance = JSON.parse('{!! json_encode($attendance) !!}');
     const countMap = {}
-    attendance.filter(p => p.is_present === 'present').map(d => {
+    attendance.filter(p => p.status === 'present').map(d => {
         if (countMap[d.date] === undefined) {
             countMap[d.date] = 1;
         } else {

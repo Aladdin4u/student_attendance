@@ -60,7 +60,7 @@
                 Semeter
                 </x-slot>
                 <x-slot:desc>
-                    Second
+                    {{$semester}}
                     </x-slot>
                     <x-slot:icon>
                         <svg class="flex-shrink-0 w-6 h-6 transition duration-75 " viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                 Sessions
                 </x-slot>
                 <x-slot:desc>
-                    2022/2023
+                    {{$section}}
                     </x-slot>
                     <x-slot:icon>
                         <svg class="flex-shrink-0 w-6 h-6 transition duration-75 " viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +127,7 @@
 <script>
     var attendance = JSON.parse('{!! json_encode($attendance) !!}');
     const countMap = {}
-    attendance.filter(p => p.is_present === 'present').map(d => {
+    attendance.filter(p => p.status === 'present').map(d => {
         if (countMap[d.date] === undefined) {
             countMap[d.date] = 1;
         } else {

@@ -51,7 +51,7 @@ class SectionsDataTable extends DataTable
     public function query(Section $model): QueryBuilder
     {
         return $model
-            ->select('id', 'start_date', 'end_date', 'is_active')
+            ->select('id', 'start_date', 'end_date', 'session', 'is_active')
             ->newQuery();
     }
 
@@ -86,6 +86,7 @@ class SectionsDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->searchable(false)->orderable(false),
             Column::make('start_date'),
             Column::make('end_date'),
+            Column::make('session'),
             Column::make('is_active')->name('Active'),
             Column::computed('Edit'),
             Column::computed('Delete'),
@@ -97,6 +98,6 @@ class SectionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Courses_' . date('YmdHis');
+        return 'Sections_' . date('YmdHis');
     }
 }

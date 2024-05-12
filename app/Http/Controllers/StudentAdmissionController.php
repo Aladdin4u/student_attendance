@@ -44,7 +44,7 @@ class StudentAdmissionController extends Controller
     public function create()
     {
         $levels = Level::all(['id', 'name', 'semester']);
-        $sections = Section::first()->where('is_active', 1)->get(['id', 'start_date', 'end_date']);
+        $sections = Section::first()->where('is_active', 1)->get(['id', 'session']);
         // dd($sections);
         $departments = Department::all(['id', 'name']);
 

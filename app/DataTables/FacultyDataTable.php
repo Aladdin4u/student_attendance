@@ -93,6 +93,6 @@ class FacultyDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'faculties_' . date('YmdHis');
+        return 'Faculties_' . date('YmdHis');
     }
 }

@@ -97,6 +97,6 @@ class DepartmentDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'departments_' . date('YmdHis');
+        return 'Departments_' . date('YmdHis');
     }
 }

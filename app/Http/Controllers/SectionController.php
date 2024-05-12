@@ -29,6 +29,8 @@ class SectionController extends Controller
         $formFields = $request->validate([
             "start_date" => "required",
             "end_date" => "required",
+            "session" => "required",
+            "semester" => "required",
         ]);
 
         Section::create($formFields);
@@ -52,6 +54,8 @@ class SectionController extends Controller
         $formFields = $request->validate([
             "start_date" => "required",
             "end_date" => "required",
+            "session" => "required",
+            "semester" => "required",
             "is_active" => "required",
         ]);
 

@@ -19,7 +19,6 @@ class LevelController extends Controller
     {
         $formFields = $request->validate([
             "name" => "required",
-            "semester" => "required",
         ]);
 
         Level::create($formFields);
@@ -38,12 +37,19 @@ class LevelController extends Controller
     {
         $formFields = $request->validate([
             "name" => "required",
-            "semester" => "required",
         ]);
 
         $level->update($formFields);
 
         return redirect("/levels/manage")->with("message", "Level updated successfully!");
+    }
+
+    // destroy level
+    public function destroy(Level $level)
+    {
+        $level->delete();
+
+        return back()->with("message", "Level deleted successfully!");
     }
 
     // manage level

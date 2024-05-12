@@ -25,12 +25,35 @@
 
             <div class="w-full flex flex-row items-center justify-between space-x-4">
                 <div class="basis-1/2">
+                    <label for="session" class="block text-sm font-medium leading-6 text-gray-900">Session</label>
+                    <input type="text" name="session" placeholder="2024/2025" value="{{$section->session}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    @error('session')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+                <div class="basis-1/2">
+                    <label for="semester" class="block text-sm font-medium leading-6 text-gray-900">Semester</label>
+                    <div>
+                        <select name="semester" id="semester" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                            <option value="" class="hover:bg-sky-100">-- select semester --</option>
+                            <option value="first" class="hover:bg-sky-100" {{$section->semester == 'first' ? 'selected' : ''}}>First</option>
+                            <option value="second" class="hover:bg-sky-100" {{$section->semester == 'second' ? 'selected' : ''}}>Second</option>
+                        </select>
+                    </div>
+                    @error('semester')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="w-full flex flex-row items-center justify-between space-x-4">
+                <div class="basis-1/2">
                     <label for="is_active" class="block text-sm font-medium leading-6 text-gray-900">Active</label>
                     <div>
                         <select name="is_active" id="is_active" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
                             <option value="" class="hover:bg-sky-100">-- select active --</option>
-                            <option value="1" class="hover:bg-sky-100" {{$section->is_active == 1 ? 'selected' : ''}}>Session on</option>
-                            <option value="0" class="hover:bg-sky-100" {{$section->is_active == 0 ? 'selected' : ''}}>Session off</option>
+                            <option value="1" class="hover:bg-sky-100" {{$section->is_active == 1 ? 'selected' : ''}}>Session Active</option>
+                            <option value="0" class="hover:bg-sky-100" {{$section->is_active == 0 ? 'selected' : ''}}>Session Inactive</option>
                         </select>
                     </div>
                     @error('is_active')

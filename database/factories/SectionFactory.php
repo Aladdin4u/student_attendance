@@ -19,6 +19,8 @@ class SectionFactory extends Factory
         return [
             'start_date' => fake()->date('Y-m-d'),
             'end_date' => fake()->date('Y-m-d'),
+            'session' => '2024/2025',
+            'semester' => 'first',
             'is_active' => true
         ];
     }

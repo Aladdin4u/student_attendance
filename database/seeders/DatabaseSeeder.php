@@ -52,12 +52,7 @@ class DatabaseSeeder extends Seeder
             ->sequence(fn (Sequence $sequence) => ['user_id' => $sequence->index + 1])
             ->create();
 
-        Level::factory()
-            ->count(2)
-            ->state(new Sequence(
-                ['name' => '100', 'semester' => 'first'],
-                ['name' => '100', 'semester' => 'second'],
-            ))->create();
+        Level::factory()->count(4)->create();
 
         Faculty::factory()
             ->count(16)

@@ -98,7 +98,7 @@
                             <option value="" class="hover:bg-sky-100">-- select Academic Session --</option>
                             @unless($sections->isEmpty())
                             @foreach($sections as $section)
-                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$section->start_date}}-{{$section->end_date}}</option>
+                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$section->session}}</option>
                             @endforeach
                             @else
                             <a href="/sections/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">

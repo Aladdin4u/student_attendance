@@ -10,8 +10,8 @@ $course = request()->is('courses*') ? 1 : 0;
 $section = request()->is('sections*') ? 1 : 0;
 $attendances = request()->is('attendances*') ? 1 : 0;
 @endphp
-<aside id="logo-sidebar" aria-label="Sidebar">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+<aside id="logo-sidebar" aria-label="Sidebar" class="overflow-auto max-h-screen">
+    <div class="h-full px-3 pb-4 bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{$dashboardLink}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group {{ request()->is('/') ? 'bg-sky-100 text-sky-500' : ''}}">
@@ -29,9 +29,7 @@ $attendances = request()->is('attendances*') ? 1 : 0;
             @else
             @include('partials._student-route')
             @endunless
-        </ul>
-        <div class="absolute inset-x-0 bottom-32 md:bottom-16">
-            <div class="font-medium px-3">
+            <li>
                 <div class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group">
                     <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-sky-500 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.8999 7.55999C9.2099 3.95999 11.0599 2.48999 15.1099 2.48999H15.2399C19.7099 2.48999 21.4999 4.27999 21.4999 8.74999V15.27C21.4999 19.74 19.7099 21.53 15.2399 21.53H15.1099C11.0899 21.53 9.2399 20.08 8.9099 16.54" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -46,7 +44,7 @@ $attendances = request()->is('attendances*') ? 1 : 0;
                         </button>
                     </form>
                 </div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </aside>
