@@ -10,9 +10,9 @@ $course = request()->is('courses*') ? 1 : 0;
 $section = request()->is('sections*') ? 1 : 0;
 $attendances = request()->is('attendances*') ? 1 : 0;
 @endphp
-<aside id="logo-sidebar" aria-label="Sidebar" class="overflow-auto max-h-screen">
-    <div class="h-full px-3 pb-4 bg-white dark:bg-gray-800">
-        <ul class="space-y-2 font-medium">
+<aside id="logo-sidebar" aria-label="Sidebar" class="min-h-screen">
+    <div class="h-[90vh] px-3 pb-4 dark:bg-gray-800">
+        <ul class="h-[85vh] flex flex-col space-y-2 font-medium bg-white overflow-y-auto">
             <li>
                 <a href="{{$dashboardLink}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group {{ request()->is('/') ? 'bg-sky-100 text-sky-500' : ''}}">
                     <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-sky-500 dark:group-hover:text-white {{ request()->is('/') ? 'text-sky-500' : ''}}" fill="none" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,20 +29,16 @@ $attendances = request()->is('attendances*') ? 1 : 0;
             @else
             @include('partials._student-route')
             @endunless
-            <li>
-                <div class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group">
+            <li id="logout" onclick="logout()">
+                <div class="flex items-center mt-20 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group">
                     <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-sky-500 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.8999 7.55999C9.2099 3.95999 11.0599 2.48999 15.1099 2.48999H15.2399C19.7099 2.48999 21.4999 4.27999 21.4999 8.74999V15.27C21.4999 19.74 19.7099 21.53 15.2399 21.53H15.1099C11.0899 21.53 9.2399 20.08 8.9099 16.54" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M15.0001 12H3.62012" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M5.85 8.6499L2.5 11.9999L5.85 15.3499" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-
-                    <form action="/logout" method="POST">
-                        @csrf
-                        <button class="flex-1 ml-3 whitespace-nowrap">
-                            Logout
-                        </button>
-                    </form>
+                    <button class="ml-3 whitespace-nowrap">
+                        Logout
+                    </button>
                 </div>
             </li>
         </ul>
