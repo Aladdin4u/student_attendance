@@ -4,74 +4,75 @@
         <h2 class="font-semibold text-left">Course Datails</h2>
         <form method="POST" action="/courses" class="space-y-4">
             @csrf
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
-
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="code" class="block text-sm font-medium leading-6 text-gray-900">Course Code</label>
-                    <input type="text" name="code" placeholder="Course Code" value="{{old('code')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="code">Course Code</x-label>
+                    <x-input type="text" name="code" placeholder="Course Code" value="{{old('code')}}" />
                     @error('code')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Course Title</label>
-                    <input type="text" name="title" placeholder="Course Title" value="{{old('title')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="title">Course Title</x-label>
+                    <x-input type="text" name="title" placeholder="Course Title" value="{{old('title')}}" />
                     @error('title')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
-
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="department_id" class="block text-sm font-medium leading-6 text-gray-900">Department</label>
+                    <x-label for="department_id">Department</x-label>
                     <div>
-                        <select name="department_id" id="department_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select department --</option>
+                        <x-select name="department_id" id="department_id">
+                            <x-option value="">-- select department --</x-option>
+                            @unless($departments->isEmpty())
                             @foreach($departments as $department)
-                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$department->name}}</option>
+                            <x-option value="{{$department->id}}">{{$department->name}}</x-option>
                             @endforeach
-                        </select>
+                            @endunless
+                        </x-select>
                     </div>
                     @error('department_id')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="level_id" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
+                    <x-label for="level_id">Level</x-label>
                     <div>
-                        <select name="level_id" id="level_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select level --</option>
+                        <x-select name="level_id" id="level_id">
+                            <x-option value="">-- select level --</x-option>
+                            @unless($levels->isEmpty())
                             @foreach($levels as $level)
-                            <option value="{{$level->id}}" class="hover:bg-sky-100">{{$level->semester}} semster - {{$level->name}} level</option>
+                            <x-option value="{{$level->id}}">{{$level->name}} level</x-option>
                             @endforeach
-                        </select>
+                            @endunless
+                        </x-select>
                     </div>
                     @error('level_id')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
-
+            </x-row>
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="unit" class="block text-sm font-medium leading-6 text-gray-900">Course Unit</label>
-                    <input type="number" name="unit" placeholder="Session" value="{{old('unit')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="unit">Course Unit</x-label>
+                    <x-input type="number" name="unit" placeholder="Session" value="{{old('unit')}}" />
                     @error('unit')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/courses/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/courses/manage" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>

@@ -1,0 +1,1 @@
+<option {{ $attributes }} class="hover:bg-sky-100">{{$slot}}</option>
