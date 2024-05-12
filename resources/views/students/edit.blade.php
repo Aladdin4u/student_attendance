@@ -6,42 +6,38 @@
             @csrf
             @method('PUT')
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="department_id" class="block text-sm font-medium leading-6 text-gray-900">Department</label>
+                    <x-label for="department_id">Department</x-label>
                     <div>
-                        <select name="department_id" id="department_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select Department --</option>
+                        <x-select name="department_id" id="department_id">
+                            <x-option value="">-- select Department --</x-option>
                             @unless($departments->isEmpty())
                             @foreach($departments as $department)
                             <option value="{{$department->id}}" class="hover:bg-sky-100" {{$student->department_id == $department->id ? 'selected' : ''}}>{{$department->name}}</option>
                             @endforeach
-                            @else
-                            <a href="/departments/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-                                add department
-                            </a>
                             @endunless
-                        </select>
+                        </x-select>
                     </div>
                 </div>
 
                 <div class="basis-1/2">
-                    <label for="regNumber" class="block text-sm font-medium leading-6 text-gray-900">Reg Number</label>
-                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="regNumber" placeholder="Registration Number" value="{{$student->regNumber}}" readonly />
+                    <x-label for="regNumber">Reg Number</x-label>
+                    <x-input type="text" name="regNumber" placeholder="Registration Number" value="{{$student->regNumber}}" readonly />
                     @error('regNumber')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/students/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/students/manage" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>

@@ -6,51 +6,50 @@
             @csrf
             @method('PUT')
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
-
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
-                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="firstName" placeholder="First Name" value="{{$user->firstName}}" />
+                    <x-label for="firstName">First Name</x-label>
+                    <x-input type="text" name="firstName" placeholder="First Name" value="{{$user->firstName}}" />
                     @error('firstName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="lastName" placeholder="Last Name" value="{{$user->lastName}}" />
+                    <x-label for="lastName">Last Name</x-label>
+                    <x-input type="text" name="lastName" placeholder="Last Name" value="{{$user->lastName}}" />
                     @error('lastName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="otherName" class="block text-sm font-medium leading-6 text-gray-900">Other Name</label>
-                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="otherName" placeholder="Other Names" value="{{$user->otherName}}" />
+                    <x-label for="otherName">Other Name</x-label>
+                    <x-input type="text" name="otherName" placeholder="Other Names" value="{{$user->otherName}}" />
                     @error('otherName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
 
                 <div class="basis-1/2">
-                    <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
-                    <input type="text" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" name="phoneNumber" placeholder="Registration Number" value="{{$user->phoneNumber}}" />
+                    <x-label for="phoneNumber">Phone Number</x-label>
+                    <x-input type="text" name="phoneNumber" placeholder="Registration Number" value="{{$user->phoneNumber}}" />
                     @error('phoneNumber')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="{{url()->previous()}}" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="{{url()->previous()}}" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>

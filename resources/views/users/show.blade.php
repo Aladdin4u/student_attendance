@@ -36,7 +36,7 @@
         <p class="font-semibold text-sky-500">Reg Number: <span class="text-gray-900">{{$admission->regNumber}}</span></p>
         <p class="font-semibold text-sky-500">Department: <span class="text-gray-900">{{$admission->departmentName}}</span></p>
         <p class="font-semibold text-sky-500">Faculty: <span class="text-gray-900">{{$faculty[0]->name}}</span></p>
-      </div>
+      </div>h
       @endforeach
       @else
       <div></div>

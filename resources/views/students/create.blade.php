@@ -5,119 +5,101 @@
         <form method="POST" action="/students" class="space-y-4">
             @csrf
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
-                    <input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                    <x-label for="firstName">First Name</x-label>
+                    <x-input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" />
                     @error('firstName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
 
                 <div class="basis-1/2">
-                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                    <x-label for="lastName">Last Name</x-label>
+                    <x-input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" />
                     @error('lastName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="otherName" class="block text-sm font-medium leading-6 text-gray-900">Other Name</label>
-                    <div>
-                        <input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    </div>
+                    <x-label for="otherName">Other Name</x-label>
+                    <x-input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" />
                     @error('otherName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                    <div>
-                        <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    </div>
+                    <x-label for="email">Email address</x-label>
+                    <x-input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" />
                     @error('email')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
-                    <div>
-                        <input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    </div>
+                    <x-label for="phoneNumber">Phone Number</x-label>
+                    <x-input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" />
                     @error('phoneNumber')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="department_id" class="block text-sm font-medium leading-6 text-gray-900">Department</label>
+                    <x-label for="department_id">Department</x-label>
                     <div>
-                        <select name="department_id" id="department_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select Department --</option>
+                        <x-select name="department_id" id="department_id">
+                            <x-option value="">-- select Department --</x-option>
                             @unless($departments->isEmpty())
                             @foreach($departments as $department)
-                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$department->name}}</option>
+                            <x-option value="{{$department->id}}">{{$department->name}}</x-option>
                             @endforeach
-                            @else
-                            <a href="/departments/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-                                add department
-                            </a>
                             @endunless
-                        </select>
+                        </x-select>
                     </div>
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="level_id" class="block text-sm font-medium leading-6 text-gray-900">Level</label>
+                    <x-label for="level_id">Level</x-label>
                     <div>
-                        <select name="level_id" id="level_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select Level --</option>
+                        <x-select name="level_id" id="level_id">
+                            <x-option value="">-- select Level --</x-option>
                             @unless($levels->isEmpty())
                             @foreach($levels as $level)
-                            <option value="{{$level->id}}" class="hover:bg-sky-100">{{$level->semester}} semester - {{$level->name}} </option>
+                            <x-option value="{{$level->id}}"> {{$level->name}} level </x-option>
                             @endforeach
-                            @else
-                            <a href="/levels/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-                                add level
-                            </a>
                             @endunless
-                        </select>
+                        </x-select>
                     </div>
                 </div>
                 <div class="basis-1/2">
-                    <label for="section_id" class="block text-sm font-medium leading-6 text-gray-900">Academic Session</label>
+                    <x-label for="section_id">Academic Session</x-label>
                     <div>
-                        <select name="section_id" id="section_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select Academic Session --</option>
+                        <x-select name="section_id" id="section_id">
+                            <x-option value="">-- select Academic Session --</x-option>
                             @unless($sections->isEmpty())
                             @foreach($sections as $section)
-                            <option value="{{$department->id}}" class="hover:bg-sky-100">{{$section->session}}</option>
+                            <x-option value="{{$department->id}}">{{$section->session}}</x-option>
                             @endforeach
-                            @else
-                            <a href="/sections/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-                                Add Academic Session
-                            </a>
                             @endunless
-                        </select>
+                        </x-select>
                     </div>
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/students/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/students/manage" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>

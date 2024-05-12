@@ -5,45 +5,41 @@
         <form method="POST" action="/departments/{{$department->id}}" class="space-y-4">
             @csrf
             @method('PUT')
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
 
                 <div class="basis-1/2">
-                    <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Department Name</label>
-                    <input type="text" name="name" placeholder="Department Code" value="{{$department->name}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="name">Department Name</x-label>
+                    <x-input type="text" name="name" placeholder="Department Code" value="{{$department->name}}" />
                     @error('name')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="faculty_id" class="block text-sm font-medium leading-6 text-gray-900">Faculty</label>
+                    <x-label for="faculty_id" class="block text-sm font-medium leading-6 text-gray-900">Faculty</x-label>
                     <div>
-                        <select name="faculty_id" id="faculty_id" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select faculty --</option>
+                        <x-select name="faculty_id" id="faculty_id">
+                            <x-option value="" class="hover:bg-sky-100">-- select faculty --</x-option>
                             @unless($faculties->isEmpty())
                             @foreach($faculties as $faculty)
                             <option class="hover:bg-sky-100" value="{{$faculty->id}}" {{$faculty->id == $department->faculty_id ? 'selected' : ''}}>{{$faculty->name}}</option>
                             @endforeach
-                            @else
-                            <a href="/faculties/create" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-                                add faculty
-                            </a>
                             @endunless
-                        </select>
+                        </x-select>
                     </div>
                     @error('faculty_id')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/departments/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/departments/manage" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>

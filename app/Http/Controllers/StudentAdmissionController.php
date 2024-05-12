@@ -43,7 +43,7 @@ class StudentAdmissionController extends Controller
     // show create form
     public function create()
     {
-        $levels = Level::all(['id', 'name', 'semester']);
+        $levels = Level::all(['id', 'name']);
         $sections = Section::first()->where('is_active', 1)->get(['id', 'session']);
         // dd($sections);
         $departments = Department::all(['id', 'name']);
@@ -103,7 +103,7 @@ class StudentAdmissionController extends Controller
             $count;
         }
 
-        $departmentDetails["regNumber"] = 'REG/' . $year . '/' . $count;
+        $departmentDetails["regNumber"] = $year . '/' . $count;
 
         StudentAdmission::create($departmentDetails);
 

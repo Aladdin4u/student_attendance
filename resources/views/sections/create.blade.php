@@ -5,56 +5,55 @@
         <form method="POST" action="/sections" class="space-y-4">
             @csrf
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="start_date" class="block text-sm font-medium leading-6 text-gray-900">Start date</label>
-                    <input type="date" name="start_date" placeholder="Start Date" value="{{old('start_date')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="start_date">Start date</x-label>
+                    <x-input type="date" name="start_date" placeholder="Start Date" value="{{old('start_date')}}" />
                     @error('start_date')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="end_date" class="block text-sm font-medium leading-6 text-gray-900">End Date</label>
-                    <input type="date" name="end_date" placeholder="End Date" value="{{old('end_date')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="end_date">End Date</x-label>
+                    <x-input type="date" name="end_date" placeholder="End Date" value="{{old('end_date')}}" />
                     @error('end_date')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="session" class="block text-sm font-medium leading-6 text-gray-900">Session</label>
-                    <input type="text" name="session" placeholder="2024/2025" value="{{old('session')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6" />
+                    <x-label for="session">Session</x-label>
+                    <x-input type="text" name="session" placeholder="2024/2025" value="{{old('session')}}" />
                     @error('session')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="semester" class="block text-sm font-medium leading-6 text-gray-900">Semester</label>
+                    <x-label for="semester">Semester</x-label>
                     <div>
-                        <select name="semester" id="semester" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                            <option value="" class="hover:bg-sky-100">-- select semester --</option>
-                            <option value="first" class="hover:bg-sky-100">First</option>
-                            <option value="second" class="hover:bg-sky-100">Second</option>
-                        </select>
+                        <x-select name="semester" id="semester">
+                            <x-option value="">-- select semester --</x-option>
+                            <x-option value="first">First</x-option>
+                            <x-option value="second">Second</x-option>
+                        </x-select>
                     </div>
                     @error('semester')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/sections/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/sections/manage" class="w-60">
                     Back
-                </a>
-            </div>
-    </div>
+                </x-link>
+            </x-row>
 
-    </form>
+        </form>
     </div>
 </x-layout>

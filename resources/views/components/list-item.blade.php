@@ -2,8 +2,18 @@
     "text",
     "icon",
     "link",
+    "data",
     ])
-<li>
+<li x-data="{ 
+                data: {{ $data}},
+                open: false, 
+                open(){
+                this.open = true
+            }, 
+                close(){
+                this.open = false
+            }, 
+        }" x-init=" data ? open() : close() ">
     <a href="{{$link}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-sky-100 hover:text-sky-500 dark:hover:bg-sky-700 group {{ request()->is('{{$link}}') ? 'bg-sky-100 text-sky-500' : ''}}">
     {{$icon}}
 

@@ -44,94 +44,82 @@
         <form class="space-y-2" action="/register" method="POST">
           @csrf
           <div>
-            <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Role</label>
+            <input type="hidden" name="role" value="admin">
+          </div>
+
+          <div>
+            <x-label for="firstName">First Name</x-label>
             <div>
-              <select name="role" id="role" class="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                <option value="" class="hover:bg-sky-100">-- select role --</option>
-                <option value="admin" selected class="hover:bg-sky-100">Admin</option>
-                <!-- <option value="lecturer" class="hover:bg-sky-100">Lecturer</option>
-                <option value="student" class="hover:bg-sky-100">Student</option> -->
-              </select>
+              <x-input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" />
             </div>
-            @error('role')
+            @error('firstName')
             <x-alert>{{$message}}</x-alert>
             @enderror
           </div>
 
           <div>
-            <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+            <x-label for="lastName">Last Name</x-label>
             <div>
-              <input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+              <x-input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" />
             </div>
-            @error('firstName')
-            <div class="flex items-center p-4 mt-1 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-              <x-alert>{{$message}}</x-alert>
-              @enderror
-            </div>
+            @error('lastName')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
+          <div>
+            <x-label for="otherName">Other Name</x-label>
             <div>
-              <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-              <div>
-                <input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('lastName')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
+              <x-input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" />
             </div>
+            @error('otherName')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
+          <div>
+            <x-label for="email">Email address</x-label>
             <div>
-              <label for="otherName" class="block text-sm font-medium leading-6 text-gray-900">Other Name</label>
-              <div>
-                <input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('otherName')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
+              <x-input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" />
             </div>
+            @error('email')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
+          <div>
+            <x-label for="phoneNumber">Phone Number</x-label>
             <div>
-              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-              <div>
-                <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('email')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
+              <x-input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" />
             </div>
+            @error('phoneNumber')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
+          <div>
+            <x-label for="password">Password</x-label>
             <div>
-              <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
-              <div>
-                <input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('phoneNumber')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
+              <x-input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password')}}" />
             </div>
+            @error('password')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
+          <div>
+            <x-label for="password_confirmation">Confirm Password</x-label>
             <div>
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-              <div>
-                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('password')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
+              <x-input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password_confirmation')}}" />
             </div>
+            @error('password_confirmation')
+            <x-alert>{{$message}}</x-alert>
+            @enderror
+          </div>
 
-            <div>
-              <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
-              <div>
-                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" placeholder="Enter password" required value="{{old('password_confirmation')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-              </div>
-              @error('password_confirmation')
-              <x-alert>{{$message}}</x-alert>
-              @enderror
-            </div>
-
-            <div>
-              <button type="submit" class="flex w-full justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">Sign up</button>
-            </div>
+          <div>
+            <x-button type="submit" class="w-full">Sign up</x-button>
+          </div>
         </form>
       </div>
     </div>

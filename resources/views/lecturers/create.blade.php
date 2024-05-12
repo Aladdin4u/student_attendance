@@ -4,76 +4,65 @@
         <h2 class="font-semibold text-left">Lecturer Datails</h2>
         <form method="POST" action="/lecturers" class="space-y-4">
             @csrf
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
-                    <input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    @error('firstName')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
+                    <x-label for="firstName">First Name</x-label>
+                    <x-input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}">
+                        @error('firstName')
+                        <x-alert>{{$message}}</x-alert>
+                        @enderror
                 </div>
 
                 <div class="basis-1/2">
-                    <label for="lastName" class="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    @error('lastName')
-                    <x-alert>{{$message}}</x-alert>
-                    @enderror
+                    <x-label for="lastName">Last Name</x-label>
+                    <x-input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}">
+                        @error('lastName')
+                        <x-alert>{{$message}}</x-alert>
+                        @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="otherName" class="block text-sm font-medium leading-6 text-gray-900">Other Name</label>
+                    <x-label for="otherName">Other Name</x-label>
                     <div>
-                        <input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
+                        <x-input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}">
                     </div>
                     @error('otherName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                    <div>
-                        <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    </div>
+                    <x-label for="email">Email address</x-label>
+                    <x-input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required value="{{old('email')}}" />
                     @error('email')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
-            </div>
+            </x-row>
 
-            <div class="w-full flex flex-row items-center justify-between space-x-4">
+            <x-row>
                 <div class="basis-1/2">
-                    <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
-                    <div>
-                        <input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6">
-                    </div>
+                    <x-label for="phoneNumber">Phone Number</x-label>
+                    <x-input id="phoneNumber" name="phoneNumber" type="tel" pattern="[0-9]{11}" autocomplete="phoneNumber" placeholder="Enter phone number" required value="{{old('phoneNumber')}}" />
                     @error('phoneNumber')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
                 </div>
                 <div class="basis-1/2">
-                <input name="role" type="text" value="lecturer" hidden>
+                    <input name="role" type="text" value="lecturer" hidden>
+                    <input name="role" type="text" required value="lecturer" hidden>
                 </div>
-            </div>
+            </x-row>
 
-            <div class="basis-1/2 sr-only">
-                <div class="mt-2">
-                    <input id="role" name="role" type="text" required value="lecturer" class="sr-only">
-                    <input name="password" type="password" value="password123" class="sr-only" />
-                    <input name="password_confirmation" type="password" value="password123" class="sr-only" />
-                </div>
-            </div>
-
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-                <a href="/users/manage" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+                </x-button>
+                <x-link href="/users/manage" class="w-60">
                     Back
-                </a>
-            </div>
+                </x-link>
+            </x-row>
         </form>
     </div>
 </x-layout>
