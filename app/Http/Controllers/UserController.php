@@ -298,6 +298,6 @@ class UserController extends Controller
 
     public function manage(UsersDataTable $dataTable)
     {
-        return $dataTable->render('users.manage');
+        return $dataTable->render('lecturers.manage');
     }
 }

@@ -7,27 +7,25 @@
             <x-row>
                 <div class="basis-1/2">
                     <x-label for="firstName">First Name</x-label>
-                    <x-input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}">
-                        @error('firstName')
-                        <x-alert>{{$message}}</x-alert>
-                        @enderror
+                    <x-input id="firstName" name="firstName" type="text" autocomplete="firstName" placeholder="Enter first name" required value="{{old('firstName')}}" />
+                    @error('firstName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
                 </div>
 
                 <div class="basis-1/2">
                     <x-label for="lastName">Last Name</x-label>
-                    <x-input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}">
-                        @error('lastName')
-                        <x-alert>{{$message}}</x-alert>
-                        @enderror
+                    <x-input id="lastName" name="lastName" type="text" autocomplete="lastName" placeholder="Enter last name" required value="{{old('lastName')}}" />
+                    @error('lastName')
+                    <x-alert>{{$message}}</x-alert>
+                    @enderror
                 </div>
             </x-row>
 
             <x-row>
                 <div class="basis-1/2">
                     <x-label for="otherName">Other Name</x-label>
-                    <div>
-                        <x-input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}">
-                    </div>
+                    <x-input id="otherName" name="otherName" type="text" autocomplete="otherName" placeholder="Enter other name" required value="{{old('otherName')}}" />
                     @error('otherName')
                     <x-alert>{{$message}}</x-alert>
                     @enderror
@@ -59,7 +57,7 @@
                 <x-button type="submit" class="w-60">
                     Save
                 </x-button>
-                <x-link href="/users/manage" class="w-60">
+                <x-link href="{{url()->previous()}}" class="w-60">
                     Back
                 </x-link>
             </x-row>

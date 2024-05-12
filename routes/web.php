@@ -49,10 +49,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [UserController::class, 'adminDashboard'])->middleware('auth')->name('admin.dashboard');
     // get all user
     Route::get('/users', [UserController::class, 'index'])->middleware('auth');
-    // show lecturer register 
-    Route::get('/users/create', [UserController::class, 'createLecturer']);
-    // manage user
-    Route::get('/users/manage', [UserController::class, 'manage'])->middleware('auth');
     // show single user
     Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth');
     // show edit user form
@@ -81,6 +77,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/lecturers/create', [UserController::class, 'createLecturer'])->middleware('auth');
     // store lecturer create form
     Route::post('/lecturers', [UserController::class, 'storeLecturer'])->middleware('auth');
+    // manage user
+    Route::get('/lecturers/manage', [UserController::class, 'manage'])->middleware('auth');
     // show create course form
     Route::get('/courses/create', [CourseController::class, 'create']);
     // store course form

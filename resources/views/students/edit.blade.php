@@ -34,7 +34,7 @@
                 <x-button type="submit" class="w-60">
                     Save
                 </x-button>
-                <x-link href="/students/manage" class="w-60">
+                <x-link href="{{url()->previous()}}" class="w-60">
                     Back
                 </x-link>
             </x-row>

@@ -1,91 +1,119 @@
 <x-layout>
   <h1 class="text-lg font-semibold text-left mb-4">Profile</h1>
-  <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-lg">
+  <div class="space-y-4">
 
-    <div class="w-full flex items-center justify-between">
-      <h2 class="font-semibold text-left"> welcome {{$contact[0]->firstName}}</h2>
+    <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
+      <x-row>
+        <h2 class="text-md font-bold">Personal Details</h2>
+        <a href="/users/{{$contact[0]->id}}/edit"><button>
+            <svg class="flex-shrink-0 w-6 h-6 stroke-gray-500 transition duration-75 hover:stroke-gray-700" viewBox="0 0 24 24" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16.04 3.02001L8.16 10.9C7.86 11.2 7.56 11.79 7.5 12.22L7.07 15.23C6.91 16.32 7.68 17.08 8.77 16.93L11.78 16.5C12.2 16.44 12.79 16.14 13.1 15.84L20.98 7.96001C22.34 6.60001 22.98 5.02001 20.98 3.02001C18.98 1.02001 17.4 1.66001 16.04 3.02001Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.91 4.1499C15.58 6.5399 17.45 8.4099 19.85 9.0899" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button></a>
+      </x-row>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">First Name:</h6>
+          <span class="text-gray-900">{{$contact[0]->firstName}}</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Last Name:</h6>
+          <span class="text-gray-900">{{$contact[0]->lastName}}</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Other Name:</h6>
+          <span class="text-gray-900">{{$contact[0]->otherName}}</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Email Address:</h6>
+          <span class="text-gray-900">{{$user->email}}</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Phone Number: </h6>
+          <span class="text-gray-900">{{$contact[0]->phoneNumber}}</span>
+        </div>
+      </div>
     </div>
 
-    <div class="space-y-2 mt-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold">Personal Details</h2>
-        <a href="/users/{{$contact[0]->id}}/edit"><button>
-            <svg class="flex-shrink-0 w-6 h-6 stroke-gray-500 transition duration-75 hover:stroke-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.2601 3.6L5.0501 12.29C4.7401 12.62 4.4401 13.27 4.3801 13.72L4.0101 16.96C3.8801 18.13 4.7201 18.93 5.8801 18.73L9.1001 18.18C9.5501 18.1 10.1801 17.77 10.4901 17.43L18.7001 8.74C20.1201 7.24 20.7601 5.53 18.5501 3.44C16.3501 1.37 14.6801 2.1 13.2601 3.6Z M11.8899 5.05C12.3199 7.81 14.5599 9.92 17.3399 10.2 M3 22H21" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-            </svg></button></a>
-      </div>
-      <div class="w-full mt-10">
-        <p class="font-semibold text-sky-500">First Name: <span class="text-gray-900">{{$contact[0]->firstName}}</span></p>
-        <p class="font-semibold text-sky-500">Last Name: <span class="text-gray-900">{{$contact[0]->lastName}}</span></p>
-        <p class="font-semibold text-sky-500">Other Name: <span class="text-gray-900">{{$contact[0]->otherName}}</span></p>
-        <p class="font-semibold text-sky-500">Email: <span class="text-gray-900">{{$user->email}}</span></p>
-        <p class="font-semibold text-sky-500">Phone Number: <span class="text-gray-900">{{$contact[0]->phoneNumber}}</span></p>
-      </div>
-
+    <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
       @if($user->role === "student")
       @unless($admissions->isEmpty())
       @foreach($admissions as $admission)
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold">Admission Details</h2>
+      <x-row>
+        <h2 class="text-md font-bold">Admission Details</h2>
         <a href="/students/{{$admission->student_id}}/edit"><button>
-            <svg class="flex-shrink-0 w-6 h-6 stroke-gray-500 transition duration-75 hover:stroke-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.2601 3.6L5.0501 12.29C4.7401 12.62 4.4401 13.27 4.3801 13.72L4.0101 16.96C3.8801 18.13 4.7201 18.93 5.8801 18.73L9.1001 18.18C9.5501 18.1 10.1801 17.77 10.4901 17.43L18.7001 8.74C20.1201 7.24 20.7601 5.53 18.5501 3.44C16.3501 1.37 14.6801 2.1 13.2601 3.6Z M11.8899 5.05C12.3199 7.81 14.5599 9.92 17.3399 10.2 M3 22H21" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-            </svg></button></a>
-      </div>
-      <div class="w-full mt-10">
-        <p class="font-semibold text-sky-500">Reg Number: <span class="text-gray-900">{{$admission->regNumber}}</span></p>
-        <p class="font-semibold text-sky-500">Department: <span class="text-gray-900">{{$admission->departmentName}}</span></p>
-        <p class="font-semibold text-sky-500">Faculty: <span class="text-gray-900">{{$faculty[0]->name}}</span></p>
-      </div>h
-      @endforeach
-      @else
-      <div></div>
-      <a href="#" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-        complete your admission
-      </a>
-      @endunless
-
-      @unless($programmees->isEmpty())
-      @foreach($programmees as $programmee)
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold">Programmee</h2>
-      </div>
-      <div class="w-full mt-10">
-        <p class="font-semibold text-sky-500">Academic Session: <span class="text-gray-900">{{$programmee->session}}</span></p>
-        <p class="font-semibold text-sky-500">Current semester: <span class="text-gray-900">{{$programmee->semester}} semester</span></p>
-        <p class="font-semibold text-sky-500">Current level: <span class="text-gray-900">{{$programmee->name}} level</span></p>
-      </div>
-      @endforeach
-      @endunless
-
-      <a href="/coursesoffer/create/{{$user->id}}">
-        <div class="mt-2">
-          <h2 class="text-xl font-bold">Course registration</h2>
-          <p>Register your courses here</p>
+            <svg class="flex-shrink-0 w-6 h-6 stroke-gray-500 transition duration-75 hover:stroke-gray-700" viewBox="0 0 24 24" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16.04 3.02001L8.16 10.9C7.86 11.2 7.56 11.79 7.5 12.22L7.07 15.23C6.91 16.32 7.68 17.08 8.77 16.93L11.78 16.5C12.2 16.44 12.79 16.14 13.1 15.84L20.98 7.96001C22.34 6.60001 22.98 5.02001 20.98 3.02001C18.98 1.02001 17.4 1.66001 16.04 3.02001Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14.91 4.1499C15.58 6.5399 17.45 8.4099 19.85 9.0899" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button></a>
+      </x-row>
+      <div class="grid grid-cols-1 gap-4">
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Reg Number: </h6>
+          <span class="text-gray-900">{{$admission->regNumber}}</span>
         </div>
-      </a>
-      @endif
-
-      @if($user->role === "lecturer")
-      <a href="/coursesoffer/lecturer/{{$user->id}}">
-        <div class="mt-2">
-          <h2 class="text-xl font-bold">Lecture registration</h2>
-          <p>Register your lectures here</p>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Department: </h6>
+          <span class="text-gray-900">{{$admission->departmentName}}</span>
         </div>
-      </a>
-      @endif
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Faculty: </h6>
+          <span class="text-gray-900">{{$faculty[0]->name}}</span>
+        </div>
 
-      <div class="space-y-2">
-        <h2 class="text-xl font-bold">Settings</h2>
-        <a href="/forgot-password" class="font-semibold text-red-400 hover:text-red-500">Change your password</a>
-        <form action="/logout" method="POST">
-          @csrf
-          <button class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
-            Logout
-          </button>
-        </form>
+        @endforeach
+        @endunless
+
+        @unless($programmees->isEmpty())
+        @foreach($programmees as $programmee)
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Session: </h6>
+          <span class="text-gray-900">{{$programmee->session}}</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Current semester: </h6>
+          <span class="text-gray-900">{{$programmee->semester}} semester</span>
+        </div>
+        <div class="flex space-x-4">
+          <h6 class="font-semibold text-[#15ACD9]">Current level: </h6>
+          <span class="text-gray-900">{{$programmee->name}} Level</span>
+        </div>
+        @endforeach
+        @endunless
       </div>
-
-
     </div>
+
+    <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
+      <h2 class="text-md font-bold">Course Registration</h2>
+      <p class="text-gray-600">Click on the button below to register courses</p>
+      <x-link class="bg-sky-500 hover:bg-sky-400 w-32 text-white" href="/coursesoffer/create/{{$user->id}}">
+        Register courses
+      </x-link>
+    </div>
+    @endif
+
+    @if($user->role === "lecturer")
+    <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
+      <h2 class="text-md font-bold">Course Registration</h2>
+      <p class="text-gray-600">Click on the button below to register courses</p>
+      <x-link class="bg-sky-500 hover:bg-sky-400 w-32 text-white" href="/coursesoffer/lecturer/{{$user->id}}">
+        Register courses
+      </x-link>
+    </div>
+    @endif
+
+    <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
+      <h2 class="text-md font-bold">Settings</h2>
+      <p class="text-gray-600">Click on the button below to change password</p>
+      <x-link class="bg-red-500 hover:bg-red-400 w-40 text-white" href="/forgot-password">
+        Change Password
+      </x-link>
+    </div>
+
+
+  </div>
 </x-layout>
