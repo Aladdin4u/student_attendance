@@ -3,14 +3,21 @@ $date = date('Y-m-d');
 $now = date('Y-m-d H:i:s');
 @endphp
 <x-layout>
-  <div id="message"></div>
-  <h1 class="text-lg font-semibold text-left mb-4">Take class attendance for ({{$date}})</h1>
+  <div id="message" class="fixed top-10 left-1/2 transform -translate-x-1/2 text-white px-3 py-2 z-50 rounded-lg hidden"></div>
+  <h1 class="text-lg font-semibold text-left mb-4">Take class attendance for (<span id="onDateChange"></span>)</h1>
   <div class="card-body bg-white py-5 px-3 space-y-4 shadow-md rounded-lg">
     <h2 class="font-semibold text-left">
       Class Attendance
     </h2>
+    <div class="w-60 space-y-2">
+      <x-label for="attendance-date">Select Date</x-label>
+      <x-input type="date" id="attendance-date" name="attendance-date" value="{{$date}}" />
+    </div>
     {{ $dataTable->table() }}
-    <button type="submit" id="save-btn" class="flex justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">Take Attendance</button>
+    <x-row>
+      <x-button type="submit" id="save-btn" class="w-60">Take Attendance</x-button>
+      <x-link href="{{url()->previous()}}" class="w-60">Back</x-link>
+    </x-row>
   </div>
 
   @push('scripts')
@@ -20,7 +27,14 @@ $now = date('Y-m-d H:i:s');
 <script>
   let section_id;
   const now = "{{$now}}";
-  const date = "{{$date}}";
+  let date = "{{$date}}";
+  $('#onDateChange').text(date);
+
+  $('#attendance-date').change(function() {
+    let dateChange = $(this).val();
+    $('#onDateChange').text(dateChange);
+    date = dateChange;
+  });
 
   $.ajax({
     url: "/api/sections",
@@ -33,7 +47,7 @@ $now = date('Y-m-d H:i:s');
   $(document).ready(function() {
     let course_id = window.location.pathname;
     course_id = course_id.split("/")[2];
-    const formData = [];
+    let formData = [];
     $('#save-btn').on('click', function() {
       $('input[type="checkbox"]').each(function(index, value) {
         let data = {
@@ -57,19 +71,23 @@ $now = date('Y-m-d H:i:s');
           formData: formData
         },
         success: function(data) {
-          $('#save-btn').attr("disabled", true)
+          formData = [];
           $('#message').text("Class attendance marked for today!");
-          $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-48 py-3 z-50 rounded-lg");
+          $('#message').addClass("bg-green-600");
+          $('#message').removeClass("hidden");
           setTimeout(function() {
-            $('#message').slideUp();
+            $('#message').addClass("hidden");
+            $('#message').removeClass("bg-green-600");
           }, 5000);
         },
         error: function(data) {
-          $('#save-btn').attr("disabled", true)
+          formData = [];
           $('#message').text(data.responseJSON.message);
-          $('#message').addClass("fixed top-10 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-48 py-3 z-50 rounded-lg");
+          $('#message').addClass("bg-red-600");
+          $('#message').removeClass("hidden");
           setTimeout(function() {
-            $('#message').slideUp();
+            $('#message').addClass("hidden");
+            $('#message').removeClass("bg-red-600");
           }, 5000);
 
         }

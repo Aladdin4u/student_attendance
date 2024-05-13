@@ -6,6 +6,7 @@
       Overall Attendance
     </h2>
     {{ $dataTable->table() }}
+    <x-link href="{{url()->previous()}}" class="w-60">Back</x-link>
   </div>
 
   @push('scripts')
