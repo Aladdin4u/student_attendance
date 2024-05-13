@@ -109,25 +109,49 @@
     </div>
 </x-layout>
 <script>
-    var attendance = JSON.parse('{!! json_encode($attendance) !!}');
-    const countMap = {}
-    attendance.filter(p => p.status === 'present').map(d => {
-        if (countMap[d.date] === undefined) {
-            countMap[d.date] = 1;
+    let attendance = JSON.parse('{!! json_encode($attendance) !!}');
+    const countMaps = {}
+    let attendancesData = []
+    attendance.map(d => {
+        if (countMaps[d.date] === undefined) {
+            countMaps[d.date] = 1;
+            let data = {
+                date: d.date,
+                statuses: [d.status]
+            }
+            attendancesData.push(data)
         } else {
-            countMap[d.date]++;
+            countMaps[d.date]++;
+            attendancesData.filter(a => {
+                if (a.date == d.date) {
+                    a.statuses.push(d.status)
+                }
+            })
         }
     })
+    const dates = attendancesData.map(a => a.date);
+    const statuses = attendancesData.map(a => a.statuses);
+    const absent = statuses.map(s => s.filter(a => a === 'absent').length);
+    const present = statuses.map(s => s.filter(a => a === 'present').length);
+
     $(document).ready(function() {
         const myChart = new Chart("myChart", {
             type: "line",
             data: {
-                labels: Object.keys(countMap).map((key) => moment(key).format('ddd')),
+                labels: dates.map((key) => moment(key).format('ddd')),
                 datasets: [{
-                    label: 'Student Attendance',
-                    data: Object.keys(countMap).map((key) => countMap[key]),
-                    fill: false,
+                    label: 'Present',
+                    data: present,
+                    fill: true,
+                    backgroundColor: 'rgba(75, 192, 192, 0.3)',
                     borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }, {
+                    label: 'Absent',
+                    data: absent,
+                    fill: true,
+                    backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                    borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
                 }]
             },
@@ -136,7 +160,7 @@
                     y: {
                         title: {
                             display: true,
-                            text: "Number of students present"
+                            text: "Number of students"
                         },
                         beginAtZero: true,
                     },

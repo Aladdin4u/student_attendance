@@ -45,7 +45,7 @@ class StudentAdmissionController extends Controller
     {
         $levels = Level::all(['id', 'name']);
         $sections = Section::first()->where('is_active', 1)->get(['id', 'session']);
-        // dd($sections);
+
         $departments = Department::all(['id', 'name']);
 
         return view("students.create", [
@@ -92,12 +92,18 @@ class StudentAdmissionController extends Controller
             "user_id" => $user->id,
         ];
 
-        $year = Carbon::now()->format('y');
+        $year = Carbon::now()->format('Y');
         $count = User::where('role', 'student')->count() + 1;
 
-        if ($count > 10) {
+        if ($count < 10) {
+            $count = '00000' . $count;
+        } else if ($count >= 10) {
+            $count = '0000' . $count;
+        } else if ($count >= 100) {
+            $count = '000' . $count;
+        } else if ($count >= 1000) {
             $count = '00' . $count;
-        } else if ($count > 100) {
+        } else if ($count >= 10000) {
             $count = '0' . $count;
         } else {
             $count;
@@ -139,7 +145,7 @@ class StudentAdmissionController extends Controller
         $student->update($formFields);
         $user = $student->user_id;
 
-        return redirect("/users/".$user)->with("message", "Student admission updated Successfully!");
+        return redirect("/users/" . $user)->with("message", "Student admission updated Successfully!");
     }
 
     // manage student

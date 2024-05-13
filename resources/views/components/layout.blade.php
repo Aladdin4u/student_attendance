@@ -80,65 +80,96 @@
         }
         const searchData = [{
                 name: "dashboard",
-                link: "/",
+                link: "/admin",
+                role: "admin",
             },
             {
                 name: "create session",
                 link: "/sections/create",
+                role: "admin",
             },
             {
                 name: "view all session",
                 link: "/sections/manage",
+                role: "admin",
             },
             {
                 name: "create faculty",
                 link: "/faculties/create",
+                role: "admin",
             },
             {
                 name: "view all faculty",
                 link: "/faculties/manage",
+                role: "admin",
             },
             {
                 name: "create department",
                 link: "/departments/create",
+                role: "admin",
             },
             {
                 name: "view all department",
                 link: "/departments/manage",
+                role: "admin",
             },
             {
                 name: "create level",
                 link: "/levels/create",
+                role: "admin",
             },
             {
                 name: "view all level",
                 link: "/levels/manage",
+                role: "admin",
             },
             {
                 name: "create lecturers",
                 link: "/lecturers/create",
+                role: "admin",
             },
             {
                 name: "view all lecturers",
                 link: "/lecturers/manage",
+                role: "admin",
             },
             {
                 name: "create students",
                 link: "/students/create",
+                role: "admin",
             },
             {
                 name: "view all students",
                 link: "/students/manage",
+                role: "admin",
             },
             {
                 name: "create courses",
                 link: "/courses/create",
+                role: "admin",
             },
             {
                 name: "view all courses",
                 link: "/courses/manage",
+                role: "admin",
+            },
+            {
+                name: "dashboard",
+                link: "/lecturer",
+                role: "lecturer",
+            },
+            {
+                name: "lectures",
+                link: "/lecture",
+                role: "lecturer",
+            },
+            {
+                name: "attendances",
+                link: "/attendances",
+                role: "lecturer",
             },
         ]
+        const role = "{{auth()->user()->role}}"
 
         function search() {
             let results = []
@@ -146,7 +177,7 @@
             $('#search').on('input', function() {
                 let value = $(this).val();
                 results = searchData.filter(search => {
-                    return value.length > 0 && search.name.toLowerCase().includes(value);
+                    return value.length > 0 && search.role == role && search.name.toLowerCase().includes(value);
                 })
 
                 if (!results.length) {
@@ -154,7 +185,6 @@
                 }
 
                 const contents = results.map(item => {
-                    console.log(item);
                     return `<li><a href=${item.link}>${item.name}</a></li>`
                 }).join('')
 

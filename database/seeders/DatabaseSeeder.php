@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Attendance;
 use App\Models\User;
 use App\Models\Level;
 use App\Models\Course;
@@ -11,6 +12,7 @@ use App\Models\Faculty;
 use App\Models\Section;
 use App\Models\Department;
 use App\Models\Programmee;
+use App\Models\CoursesOffer;
 use App\Models\PersonalDetail;
 use Illuminate\Database\Seeder;
 use App\Models\StudentAdmission;
@@ -25,7 +27,7 @@ class DatabaseSeeder extends Seeder
     {
         $faculties = ['arts', 'classics', 'commerce', 'economics', 'education', 'engineering', 'graduate studies', 'health', 'humanities', 'information technology', 'law', 'management studies', 'music', 'sciences', 'philosophy', 'political science'];
 
-        $reg = ['REG/CSC/2024/001', 'REG/CSC/2024/002', 'REG/CSC/2024/003', 'REG/CSC/2024/004', 'REG/CSC/2024/005', 'REG/CSC/2024/006', 'REG/CSC/2024/007', 'REG/CSC/2024/008', 'REG/CSC/2024/009', 'REG/CSC/2024/010', 'REG/CSC/2024/011', 'REG/CSC/2024/012', 'REG/CSC/2024/013', 'REG/CSC/2024/014', 'REG/CSC/2024/015', 'REG/CSC/2024/016', 'REG/CSC/2024/017', 'REG/CSC/2024/018', 'REG/CSC/2024/019', 'REG/CSC/2024/020'];
+        $reg = ['2024/000001', '2024/000002', '2024/000003', '2024/000004', '2024/000005', '2024/000006', '2024/000007', '2024/000008', '2024/000009', '2024/000010', '2024/000011', '2024/000012', '2024/000013', '2024/000014', '2024/000015', '2024/000016', '2024/000017', '2024/000018', '2024/000019', '2024/000020'];
 
         $codes = ["CSC 101", "CSC 102", "GNS 101", "PHY 101", "PHY 103", "PHY 107"];
 
@@ -85,5 +87,19 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $sequence->index + 3,
             ])
             ->create();
+
+        CoursesOffer::factory()
+        ->count(19)
+        ->sequence(fn (Sequence $sequence) => [
+            'user_id' => $sequence->index + 2,
+        ])
+        ->create();
+
+        Attendance::factory()
+        ->count(18)
+        ->sequence(fn (Sequence $sequence) => [
+            'user_id' => $sequence->index + 3,
+        ])
+        ->create();
     }
 }

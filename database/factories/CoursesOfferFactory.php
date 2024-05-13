@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attendance>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CoursesOffer>
  */
-class AttendanceFactory extends Factory
+class CoursesOfferFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,7 @@ class AttendanceFactory extends Factory
     {
         return [
             'course_id' => 1,
-            'section_id' => 1,
-            'date' => date('Y-m-d'),
+            'is_Active' => 1,
         ];
     }
 }
