@@ -33,7 +33,11 @@ $dashboardLink = (auth()->user()->role == 'admin') ? '/admin' : ((auth()->user()
                             </svg>
                         </div>
                         <input type="search" id="search" class="w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-400 sm:text-sm sm:leading-6  pl-10" placeholder="Search...">
-                        <!-- <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">Search</button> -->
+
+                        <div id="display-search" class="bg-[#D0EEF7] absolute w-80 top-10 left-1/2 transform -translate-x-1/2 px-3 py-2 z-50 rounded-lg shadow-sm hidden">
+                            <ul id="results" class="w-full space-y-2 divide-y divide-white">
+                            </ul>
+                        </div>
                     </div>
                 </form>
                 <div class="flex items-center">

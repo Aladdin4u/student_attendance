@@ -68,7 +68,6 @@
     </div>
     @stack('scripts')
     <script>
-        
         function logout() {
             const logout = document.getElementById("logout");
             const x = document.getElementById("modal-logout");
@@ -79,6 +78,92 @@
             }
 
         }
+        const searchData = [{
+                name: "dashboard",
+                link: "/",
+            },
+            {
+                name: "create session",
+                link: "/sections/create",
+            },
+            {
+                name: "view all session",
+                link: "/sections/manage",
+            },
+            {
+                name: "create faculty",
+                link: "/faculties/create",
+            },
+            {
+                name: "view all faculty",
+                link: "/faculties/manage",
+            },
+            {
+                name: "create department",
+                link: "/departments/create",
+            },
+            {
+                name: "view all department",
+                link: "/departments/manage",
+            },
+            {
+                name: "create level",
+                link: "/levels/create",
+            },
+            {
+                name: "view all level",
+                link: "/levels/manage",
+            },
+            {
+                name: "create lecturers",
+                link: "/lecturers/create",
+            },
+            {
+                name: "view all lecturers",
+                link: "/lecturers/manage",
+            },
+            {
+                name: "create students",
+                link: "/students/create",
+            },
+            {
+                name: "view all students",
+                link: "/students/manage",
+            },
+            {
+                name: "create courses",
+                link: "/courses/create",
+            },
+            {
+                name: "view all courses",
+                link: "/courses/manage",
+            },
+        ]
+
+        function search() {
+            let results = []
+            const list = document.getElementById('results')
+            $('#search').on('input', function() {
+                let value = $(this).val();
+                results = searchData.filter(search => {
+                    return value.length > 0 && search.name.toLowerCase().includes(value);
+                })
+
+                if (!results.length) {
+                    return $('#display-search').addClass("hidden")
+                }
+
+                const contents = results.map(item => {
+                    console.log(item);
+                    return `<li><a href=${item.link}>${item.name}</a></li>`
+                }).join('')
+
+                $('#display-search').removeClass("hidden");
+                list.innerHTML = contents
+
+            })
+        }
+        search();
     </script>
 </body>
 
