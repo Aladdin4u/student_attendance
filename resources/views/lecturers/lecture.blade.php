@@ -2,7 +2,7 @@
     <div id="message"></div>
     <h1 class="text-lg font-semibold text-left mb-4">Register Lecture</h1>
     <div class="w-full p-5 text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-xl pb-12 space-y-2">
-        <h2 class="font-semibold text-left">Register lecture for this semester</h2>
+        <h2 class="font-semibold text-left">Lecture details</h2>
 
         <form method="POST" action="/coursesoffer/lecturer" class="space-y-4">
             @csrf
@@ -20,19 +20,23 @@
                 </select>
             </div>
 
-            <div class="mx-auto flex flex-row items-center justify-between space-x-2">
-                <button type="submit" class="flex w-60 justify-center rounded-md bg-sky-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400">
+            <x-row>
+                <x-button type="submit" class="w-60">
                     Save
-                </button>
-            </div>
+                </x-button>
+                <x-link href="{{url()->previous()}}" class="w-60">
+                    Back
+                </x-link>
+            </x-row>
         </form>
 
         <table class="w-full table-auto rounded-sm">
-            <thead>
+            <thead class="bg-[#15ACD9] text-white">
                 <tr>
-                    <th>Title</th>
-                    <th>Code</th>
-                    <th>Unit</th>
+                    <th class="p-2 rounded-tl-lg">Title</th>
+                    <th class="p-2">Code</th>
+                    <th class="p-2">Unit</th>
+                    <th class="p-2 rounded-tr-lg"></th>
                 </tr>
             </thead>
             <tbody>
@@ -63,7 +67,7 @@
                 @endforeach
                 @else
                 <tr class="border-gray-300">
-                    <td class="p-2 border-t border-b border-gray-300 text-lg">
+                    <td colspan="4" class="p-2 border-gray-300 text-lg">
                         <p class="text-center">No courses Found</p>
                     </td>
                 </tr>

@@ -31,7 +31,18 @@ class CourseOfferController extends Controller
     {
         $coursesoffer = CoursesOffer::where('user_id', $user)->get();
         if (!$coursesoffer->isEmpty()) {
-            return back()->with("message", "Course registration is completed");
+            $level = Programmee::where('user_id', $user)
+                ->join('sections', 'programmees.section_id', '=', 'sections.id')
+                ->where('sections.is_active', 1)->get('level_id');
+            $courses = CoursesOffer::where('user_id', $user)->join('courses', 'courses_offers.course_id', '=', 'courses.id')
+                ->where('level_id', $level[0]->level_id)
+                ->get(['courses.id as id', 'courses_offers.id as cid', 'code', 'title', 'unit', 'is_active']);
+
+            return view('courseoffers.edit', [
+                'courses' => $courses,
+                'user' => $user,
+                'message' => 'Course registration is completed. Edit course',
+            ]);
         }
         $dept = StudentAdmission::where('user_id', $user)->get('department_id');
         $level = Programmee::where('user_id', $user)
@@ -73,6 +84,20 @@ class CourseOfferController extends Controller
 
         foreach ($records as $record) {
             CoursesOffer::create($record);
+        }
+    }
+
+    // update course form data
+    public function update(Request $request)
+    {
+        $records = $request->formData;
+
+        foreach ($records as $record) {
+            $course = CoursesOffer::find($record['id']);
+            $course->user_id = $record['user_id'];
+            $course->course_id = $record['course_id'];
+            $course->is_active = $record['is_active'];
+            $course->save();
         }
     }
 

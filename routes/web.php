@@ -155,6 +155,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/coursesoffer/create/{user}', [CourseOfferController::class, 'create']);
     // store course form
     Route::post('/coursesoffer/student', [CourseOfferController::class, 'store']);
+    // update course form
+    Route::put('/coursesoffer/student/edit', [CourseOfferController::class, 'update']);
     // show lecturer lecture form
     Route::get('/coursesoffer/lecturer/{user}', [CourseOfferController::class, 'LecturerCourse']);
     // store lecturer lecture form

@@ -37,8 +37,8 @@
       </div>
     </div>
 
+    @if($user->role === "student")
     <div class="w-full p-5 text-gray-900 bg-white rounded-lg space-y-2">
-      @if($user->role === "student")
       @unless($admissions->isEmpty())
       @foreach($admissions as $admission)
       <x-row>
